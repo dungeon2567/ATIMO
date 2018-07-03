@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Átimo - Pessoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>PESSOAS</h3>
+                </div>
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-info" href="~/Pessoa/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Novo
+                        </a>
+                        <hr />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>NOME/RAZÃO SOCIAL</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input id="nome" class="form-control uppercase" maxlength="80">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>CPF/CNPJ</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input id="doc" class="form-control uppercase" maxlength="80">
+                        </div>
+
+                        <hr/>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar();">
+                            <i class="glyphicon glyphicon-search"></i>
+                             Pesquisar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script>
+
+        function pesquisar() {
+            var params = {
+                situacao: []
+            };
+
+            if ($("#nome").val() != "") {
+                params.nome = $("#nome").val();
+            }
+
+            if ($("#doc").val() != "") {
+                params.doc = $("#doc").val();
+            }
+
+
+
+            location.href = "../Pessoa/Index/?" + jQuery.param(params, true);
+        }
+    </script>
+}

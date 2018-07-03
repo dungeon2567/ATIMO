@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "ÁTIMO - Tipo de Conta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main" ng-app="TipoConta" ng-controller="TipoContaController">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bank"></i>
+                    <h3>TIPOS DE CONTA</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-success" href="~/Banco/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/Financeiro/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Financeiro
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        SIGLA
+                                    </th>
+
+                                    <th>
+                                        DESCRIÇÃO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input ng-model="sigla" ng-change="atualizar_table();" ng-model-options="{ debounce: 350 }" />
+                                    </td>
+                                    <td>
+                                        <input ng-model="descricao" ng-change="atualizar_table();" ng-model-options="{ debounce: 350 }" />
+                                    </td>
+                                    <td>
+
+                                    </td>
+
+                                </tr>
+                                <tr ng-repeat="tc in tipo_conta">
+                                    <td ng-bind="tc.sigla"></td>
+                                    <td ng-bind="tc.descricao"></td>
+                                    <td>
+                                        <button></button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3">
+                                        <ul class="pagination">
+                                            <li ng-repeat="pagina in paginas" class="page-item" ng-click="atualizar_pagina(pagina)" ng-class="{'disabled': pagina == pagina_atual}">
+                                                <a class="page-link" href="#" ng-bind="pagina"></a>
+                                            </li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr />
+
+                        <a class="btn btn-success" href="~/Banco/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/AreaDoFuncionario/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Cadastros
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+
+    <script>
+        var app = angular.module("TipoConta", []);
+
+        app.controller("TipoContaController", function ($scope, $http) {
+            $scope.tipo_conta = [];
+
+            $scope.pagina_atual = 1;
+
+            $scope.paginas = [];
+
+            $scope.atualizar_pagina = function (pagina) {
+                if (pagina != $scope.pagina_atual) {
+
+                    $scope.pagina_atual = pagina;
+
+                    $scope.atualizar_table();
+                }
+            }
+
+            $scope.atualizar_table = function () {
+                var params = {
+                    page: $scope.pagina_atual
+                };
+
+                if ($scope.sigla != '') {
+                    params.sigla = $scope.sigla;
+                }
+
+                if ($scope.descricao != '') {
+                    params.descricao = $scope.descricao;
+                }
+
+
+
+                $http({
+                    method: 'GET',
+                    url: '/TipoConta/GetTipoConta/',
+                    params: params
+
+                }).then(function successCallback(response) {
+
+                    $scope.tipo_conta = response.data.objetos;
+                    $scope.paginas = response.data.paginas;
+
+                }, function errorCallback(response) {
+                    // called asynchronously if an error occurs
+                    // or server returns response with an error status.
+                });
+            }
+
+            $scope.sigla = "";
+
+            $scope.descricao = "";
+
+            $scope.atualizar_table();
+
+        });
+    </script>
+}

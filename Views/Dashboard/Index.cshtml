@@ -1,0 +1,128 @@
+﻿@model ATIMO.ViewModel.DashboardAdminViewModel
+
+@using ATIMO;
+
+
+@{
+    ViewBag.Title = "Átimo - Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-alt"></i>
+                    <h3>DASHBOARD</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div id="status_os_preventiva"></div>
+            </div>
+
+            <div class="col-md-6">
+                <div id="status_os"></div>
+                <br />
+            </div>
+
+            <div class="col-md-12">
+                <div id="entrada"></div>
+            </div>
+
+            <div class="col-md-12">
+                <div id="saida"></div>
+                <br />
+            </div>
+
+            <div class="col-md-12">
+                <div id="saldo"></div>
+                <br />
+            </div>
+
+        </div>
+    </div>
+</div>
+<br>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        $(function () {
+            $('#status_os_preventiva').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'OS PREVENTIVA'
+                },
+                subtitle: {
+                    text: 'TOTAL: @(Model.StatusOsPreventiva.Values.Sum())'
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 50,
+                        depth: 45,
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'quantidade',
+
+                    data: [
+                        @foreach (var kv in Model.StatusOsPreventiva)
+                        {
+                            @:['@Html.Raw(kv.Key)', @kv.Value],
+                        }
+                    ]
+                }],
+
+            });
+
+            $('#status_os').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'OS NÃO PREVENTIVA'
+                },
+                subtitle: {
+                    text: 'TOTAL: @(Model.StatusOs.Values.Sum())'
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 50,
+                        depth: 45,
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'quantidade',
+                    data: [
+                        @foreach (var kv in Model.StatusOs)
+                        {
+                    @:['@Html.Raw(kv.Key)', @kv.Value],
+                    }
+                    ]
+                }],
+
+            });
+        });
+    </script>
+}

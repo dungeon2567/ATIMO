@@ -1,0 +1,131 @@
+﻿@model ATIMO.Models.ESPECIALIDADE
+
+@{
+    ViewBag.Title = "ÁTIMO - Especialidades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bars"></i>
+                    <h3>ESPECIALIDADES - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID, new { id = "id" })
+
+                        <fieldset>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Especialidade/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+
+                                <hr />
+                            </div>
+
+                            <div class="form-group col-md-10">
+                                <div>
+                                    <label>DESCRIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase requirido", maxlength = "200", placeholder = "DESCRIÇÃO", id = "descricao", required = "" })
+                                    @Html.ValidationMessageFor(model => model.DESCRICAO, "Informe uma descrição!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select class="editor-field" id="situacao" required="">
+                                    @if ((Model != null) && (Model.SITUACAO == "A"))
+                                    {
+                                        <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ATIVO</option>
+                                    }
+
+
+                                    @if ((Model != null) && (Model.SITUACAO == "I"))
+                                    {
+                                        <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Especialidade/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function salvar() {
+            var especialidade = new Object();
+            especialidade.ID = $("#id").val();
+            especialidade.DESCRICAO = $("#descricao").val();
+            especialidade.SITUACAO = $("#situacao").val();
+
+            $.ajax({
+                url: "/Especialidade/ConfirmarEdit/",
+                data: JSON.stringify(especialidade),
+                type: "POST",
+                contentType: "application/json;",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status === 200) {
+                        alert(data.msg);
+                        window.location.href = "/Especialidade/Index/";
+                    }
+
+                    if (data.status === 100) {
+                        alert(data.ex);
+                    }
+                }
+            });
+        }
+    </script>
+}

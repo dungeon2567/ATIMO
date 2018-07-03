@@ -1,0 +1,194 @@
+﻿@model IEnumerable<ATIMO.Models.OSSB>
+
+@{
+    ViewBag.Title = "Átimo - Area do Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOrdensDeServico")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-alt"></i>
+                    <h3>ORDENS DE SERVIÇO</h3>
+                </div>
+
+                <div class="widget-content">
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        NÚMERO
+                                    </th>
+                                    <th>
+                                        PROJETO
+                                    </th>
+
+                                    <th>
+                                        CONTRATO
+                                    </th>
+
+                                    <th>
+                                        OCORRENCIA
+                                    </th>
+
+                                    <th>
+                                        PORTE
+                                    </th>
+
+                                    <th>
+                                        TIPO
+                                    </th>
+
+                                    <th>
+                                        AMBIENTE
+                                    </th>
+
+                                    <th>
+                                        STATUS
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayTextFor(modelItem => item.ID)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayTextFor(modelItem => item.PROJETO1.DESCRICAO)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayTextFor(modelItem => item.CONTRATO1.DESCRICAO)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayTextFor(modelItem => item.OCORRENCIA)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayTextFor(modelItem => item.PORTE)
+                                        </td>
+
+                                        @switch (item.TIPO)
+                                        {
+                                            case "C":
+                                                <td>
+                                                    <span class="label label-info">CORRETIVA</span>
+                                                </td>
+                                                break;
+                                            case "E":
+                                                <td>
+                                                    <span class="label label-danger">EMERGENCIAL</span>
+                                                </td>
+                                                break;
+                                            case "G":
+                                                <td>
+                                                    <span class="label label-warning">GARANTIA</span>
+                                                </td>
+                                                break;
+                                            case "O":
+                                                <td>
+                                                    <span class="label label-warning">ACOMPANHAMENTO</span>
+                                                </td>
+                                                break;
+                                            case "X":
+                                                <td>
+                                                    <span class="label label-success">EXTRA CONTRATUAL</span>
+                                                </td>
+                                                        break;
+                                                    default:
+                                                <td>
+                                                    <span class="label label-success">PREVENTIVA</span>
+                                                </td>
+                                                break;
+                                        }
+
+                                        @switch (item.AMBIENTE)
+                                        {
+                                            case "A":
+                                                <td>
+                                                    <span class="label label-danger">AMBOS</span>
+                                                </td>
+                                                break;
+                                            case "E":
+                                                <td>
+                                                    <span class="label label-success">EXTERNO</span>
+                                                </td>
+                                                break;
+                                            default:
+                                                <td>
+                                                    <span class="label label-default">INTERNO</span>
+                                                </td>
+                                                break;
+                                        }
+
+                                        @switch (item.SITUACAO)
+                                        {
+                                            case "I":
+                                                <td>
+                                                    <span class="label label-default">VISITA INICIAL</span>
+                                                </td>
+                                                break;
+                                            case "O":
+                                                <td>
+                                                    <span class="label label-default">ORÇAR</span>
+                                                </td>
+                                                break;
+                                            case "R":
+                                                <td>
+                                                    <span class="label label-default">ORÇAMENTO</span>
+                                                </td>
+                                                break;
+                                            case "E":
+                                                <td>
+                                                    <span class="label label-default">EXECUTANDO</span>
+                                                </td>
+                                                break;
+
+                                            case "C":
+                                                <td>
+                                                    <span class="label label-default">CANCELADA</span>
+                                                </td>
+                                                break;
+                                            case "K":
+                                                <td>
+                                                    <span class="label label-default">COBRANÇA</span>
+                                                </td>
+                                                break;
+                                            case "F":
+                                                <td>
+                                                    <span class="label label-default">FINALIZADA</span>
+                                                </td>
+                                                break;
+                                        }
+
+                                        <td class="col-md-3">
+                                            <a class="btn btn-warning" href="~/OssbComunicacaoCliente/Index/@item.ID">
+                                                <i class="fa fa-comments-o"></i>
+                                                Comunicação
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")

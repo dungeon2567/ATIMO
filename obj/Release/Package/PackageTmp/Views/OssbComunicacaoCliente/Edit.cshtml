@@ -1,0 +1,58 @@
+﻿@model ATIMO.Models.OSSB_COMUNICACAO
+
+@{
+    ViewBag.Title = "Átimo - OSSB Comunicação";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOrdensDeServico")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-comment-o"></i>
+                    <h3>OSSB COMUNICAÇÃO - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID)
+                        @Html.HiddenFor(model => model.OSSB)
+                        @Html.HiddenFor(model => model.DATA)
+                        @Html.HiddenFor(model => model.TIPO)
+                        @Html.HiddenFor(model => model.PESSOA)
+
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>TEXTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.TEXTO, new { @class = "form-control input-lg uppercase", placeholder = "TEXTO", id = "texto", rows = "5", required = "" })
+                                    @Html.ValidationMessageFor(model => model.TEXTO, "Informe o texto!")
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                | @Html.ActionLink("Voltar", "Index", new { id = Model.OSSB })
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("RodapeFixo")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

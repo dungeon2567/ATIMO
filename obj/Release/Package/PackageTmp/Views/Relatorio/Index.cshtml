@@ -1,0 +1,89 @@
+﻿@model ATIMO.ViewModel.RelatorioViewModel
+
+@{
+    ViewBag.Title = "Átimo - Relatórios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>PESSOAS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover tree">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" style="text-align:center">
+                                        SAÍDAS TOTAIS
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        DESCRIÇÃO
+                                    </th>
+
+                                    <th>
+                                        PREVISTO
+                                    </th>
+
+                                    <th>
+                                       REALIZADO
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                
+                                    @helper ShowTree(ATIMO.ViewModel.RelatorioViewModel relatorioModel, Int32 spaces = 0, ATIMO.ViewModel.RelatorioViewModel parent = null)
+                                    {
+
+
+                                <tr class="treegrid-@(relatorioModel.Id + (parent == null ? "" : " treegrid-parent-" + parent.Id))">
+                                    <td>
+                                        <span>@relatorioModel.Descricao</span>
+                                    </td>
+                                    <td>
+                                        <span>@relatorioModel.ValorPrevisto.ToString("C")</span>
+                                    </td>
+                                    <td>
+                                        <span>@relatorioModel.ValorPago.ToString("C")</span>
+                                    </td>
+                                </tr>
+
+foreach (var child in relatorioModel.Subitems)
+{
+        @ShowTree(child, spaces + 4, relatorioModel);
+
+    }
+}
+
+    @ShowTree(Model)
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+@Html.Partial("Rodape")
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script type="text/javascript" src="../../Scripts/jquery.treegrid.js"></script>
+<script type="text/javascript" src="../../Scripts/jquery.treegrid.bootstrap3.js"></script>
+        <link rel="stylesheet" href="../../Content/jquery.treegrid.css">
+
+        <script>
+            $('.tree').treegrid({ initialState: "collapsed" });
+        </script>
+    }

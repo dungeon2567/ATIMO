@@ -1,0 +1,115 @@
+﻿@model IEnumerable<ATIMO.Models.COMPRA>
+
+@{
+    ViewBag.Title = "ÁTIMO - Contas a Pagar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>COMPRAS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" href="~/Financeiro/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Financeiro
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        OBSERVAÇÃO
+                                    </th>
+
+                                    <th>
+                                        FORNECEDOR
+                                    </th>
+
+                                    <th>
+                                        TOTAL
+                                    </th>
+
+                                    <th>
+                                        PAGO
+                                    </th>
+
+                                    <th>
+                                        RESTANTE
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span> @(item.OBSERVACAO ?? "")</span>
+
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FORNECEDOR1.RAZAO)
+                                        </td>
+
+                                        <td>
+                                            <span>@item.COMPRA_PARCELA.Sum(cpp => cpp.VALOR).ToString("C")</span>
+                                        </td>
+
+                                        <td>
+                                            <span>@item.COMPRA_PARCELA.Where(cp => cp.DATA_PAGAMENTO != null).Sum(cpp => cpp.VALOR).ToString("C")</span>
+                                        </td>
+
+                                        <td>
+                                            <span>@item.COMPRA_PARCELA.Where(cp => cp.DATA_PAGAMENTO == null).Sum(cpp => cpp.VALOR).ToString("C")</span>
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-warning" href="~/CompraParcela/Index/@item.ID" title="Parcelas">
+                                                <i class="fa fa-dollar"></i>
+                                                Parcelas
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="7">
+                                        <a type="button" class="btn btn-primary" href="~/Compra/Create">
+                                            <i class="fa fa-check-square-o"></i> Novo
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

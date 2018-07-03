@@ -1,0 +1,32 @@
+﻿@model ATIMO.Models.PESSOA
+@{
+    ViewBag.Title = "DadosClientePorCnpj";
+}
+
+<h2>DadosClientePorCnpj</h2>
+
+@using (Html.BeginForm())
+{
+
+    <label>CNPJ</label>
+        <input size="60" type="text" value="@Model.NUM_DOC" name="NUM_DOC" />
+        <button type="submit">Obter Dados</button>
+        <hr />
+        <label>Dados extraídos de </label>
+        <br /><a href="https://www3.prefeitura.sp.gov.br/fdc/fdc_imp02_cgc.asp" target="_blank">Ficha Cadastral Prefeitura de São Paulo (informar @Model.NUM_DOC). Esta pesquisa costuma ser lenta</a>
+        <br /><a href="http://receitaws.com.br/v1/cnpj/@Model.NUM_DOC" target="_blank">Webservice da Receita com dados publicos </a> 
+        <hr />
+            <label style="color:red">@Model.OBSERVACAO</label>
+        <hr />
+    <label>Nome</label> <input size="60" type="text" value="@Model.NOME" name="NOME" /> <br />
+    <label>CEP</label> <input size="60" type="text" value="@Model.CEP" name="CEP" /> <br />
+    <label>Endereco</label> <input size="60" type="text" value="@Model.ENDERECO" name="ENDERECO" /> <br />
+    <label>Bairro</label> <input size="60" type="text" value="@Model.BAIRRO" name="BAIRRO" /> <br />
+    <label>Cidade</label> <input size="60" type="text" value="@Model.CIDADE" name="CIDADE" /> <br />
+    <label>UF</label> <input size="60" type="text" value="@Model.UF" name="UF" /> <br />
+    <label>Telefone</label> <input size="60" type="text" value="@Model.TELEFONE1" name="TELEFONE1" /> <br />
+    <label>Email</label> <input size="60" type="text" value="@Model.EMAIL" name="EMAIL" /> <br />
+    <label>Tipo Pessoa Tributação</label> <input size="60" type="text" value="@Model.TIPO_PESSOA_TRIBUTACAO" name="TIPO_PESSOA_TRIBUTACAO" /> <br />
+    <label>CCM São Paulo</label> <input size="60" type="text" value="@Model.INSC_MUNICIPAL" name="INSC_MUNICIPAL" /> <br />
+
+}

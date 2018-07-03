@@ -1,0 +1,198 @@
+﻿@model ATIMO.ViewModel.CaixinhaDevolvidaViewModel
+
+@{
+    ViewBag.Title = "Átimo - Relatório de Caixinha";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>CAIXINHA DEVOLVIDA</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" href="~/Caixinha/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>DATA</label>
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">DE</span>
+                            <input id="de" class="form-control input-lg datepicker" maxlength="10" alt="date" value="@ViewBag.DE" />
+                            <span class="input-group-addon" id="basic-addon1">ATÉ</span>
+                            <input id="ate" class="form-control input-lg datepicker" maxlength="10" alt="date" value="@ViewBag.ATE" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar();">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Pesquisar
+                        </button>
+                        <hr />
+                    </div>
+
+
+                    <div class="widget-content">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover tree">
+                                <thead>
+                                    <tr>
+                                        <th colspan="7" style="text-align:center">
+                                            CAIXINHAS JÁ DEVOLVIDAS
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            OSSB
+                                        </th>
+
+                                        <th>
+                                            PESSOA
+                                        </th>
+
+                                        <th>
+                                            DESCRIÇÃO
+                                        </th>
+
+                                        <th>
+                                            DATA
+                                        </th>
+
+                                        <th>
+                                            NOTA FISCAL
+                                        </th>
+
+                                        <th>
+                                            VALOR
+                                        </th>
+
+                                        <th>
+                                            AÇÕES
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach (var item in Model.ITEMS)
+                    {
+                        <tr>
+                            <td>
+                                @item.OSSB.ToString()
+                            </td>
+
+                            <td>
+                                @item.PESSOA1.RAZAO
+                            </td>
+
+
+                            <td>
+                                @item.DESCRICAO
+                            </td>
+
+                            <td>
+                                @item.DATA_QUITADO.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @item.NOTA_FISCAL
+                            </td>
+                            <td>
+                                @item.VALOR.ToString("C")
+                            </td>
+                            <td>
+                                @if (item.ANEXO != null)
+                {
+                    <a href="/Caixinha/VisualizarArquivo/?id=@item.ID" class="btn btn-info">Visualizar</a>
+}
+
+                            </td>
+                        </tr>
+    }
+                                </tbody>
+
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="4">
+
+                                        </th>
+
+                                        <th>
+                                            TOTAL
+                                        </th>
+                                        <th>
+                                            @Model.ITEMS.Select(ci => ci.VALOR).DefaultIfEmpty().Sum().ToString("C")
+                                        </th>
+
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts
+{
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(document).ready(function () {
+            $(".datepicker").datepicker({
+                maxViewMode: 0,
+                todayBtn: "linked",
+                language: "pt-BR",
+                autoclose: true,
+                toggleActive: true
+            });
+        });
+
+        function pesquisar() {
+            var params = {
+                pessoa: @Model.PESSOA
+            };
+
+
+            if ($("#de").val() != "") {
+                params.de = $("#de").val();
+            }
+
+            if ($("#ate").val() != "") {
+                params.ate = $("#ate").val();
+            }
+
+            location.href = "/Caixinha/Devolvidas/?" + jQuery.param(params, true);
+        }
+
+    </script>
+}
+}

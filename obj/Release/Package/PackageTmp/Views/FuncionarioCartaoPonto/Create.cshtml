@@ -1,0 +1,85 @@
+﻿@model ATIMO.Models.FUNCIONARIO_CARTAO_PONTO
+
+@{
+    ViewBag.Title = "Átimo - Controle de Ponto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-comment-o"></i>
+                    <h3>CONTROLE DE PONTO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", rows = "5", maxlength = "100" })
+                                </div>
+                            </div>
+
+                            <input type="hidden" id="latitude" name="LATITUDE" />
+                            <input type="hidden" id="longitude" name="LONGITUDE" />
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                | @Html.ActionLink("Voltar", "Index")
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        function showPosition(position) {
+            $("#latitude").val(position.coords.latitude.toLocaleString('pt-BR'));
+            $("#longitude").val(position.coords.longitude.toLocaleString('pt-BR'));
+        }
+
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition, showError, { maximumAge: 1000, timeout: 5000, enableHighAccuracy: true });
+        } else {
+
+        }
+    </script>
+}

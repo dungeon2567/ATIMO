@@ -1,0 +1,249 @@
+﻿@model ATIMO.Models.LOJA_EQUIPAMENTO
+
+@{
+    ViewBag.Title = "Átimo - Cliente/Loja/Equipamento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<text>
+    @Html.Partial("MenuAreaFuncionario")
+</text>
+
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-archive"></i>
+                    <h3>LOJA/EQUIPAMENTO - VISUALIZAR</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+
+                        <fieldset>
+                            @if (Model.IMAGEM != null)
+                            {
+                                <div class="form-group col-md-12">
+                                    <img src="/LojaEquipamento/GetImagem/?anexo=@Model.IMAGEM" alt="Lights" style="transition: transform .2s ease-in-out;">
+                                </div>
+                            }
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CLIENTE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.LOJA1.CLIENTE1.NOME_COMPLETO, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>LOJA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.LOJA1.APELIDO, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>SETOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SETOR, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>SUBSETOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SUBSETOR, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>TIPO DE EQUIPAMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("TIPO", null, "SELECIONE UM TIPO", new { required = "", name = "TIPO", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>MODELO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("MODELO", null, "SELECIONE UM MODELO", new { required = "", name = "MODELO", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>SÉRIE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SERIE, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>NUM MODELO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NUM_MODELO, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>TENSÃO NOMINAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.TENSAO_NOMINAL, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CORRENTE NOMINAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CORRENTE_NOMINAL, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>FABRICANTE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.FABRICANTE, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>POTÊNCIA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.POTENCIA, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CAPACIDADE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CAPACIDADE, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>TAG</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.TAG, new { @class = "form-control input-lg", maxlength = "80", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>DATA DE FABRICAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DATA_FABRICACAO, new { @class = "form-control input-lg datepicker", maxlength = "10", alt = "date", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>DATA DE VENCIMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DATA_VENCIMENTO, new { @class = "form-control input-lg datepicker", maxlength = "10", alt = "date", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-12">
+                                <a class="btn btn-danger">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

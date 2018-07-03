@@ -1,0 +1,166 @@
+﻿@model ATIMO.Models.Faturamento.Faturamento
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    if (Model.NumeroNF > 0)
+    {
+        ViewBag.Title = "Cancelamento da Nota Fiscal Eletrônica de Serviço";
+    }
+    else {
+        ViewBag.Title = "Exclusão do Faturamento";
+    }
+
+
+}
+
+<link href="@Url.Content("~/Content/bootstrap-datepicker.css")" rel="stylesheet" />
+
+@Html.Partial("MenuFinanceiro")
+
+@Html.LayoutMessage()
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>@ViewBag.Title</h3>
+                </div>
+
+                <div class="widget-content">
+
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-horizontal">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <fieldset>
+                                <legend></legend>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <div class="alert alert-danger">
+                                            @if (Model.NumeroNF > 0)
+                                            {
+                                                <h2>Confirmação de cancelamento de nota fiscal</h2>
+                                                <p>
+                                                    Ao clicar em 'Confirmar cancelamento da nota fiscal', o sistema soliciatará o token e a senha, para efetuar o cancelamento no sistema da prefeitura.
+                                                    <br />
+                                                    Esta operação não pode ser desfeita após a inserção da senha do certificado
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <h2>Excusão de faturamento</h2>
+                                                <p>
+                                                    Ao clicar em 'Confirmar exclusão do faturamento', o sistema vai deletar este faturamento do sistema e o 'Contas a Receber' vinculado a ele.
+                                                    <br />
+                                                    Esta operação não pode ser desfeita após a confirmação e se caso necessário, um novo faturamento deve ser cadastrado
+                                                </p>
+                                            }
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="hidden" name="ID" value="@Model.ID" />
+
+                                        <div class="form-group">
+
+                                            <label for="txtOSSB" class="col-sm-2 control-label">OSSB</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control-static">@Model.OSSBID </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtClienteNome" class="col-sm-2 control-label">Cliente</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control-static">@Model.Cliente.NOME</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtClienteNome" class="col-sm-2 control-label">Empresa</label>
+                                            <div class="col-sm-10">
+                                                <label class="form-control-static">@Model.EmpresaEmissao.Nome</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtClienteNome" class="col-sm-2 control-label">Nota Fiscal</label>
+                                            <div class="col-sm-4">
+                                                <label class="form-control-static">@Model.NumeroNF</label>
+                                            </div>
+                                            <label for="txtClienteNome" class="col-sm-2 control-label">Valor</label>
+                                            <div class="col-sm-4">
+                                                <label class="form-control-static">@Model.ValorServico</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="txtClienteNome" class="col-sm-2 control-label">Data Emissão</label>
+                                            <div class="col-sm-4">
+                                                <label class="form-control-static">@Model.DataEmissao</label>
+                                            </div>
+                                            <label for="txtClienteNome" class="col-sm-2 control-label">Link da NF</label>
+                                            <div class="col-sm-4">
+                                                <label class="form-control-static">@Model.CaminhoPdfNf</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="text-align:right; ">
+                                        <hr />
+
+                                        @if (Model.NumeroNF > 0)
+                                        {
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fa fa-times"></i> Confirmar cancelamento da nota fiscal
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fa fa-times"></i> Confirmar exclusão do faturamento
+                                            </button>
+                                        }
+
+                                        <a class="btn btn-default" href="~/NotasFiscais/Index">
+                                            <i class="fa fa-rotate-left"></i>
+                                            Voltar
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptFile("~/Scripts/utils.js");
+    Html.AddScriptFile("~/Scripts/bootstrap-datepicker.min.js");
+    Html.AddScriptFile("~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js");
+    Html.AddScriptFile("~/Scripts/moment.js");
+    Html.AddScriptFile("~/Scripts/moment-with-locales.js");
+
+
+
+
+    Html.AddScriptBlock(
+/// <reference path="Scripts/_references.js" />
+    @<script type="text/javascript">
+
+            
+    </script>
+    );
+}

@@ -1,0 +1,219 @@
+﻿
+@model ATIMO.ViewModel.OssbImagemViewModel
+
+@{
+    ViewBag.Title = "Átimo - OSSB Imagem";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container" ng-app="ImageGallery" ng-controller="ImageGalleryController">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-wrench"></i>
+                    <h3>OSSB/IMAGENS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-info" href="~/OssbImagem/GetRelatorioPDF/@Model.Ossb">
+                            <i class="fa fa-file-pdf-o"></i>
+                            Gerar Relatório
+                        </a>
+                        <hr />
+                    </div>
+                    <div class="col-md-12">
+                        @using (Html.BeginForm("FileUpload", "OssbImagem", new { ossb = @Model.Ossb }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+
+                            <input type="file" name="files" accept="image/*" multiple="multiple" data-fancybox-type="iframe">
+                            <input type="submit" value="Enviar" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" ng-repeat="album in albuns">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-photo"></i>
+                    <h3>{{getLetter($index)}}</h3>
+                </div>
+
+
+                <div class="widget-content" style="position: relative;">
+                    <div class="col-md-12 thumbnail" style="display: flex;flex-wrap:wrap">
+                        <div style="margin: auto; overflow: hidden;" ng-drop="true" ng-drag="true" ng-drop-success="onDropComplete($index, album, $data, $event)" ng-drag-data="{album: album, image: image}" ng-repeat="image in album.images">
+                            <div class="thumbnail">
+                                <div class="caption" style="max-width: 300px; overflow: hidden;">
+                                    <span style="font-weight:bold">{{($index + 1) + getLetter($parent.$index)}}</span>
+
+                                    <button type="button" class="close pull-right" aria-label="Close" ng-click="deletar(album, image)">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <img ng-src="~/OssbImagem/GetImagem/{{image.id}}" alt="Lights" style="width: 300px; height: 300px;display:block; transition: transform .2s ease-in-out;">
+
+                                <div class="caption" style="height: 150px; max-width: 300px; overflow: hidden;">
+                                    <textarea ng-mousedown="$event.stopPropagation();" class="uppercase" rows="5" maxlength="150" style="overflow: hidden; border-style: none; border-color: transparent; width: 100%; height: 100%;" ng-change="salvarImagem(image);" ng-model="image.desc"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin: auto; overflow: hidden;">
+                            <div class="thumbnail">
+                                <form style="width: 300px; height: 489px" action="{{'/OssbImagem/FileUploadAlbum/?album=' + album.id}}" enctype="multipart/form-data" method="post">
+                                    <input type="file" name="files" accept="image/*" multiple="multiple" data-fancybox-type="iframe">
+                                    <input type="submit" value="Enviar" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="margin: auto; overflow: hidden;">
+                        <div style="text-align: center;">
+                            CONCLUSÃO
+                        </div>
+
+                        <div>
+                            <textarea class="uppercase" rows="1" maxlength="1024" style="overflow: hidden; border-style: none; border-color: transparent; width: 100%; height: 100%;" ng-change="salvarAlbum(album);" ng-model="album.desc"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ngDraggable.js"></script>
+
+    <style>
+        [ng-drag] {
+            position: relative;
+        }
+
+        [ng-drop] {
+            position: relative;
+        }
+
+        [ng-drag].drag-over {
+            border: solid 1px red;
+        }
+
+        [ng-drag].dragging {
+            opacity: 0.5;
+        }
+
+        [ng-drop].drag-enter {
+            border: solid 1px red;
+        }
+    </style>
+
+    <script>
+        var app = angular.module("ImageGallery", ['ngDraggable']);
+
+        app.controller("ImageGalleryController", function ($scope, $http) {
+            $scope.albuns = [
+              @Html.Raw(@String.Join(", ",
+                Model.Items.Select(ab => "{id: " +ab.ID +", desc: '"+ ab.DESCRICAO + "', images: [" + String.Join(", ", ab.OSSB_IMAGEM.Select(img => "{" + "id: " +img.ID +  ", updated: false,  desc: "+ (img.DESCRICAO ==null? "null" : ("'" +@HttpUtility.JavaScriptStringEncode(img.DESCRICAO )+"'")) + "}")) + "]}")))
+            ];
+
+            $scope.onDropComplete = function (index, album, album_image, evt) {
+                var otherObj = album.images[index];
+                var otherIndex = album_image.album.images.indexOf(album_image.image);
+
+                if (album_image.image != otherObj) {
+                    $http({
+                        url: "/OssbImagem/PermutarImagens/?a=" + album_image.image.id + '&b=' + otherObj.id,
+                        method: "GET",
+                    }).then(function (response) {
+                        if (response.data.status == 0) {
+                            album.images[index] = album_image.image;
+                            album_image.album.images[otherIndex] = otherObj;
+                        }
+                    });
+                }
+            }
+
+            $scope.getLetter = function (index) {
+                return String.fromCharCode(65 + index);
+            }
+
+            var salvarImagemTimer;
+            var salvarAlbumTimer;
+
+            $scope.salvarImagem = function (image) {
+                window.clearTimeout(salvarImagemTimer);
+
+                salvarImagemTimer = window.setTimeout(function () {
+                    $http({
+                        url: "/OssbImagem/UpdateImageDesc/?id=" + image.id + "&desc=" + image.desc.toUpperCase(),
+                        method: "GET",
+                    }).then(function (response) {
+
+                    });
+                }, 300);
+
+            };
+
+            $scope.salvarAlbum = function (album) {
+                window.clearTimeout(salvarAlbumTimer);
+
+                salvarAlbumTimer = window.setTimeout(function () {
+
+                    $http({
+                        url: "/OssbImagem/UpdateAlbumDesc/?id=" + album.id + "&desc=" + album.desc.toUpperCase(),
+                        method: "GET",
+                    }).then(function (response) {
+
+                    });
+                } , 300);
+            };
+
+            $scope.textChanged = function (imagem) {
+                imagem.updated = true;
+            }
+
+            $scope.deletar_album = function (album) {
+                $http({
+                    url: "/OssbImagem/DeleteAlbum/?id=" + album.id,
+                    method: "GET",
+                }).then(function (response) {
+                    if (response.data.status == 0) {
+                        $scope.albuns.splice($scope.albuns.indexOf(album), 1);
+                    }
+                });
+            };
+
+            $scope.deletar = function (album, image) {
+                $http({
+                    url: "/OssbImagem/DeleteImage/?id=" + image.id,
+                    method: "GET",
+                }).then(function (response) {
+                    if (response.data.status == 0) {
+                        album.images.splice(album.images.indexOf(image), 1);
+
+                        if (album.images.length == 0) {
+                            $scope.albuns.splice($scope.albuns.indexOf(album), 1);
+                        }
+                    }
+                });
+            };
+        });
+    </script>
+}
+
+

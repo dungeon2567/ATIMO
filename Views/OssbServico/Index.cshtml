@@ -1,0 +1,693 @@
+﻿@model ATIMO.ViewModel.OssbServicoIndexViewModel
+
+
+@{
+    ViewBag.Title = "Átimo - OSSB Serviço";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main widget-content" style="margin: 8px;" ng-app="OssbServico" ng-controller="OssbServicoController">
+
+    <div>
+        <input ng-model="subdivisao" placeholder="SUBDIVISÃO" style="width: 300px; display: inline;" />
+
+        <a class="btn btn-success" ng-click="adicionar_servico(subdivisao);" ng-disabled="subdivisao == ''">
+            Adicionar Serviço
+        </a>
+
+        <a class="btn btn-info" onclick="$(this).focus();">
+            Salvar
+        </a>
+
+        <div class="dropdown" style="display: inline-block;">
+            <button class="btn btn-default dropdown-toggle" role="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Ações
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <li>
+                    <a class="dropdown-item" onclick="window.open('/OssbServico/GetOrcamentoPDF/?id=@Model.Ossb', '_blank');">
+                        <i class="fa fa-file-pdf-o"></i>
+                        Gerar Orçamento
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" onclick="window.open('/OssbServico/GetOrcamentoPDF/?id=@Model.Ossb&materiais=1', '_blank');">
+                        <i class="fa fa-file-pdf-o"></i>
+                        Gerar Orçamento de Materiais
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" onclick="window.open('/OssbServico/GetEscopoPDF/?id=@Model.Ossb', '_blank');">
+                        <i class="fa fa-file-pdf-o"></i>
+                        Gerar Escopo
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" onclick="window.open('/OssbServico/GetComparativoPDF/?id=@Model.Ossb', '_blank');">
+                        <i class="fa fa-file-pdf-o"></i>
+                        Gerar Comparativo
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" onclick="$('#alterar-bdi-ma').modal('toggle')">
+                        <i class="fa fa-file-pdf-o"></i>
+                        Aplicar BDI para Materiais
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" onclick="$('#alterar-bdi-mo').modal('toggle')">
+                        <i class="fa fa-file-pdf-o"></i>
+                        Aplicar BDI para Mão de Obra
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div style="width: 100%; overflow-x: auto;">
+        <table style="table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="min-width: 40px; text-align: center;">
+                        ITEM
+                    </th>
+
+                    <th style="min-width: 250px; text-align: center;">
+                        SERVIÇO / PRODUTO
+                    </th>
+
+                    <th style="min-width: 40px; text-align: center;">
+                        QTD
+                    </th>
+
+                    <th style="min-width: 40px; text-align: center;">
+                        UNID
+                    </th>
+
+                    <th style="min-width: 225px; text-align: center;" colspan="3">
+                        UNIT MÃO DE OBRA
+                    </th>
+
+                    <th style="min-width: 225px; text-align: center;" colspan="3">
+                        UNIT MATERIAL
+                    </th>
+
+                    <th style="min-width: 150px; text-align: center;" colspan="2">
+                        TOTAL MÃO DE OBRA
+                    </th>
+
+                    <th style="min-width: 150px; text-align: center;" colspan="2">
+                        TOTAL MATERIAl
+                    </th>
+
+                    <th style="min-width: 150px; text-align: center;" colspan="2">
+                        TOTAL
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="4">
+
+                    </th>
+                    <td style="min-width: 75px;">
+                        SEM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        COM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        BDI %
+                    </td>
+                    <td style="min-width: 75px;">
+                        SEM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        COM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        BDI %
+                    </td>
+                    <td style="min-width: 75px;">
+                        SEM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        COM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        SEM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        COM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        SEM BDI
+                    </td>
+                    <td style="min-width: 75px;">
+                        COM BDI
+                    </td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr class="active" ng-repeat-start="(key, value) in servicos | groupBy: 'subdivisao'">
+                    <td style="min-width: 40px; text-align: center" ng-bind="$index + 1"></td>
+                    <td style="min-width: 250px;" ng-bind="key"></td>
+                    <td style="min-width: 40px;"></td>
+                    <td style="min-width: 40px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(value | map: get_total_mo | sum: 0)"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(value | map: get_total_mo_bdi | sum: 0)"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(value | map: get_total_ma | sum: 0)"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(value | map: get_total_ma_bdi | sum: 0)"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(value | map: get_total | sum: 0)"> </td>
+                    <td style="min-width: 75px;" ng-bind="format_money(value | map: get_total_bdi | sum: 0)"> </td>
+                    <td style="width: 18px;"></td>
+                </tr>
+
+                <tr ng-repeat-end ng-repeat="servico in value">
+                    <td style="min-width: 40px; text-align: center" ng-bind="($parent.$index + 1) + '.' + ($index + 1)"></td>
+
+                    <td style="min-width: 250px;">
+                        <textarea rows="1" msd-elastic ng-model="servico.descricao" ng-blur="salvar_descricao(servico)"></textarea>
+                    </td>
+
+                    <td style="min-width: 40px;">
+                        <input type="text" ng-model="servico.quantidade" ng-blur="quantidade_blur(servico)" />
+                    </td>
+
+                    <td style="min-width: 40px;">
+                        <select ng-model="servico.unidade" ng-options="key as value for (key , value) in unidades" ng-change="salvar_unidade(servico)" />
+                    </td>
+
+                    <td style="min-width: 75px;">
+                        <input type="text" ng-model="servico.valor_mo" ng-blur="valor_mo_blur(servico)" />
+                    </td>
+
+                    <td style="min-width: 75px;">
+                        <input type="text" ng-model="servico.valor_mo_bdi" ng-blur="valor_mo_bdi_blur(servico)" />
+                    </td>
+
+                    <td style="min-width: 75px;">
+                        <input type="text" ng-model="servico.mo_bdi" ng-blur="mo_bdi_blur(servico)" />
+                    </td>
+
+                    <td style="min-width: 75px;">
+                        <input type="text" ng-model="servico.valor_ma" ng-blur="valor_ma_blur(servico)" ng-change="salvar_valor_ma(servico)" />
+                    </td>
+
+                    <td style="min-width: 75px;">
+                        <input type="text" ng-model="servico.valor_ma_bdi" ng-blur="valor_ma_bdi_blur(servico)" />
+                    </td>
+
+                    <td style="min-width: 75px;">
+                        <input type="text" ng-model="servico.ma_bdi" ng-blur="ma_bdi_blur(servico)" />
+                    </td>
+
+                    <td style="min-width: 75px;" ng-bind="format_money(get_total_mo(servico))"></td>
+
+                    <td style="min-width: 75px;" ng-bind="format_money(get_total_mo_bdi(servico))"></td>
+
+                    <td style="min-width: 75px;" ng-bind="format_money(get_total_ma(servico))"></td>
+
+                    <td style="min-width: 75px;" ng-bind="format_money(get_total_ma_bdi(servico))"></td>
+
+                    <td style="min-width: 75px;" ng-bind="format_money(get_total(servico))"></td>
+
+                    <td style="min-width: 75px;" ng-bind="format_money(get_total_bdi(servico))"></td>
+
+                    <td style="width: 18px;">
+                        <button type="button" class="close" aria-label="Close" ng-click="deletar_servico(servico)">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </td>
+                </tr>
+
+                <tr class="active">
+                    <td style="min-width: 40px;"></td>
+                    <td style="min-width: 250px;"></td>
+                    <td style="min-width: 40px;"></td>
+                    <td style="min-width: 40px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(servicos | map: get_total_mo | sum: 0)"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(servicos | map: get_total_mo_bdi | sum: 0)"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(servicos | map: get_total_ma | sum: 0)"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(servicos | map: get_total_ma_bdi | sum: 0)"></td>
+                    <td style="min-width: 75px;" ng-bind="format_money(servicos | map: get_total | sum: 0)"> </td>
+                    <td style="min-width: 75px;" ng-bind="format_money(servicos | map: get_total_bdi | sum: 0)"> </td>
+                    <td style="width: 18px;"></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div id="alterar-bdi-ma" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alterar BDI de materiais</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" id="ossb-id">
+                        <div class="form-group">
+                            <label for="ossb-status">BDI DE MATERIAL %</label>
+                            <input class="form-control" id="bdi-ma-global" ng-model="bdi_ma_global" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="alterar_bdi_ma();">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alterar-bdi-mo" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">ALTERAR BDI DE MÃO DE OBRA</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" id="ossb-id">
+                        <div class="form-group">
+                            <label for="ossb-status">BDI DE MÃO DE OBRA %</label>
+                            <input class="form-control" id="bdi-ma-global" ng-model="bdi_mo_global" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="alterar_bdi_mo();">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+@Html.Partial("Rodape")
+
+
+@section Scripts
+{
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.17/angular-filter.min.js"></script>
+    <script src="/Scripts/accounting.min.js"></script>
+    <script src="/Scripts/elastic.js"></script>
+
+    <style>
+        table > tbody {
+            display: block;
+        }
+
+        table > thead {
+            position: relative;
+            display: block;
+        }
+
+        .active {
+            background-color: #f5f5f5
+        }
+
+        td, th {
+            border: 1px solid #ddd;
+        }
+
+
+        table {
+            border-collapse: collapse;
+        }
+
+            table > tbody {
+                overflow-y: auto;
+                max-height: 400px;
+            }
+
+        tr {
+            width: 1288px;
+        }
+
+
+        td, th, tr {
+            text-align: center;
+            font-size: 10px;
+            font-family: 'Times New Roman';
+        }
+
+            td div {
+                text-align: center;
+                text-align-last: center;
+                font-size: 10px;
+                font-family: 'Times New Roman';
+                text-transform: uppercase;
+                width: 100%;
+            }
+
+        input, textarea {
+            text-transform: uppercase;
+            font-size: 10px;
+            font-family: 'Times New Roman';
+        }
+
+        td input, td select, td textarea {
+            all: initial;
+            text-transform: uppercase;
+            text-align: center;
+            text-align-last: center;
+            font-size: 10px;
+            font-family: 'Times New Roman';
+            width: 100%;
+            box-sizing: border-box;
+        }
+    </style>
+    <script>
+        $('alterar-bdi-ma').on('shown.bs.modal', function () {
+            $('#bdi-ma-global').val('0');
+            $('#bdi-ma-global').trigger('input');
+            $('#bdi-ma-global').focus();
+        })
+
+        $('alterar-bdi-mo').on('shown.bs.modal', function () {
+            $('#bdi-mo-global').val('0');
+            $('#bdi-mo-global').trigger('input');
+            $('#bdi-mo-global').focus();
+        })
+
+        $(document).ready(function () {
+            $(".dropdown-toggle").dropdown();
+        });
+
+        var app = angular.module("OssbServico", ['angular.filter', 'monospaced.elastic']);
+
+        app.controller("OssbServicoController", function ($scope, $http) {
+            $scope.unidades = @Html.Raw(Json.Encode(Model.Unidades.ToDictionary(un => un.ID.ToString(), un => un.SIGLA)));
+
+            $scope.subdivisao = "";
+
+            $scope.bdi_ma_global = "0";
+
+            $scope.bdi_mo_global = "0";
+
+            $scope.alterar_bdi_ma = function () {
+                var valor = accounting.formatNumber(accounting.unformat($scope.bdi_ma_global, ','), 2, '', ',');
+
+                var cont = () => { $('#alterar-bdi-ma').modal('toggle'); }
+
+                $scope.servicos.forEach((item, index) => {
+                    var j = cont;
+
+                    cont = () => {
+                        setTimeout(j, 300);
+
+                        item.ma_bdi = valor;
+
+                        $scope.ma_bdi_blur(item);
+                    } 
+                });
+
+                cont();
+            }
+
+            $scope.alterar_bdi_mo = function () {
+                var valor = accounting.formatNumber(accounting.unformat($scope.bdi_mo_global, ','), 2, '', ',');
+
+                var cont = () => { $('#alterar-bdi-mo').modal('toggle'); }
+
+                $scope.servicos.forEach((item, index) => {
+
+                    var j = cont;
+
+                    cont = () => {
+                        setTimeout(j, 300);
+
+                        item.mo_bdi = valor;
+
+                        $scope.mo_bdi_blur(item);
+                    } 
+                });
+
+                cont();
+            }
+
+            $scope.servicos = @Html.Raw(Json.Encode(Model.Servicos.Select(s => new
+                         {
+                             id = s.ID,
+                             descricao = s.DESCRICAO,
+                             unidade = s.UNIDADE.ToString(),
+                             subdivisao = s.SUBDIVISAO,
+                             quantidade = s.QUANTIDADE.ToString("0.00"),
+                             valor_ma = s.VALOR_MA.ToString("0.00"),
+                             valor_mo = s.VALOR_MO.ToString("0.00"),
+                             mo_bdi = (s.VALOR_MO == 0 ? 0 : (s.VALOR_MO_BDI / s.VALOR_MO * 100 - 100)).ToString("0.00"),
+                             ma_bdi = (s.VALOR_MA == 0 ? 0 : (s.VALOR_MA_BDI / s.VALOR_MA * 100 - 100)).ToString("0.00"),
+                             valor_mo_bdi = s.VALOR_MO_BDI.ToString("0.00"),
+                             valor_ma_bdi = s.VALOR_MA_BDI.ToString("0.00")
+                         })));
+
+            $scope.adicionar_servico = function (subdivisao) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/AdicionarServico/',
+                    params: { ossb: @Model.Ossb, subdivisao: subdivisao }
+                }).then(function successCallback(response) {
+                    $scope.servicos.push(response.data);
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao adicionar o serviço");
+                });
+            }
+
+            $scope.salvar_descricao = function (servico) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/SalvarDescricao/',
+                    params: { id: servico.id, descricao: servico.descricao }
+                }).then(function successCallback(response) {
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao salvar o serviço");
+                });
+            }
+
+            $scope.deletar_servico = function (servico) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/DeletarServico/',
+                    params: { id: servico.id }
+                }).then(function successCallback(response) {
+                    var index = $scope.servicos.indexOf(servico);
+
+                    if (index !== -1) {
+                        $scope.servicos.splice(index, 1);
+                    }
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao deletar o serviço (talvez algum terceiro esteja referenciando esse serviço).");
+                });
+            }
+
+            $scope.salvar_quantidade = function (servico) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/SalvarQuantidade/',
+                    params: { id: servico.id, quantidade: servico.quantidade }
+                }).then(function successCallback(response) {
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao salvar o serviço");
+                });
+            }
+
+            $scope.salvar_quantidade = function (servico) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/SalvarQuantidade/',
+                    params: { id: servico.id, quantidade: accounting.formatNumber(accounting.unformat(servico.quantidade, ','), 2, '', ',') }
+                }).then(function successCallback(response) {
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao salvar o serviço");
+                });
+
+            }
+
+            $scope.salvar_unidade = function (servico) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/SalvarUnidade/',
+                    params: { id: servico.id, unidade: servico.unidade }
+                }).then(function successCallback(response) {
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao salvar o serviço");
+                });
+            }
+
+            $scope.salvar_valor_mo = function (servico) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/SalvarValorMo/',
+                    params: { id: servico.id, valor_mo: accounting.formatNumber(accounting.unformat(servico.valor_mo, ','), 2, '', ',') }
+                }).then(function successCallback(response) {
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao salvar o serviço");
+                });
+            }
+
+            $scope.salvar_valor_mo_bdi = function (servico) {
+                if (accounting.unformat(servico.valor_mo_bdi, ',', null) != null) {
+                    $http({
+                        method: 'POST',
+                        url: '/OssbServico/SalvarValorMoBdi/',
+                        params: { id: servico.id, valor_mo_bdi: accounting.formatNumber(accounting.unformat(servico.valor_mo_bdi, ','), 2, '', ',') }
+                    }).then(function successCallback(response) {
+
+                    }, function errorCallback(response) {
+                        alert("erro inesperado ao salvar o serviço");
+                    });
+                }
+            }
+
+            $scope.salvar_valor_ma = function (servico) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/SalvarValorMa/',
+                    params: { id: servico.id, valor_ma: accounting.formatNumber(accounting.unformat(servico.valor_ma, ','), 2, '', ',') }
+                }).then(function successCallback(response) {
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao salvar o serviço");
+                });
+            }
+
+            $scope.salvar_valor_ma_bdi = function (servico) {
+                $http({
+                    method: 'POST',
+                    url: '/OssbServico/SalvarValorMaBdi/',
+                    params: { id: servico.id, valor_ma_bdi: accounting.formatNumber(accounting.unformat(servico.valor_ma_bdi, ','), 2, '', ',') }
+                }).then(function successCallback(response) {
+
+                }, function errorCallback(response) {
+                    alert("erro inesperado ao salvar o serviço");
+                });
+            }
+
+
+
+            $scope.quantidade_blur = function (servico) {
+                servico.quantidade = accounting.formatNumber(accounting.unformat(servico.quantidade, ','), 2, '', ',')
+
+                $scope.salvar_quantidade(servico);
+            }
+
+            $scope.valor_ma_bdi_blur = function (servico) {
+                servico.valor_ma_bdi = accounting.formatNumber(accounting.unformat(servico.valor_ma_bdi, ','), 2, '', ',')
+
+                var valor_ma = accounting.unformat(servico.valor_ma, ',');
+
+                servico.ma_bdi = accounting.format((valor_ma == 0 ? 0 : (accounting.unformat(servico.valor_ma_bdi, ',') / valor_ma * 100 - 100)), 2, '', ',')
+
+                $scope.salvar_valor_ma_bdi(servico);
+            }
+
+            $scope.valor_mo_bdi_blur = function (servico) {
+                servico.valor_mo_bdi = accounting.formatNumber(accounting.unformat(servico.valor_mo_bdi, ','), 2, '', ',')
+
+                var valor_mo = accounting.unformat(servico.valor_mo, ',');
+
+                servico.mo_bdi = accounting.format((valor_mo == 0 ? 0 : (accounting.unformat(servico.valor_mo_bdi, ',') / valor_mo * 100 - 100)), 2, '', ',')
+
+                $scope.salvar_valor_mo_bdi(servico);
+            }
+
+            $scope.valor_ma_blur = function (servico) {
+                servico.valor_ma = accounting.formatNumber(accounting.unformat(servico.valor_ma, ','), 2, '', ',')
+
+                var valor_ma = accounting.unformat(servico.valor_ma, ',');
+
+                servico.ma_bdi = accounting.format((valor_ma == 0 ? 0 : (accounting.unformat(servico.valor_ma_bdi, ',') / valor_ma * 100 - 100)), 2, '', ',')
+
+                $scope.salvar_valor_ma(servico);
+            }
+
+            $scope.mo_bdi_blur = function (servico) {
+                servico.mo_bdi = accounting.formatNumber(accounting.unformat(servico.mo_bdi, ','), 2, '', ',')
+                servico.valor_mo_bdi = accounting.formatNumber((accounting.unformat(servico.mo_bdi, ',') / 100 + 1) * accounting.unformat(servico.valor_mo, ','), 2, '', ',');
+
+                $scope.salvar_valor_mo_bdi(servico);
+            }
+
+            $scope.ma_bdi_blur = function (servico) {
+                servico.ma_bdi = accounting.formatNumber(accounting.unformat(servico.ma_bdi, ','), 2, '', ',')
+                servico.valor_ma_bdi = accounting.formatNumber((accounting.unformat(servico.ma_bdi, ',') / 100 + 1) * accounting.unformat(servico.valor_ma, ','), 2, '', ',');
+
+                $scope.salvar_valor_ma_bdi(servico);
+            }
+
+            $scope.valor_mo_blur = function (servico) {
+                servico.valor_mo = accounting.formatNumber(accounting.unformat(servico.valor_mo, ','), 2, '', ',');
+
+                var valor_mo = accounting.unformat(servico.valor_mo, ',');
+
+                servico.mo_bdi = accounting.format((valor_mo == 0 ? 0 : (accounting.unformat(servico.valor_mo_bdi, ',') / valor_mo * 100 - 100)), 2, '', ',')
+
+                $scope.salvar_valor_mo(servico);
+            }
+
+            $scope.get_total_mo = function (servico) {
+                return accounting.unformat(servico.valor_mo, ',') * accounting.unformat(servico.quantidade, ',');
+            }
+
+            $scope.get_total_ma = function (servico) {
+                return accounting.unformat(servico.valor_ma, ',') * accounting.unformat(servico.quantidade, ',');
+            }
+
+            $scope.get_total_ma_bdi = function (servico) {
+                return accounting.unformat(servico.valor_ma_bdi, ',') * accounting.unformat(servico.quantidade, ',');
+            }
+
+            $scope.get_total_mo_bdi = function (servico) {
+                return accounting.unformat(servico.valor_mo_bdi, ',') * accounting.unformat(servico.quantidade, ',');
+            }
+
+            $scope.get_total = function (servico) {
+                return (accounting.unformat(servico.valor_ma, ',') + accounting.unformat(servico.valor_mo, ',')) * accounting.unformat(servico.quantidade, ',');
+            }
+
+            $scope.get_total_bdi = function (servico) {
+                return (accounting.unformat(servico.valor_ma_bdi, ',') + accounting.unformat(servico.valor_mo_bdi, ',')) * accounting.unformat(servico.quantidade, ',');
+            }
+
+
+            $scope.format_money = function (valor) {
+                return accounting.formatMoney(valor, "R$", 2, '.', ',')
+            }
+        });
+
+     function openDeleteModal(url) {
+        $('.btn-ok').attr('href', url);
+
+        $('.debug-url').html('Delete URL: <strong>' + $('.btn-ok').attr('href') + '</strong>');
+
+        $('#confirm-delete').modal('show');
+     }
+    </script>
+}

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ATIMO.Models.AREA_MANUTENCAO>
+
+@{
+    ViewBag.Title = "Átimo - Área de Manutenção";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-indent"></i>
+                    <h3>ÁREAS DE MANUTENÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    <p>
+                        @Html.ActionLink("Incluir Novo", "Create") |
+                        @Html.ActionLink("Voltar para Cadastros", "Index", "Cadastro")
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        DESCRIÇÃO
+                                    </th>
+
+                                    <th>
+                                        SITUAÇÂO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DESCRICAO)
+                                        </td>
+
+                                        @switch (item.SITUACAO)
+                                        {
+                                            case "A":
+                                                <td>
+                                                    <span class="label label-success">ATIVO</span>
+                                                </td>
+                                                break;
+                                            default:
+                                            <td>
+                                                <span class="label label-default">INATIVO</span>
+                                            </td>
+                                                break;
+                                        }
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/AreaManutencao/Edit/@item.ID">
+                                                <i class="fa fa-edit"></i>
+                                                Editar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")

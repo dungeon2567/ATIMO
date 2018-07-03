@@ -1,0 +1,139 @@
+﻿@model ATIMO.Models.MATERIAL
+
+@{
+    ViewBag.Title = "ÁTIMO - Materiais";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-paperclip"></i>
+                    <h3>MATERIAIS - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID, new {id = "id"})
+
+                        <fieldset>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Material/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+
+                                <hr />
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>DESCRIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "DESCRIÇÃO", id = "descricao", required = "" })
+                                    @Html.ValidationMessageFor(model => model.DESCRICAO, "Informe uma descrição!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>TIPO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("TIPO", null, "SELECIONE UM TIPO", new { required = "", id = "tipo1" })
+                                    @Html.ValidationMessageFor(model => model.TIPO, "Selecione um tipo!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>GRUPO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("GRUPO", null, "SELECIONE UM GRUPO", new { required = "", id = "grupo" })
+                                    @Html.ValidationMessageFor(model => model.GRUPO, "Selecione um grupo!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.OBSERVACAO)
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Material/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function salvar() {
+            var material = new Object();
+            material.ID = $("#id").val();
+            material.GRUPO = $("#grupo").val();
+            material.TIPO = $("#tipo1").val();
+            material.DESCRICAO = $("#descricao").val();
+            material.OBSERVACAO = $("#observacao").val();
+
+            $.ajax({
+                url: "/Material/ConfirmarEdit/",
+                data: JSON.stringify(material),
+                type: "POST",
+                contentType: "application/json;",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status === 200) {
+                        alert(data.msg);
+                        window.location.href = "/Material/Index/";
+                    }
+
+                    if (data.status === 100) {
+                        alert(data.ex);
+                    }
+                }
+            });
+        }
+    </script>
+}

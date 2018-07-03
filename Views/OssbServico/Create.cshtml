@@ -1,0 +1,337 @@
+﻿@model ATIMO.Models.OSSB_SERVICO
+
+@{
+    ViewBag.Title = "Átimo - OSSB Serviço";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-wrench"></i>
+                    <h3>OSSB/SERVIÇOS - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.OSSB)
+
+                        <fieldset>
+                            <font size="1" face="times new roman">
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>SUBDIVISÃO</label>
+                                    </div>
+                                    <div class="editor-field">
+                                        @Html.TextBoxFor(model => model.SUBDIVISAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "SUBDIVISÃO", id = "subdivisao" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-3">
+                                    <div>
+                                        <label>DESCRIÇÃO</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        @Html.TextAreaFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase", maxlength = "1000", placeholder = "DESCRIÇÃO", id = "descricao" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>QUANTIDADE</label>
+                                    </div>
+                                    <div class="editor-field">
+                                        @Html.TextBoxFor(model => model.QUANTIDADE_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "QUANTIDADE", id = "quantidade", required = "", alt = "decimal" })
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>VALOR MO</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        @Html.TextBoxFor(model => model.VALOR_MO_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR MO", id = "valormo", alt = "decimal" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>VALOR MO COM BDI</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        @Html.TextBoxFor(model => model.VALOR_MO_BDI_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", id = "valormobdi", alt = "decimal" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>BDI MO (%)</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        <input class="form-control input-lg uppercase" maxlength="18" id="bdimo" alt="decimal" value="@ViewBag.MO_BDI" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>UNIDADE</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        @Html.DropDownList("UNIDADE", ViewBag.UNIDADE as IEnumerable<SelectListItem>, null, new { required = "" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>VALOR MA</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        @Html.TextBoxFor(model => model.VALOR_MA_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR MA", id = "valorma", alt = "decimal" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>VALOR MA COM BDI</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        @Html.TextBoxFor(model => model.VALOR_MA_BDI_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR MA COM BDI", id = "valormabdi", alt = "decimal" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-1">
+                                    <div>
+                                        <label>BDI MA (%)</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        <input class="form-control input-lg uppercase" maxlength="18" id="bdima" alt="decimal" value="@ViewBag.MA_BDI" />
+                                    </div>
+                                </div>
+                            </font>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                <input type="button" value="Voltar" class="btn btn-default" onclick="location.href = '@Url.Action("Index", "OssbServico", new { id = Model.OSSB })'" />
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <hr />
+                                <font size="1" face="times new roman">
+                                    <div class="table-responsive">
+                                        <table id="servicos" class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="9" style="text-align:center">
+                                                        SERVIÇOS JÁ CADASTRADOS
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        ITEM
+                                                    </th>
+
+                                                    <th>
+                                                        SERVIÇO / PRODUTO
+                                                    </th>
+
+                                                    <th>
+                                                        QTD
+                                                    </th>
+
+                                                    <th>
+                                                        UNID
+                                                    </th>
+
+                                                    <th>
+                                                        UNITÁRIO MÃO OBRA
+                                                    </th>
+
+                                                    <th>
+                                                        UNITÁRIO MATERIAL
+                                                    </th>
+
+                                                    <th>
+                                                        TOTAL MÃO OBRA
+                                                    </th>
+
+                                                    <th>
+                                                        TOTAL MATERIAL
+                                                    </th>
+
+                                                    <th>
+                                                        TOTAL
+                                                    </th>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    int x = 0;
+                                                }
+                                                @foreach (var group in from s in ViewBag.ADICIONADOS as IEnumerable<ATIMO.Models.OSSB_SERVICO> group s by s.SUBDIVISAO into g select new { SUBDIVISAO = g.Key, SERVICOS = g })
+                                                {
+                                                    ++x;
+
+                                                    <tr class="active">
+                                                        <td>
+                                                            @x
+                                                        </td>
+
+                                                        <td colspan="7" style="text-align: center">
+                                                            @group.SUBDIVISAO
+                                                        </td>
+
+                                                        <td style="white-space: nowrap">
+                                                            @((group.SERVICOS.Select(s => (s.VALOR_MA_BDI + s.VALOR_MO_BDI) * s.QUANTIDADE)).Sum().ToString("C"))
+                                                        </td>
+                                                    </tr>
+
+                                                    int y = 0;
+
+                                                    foreach (var servico in group.SERVICOS)
+                                                    {
+                                                        ++y;
+
+                                                        <tr>
+                                                            <td>
+                                                                @(x).@(y)
+                                                            </td>
+
+                                                            <td>
+                                                                @servico.DESCRICAO
+                                                            </td>
+
+                                                            <td style="white-space: nowrap">
+                                                                @servico.QUANTIDADE.ToString("N2")
+                                                            </td>
+
+                                                            <td style="white-space: nowrap">
+                                                                @servico.UNIDADE1.SIGLA
+                                                            </td>
+
+                                                            <td style="white-space: nowrap">
+                                                                @servico.VALOR_MA_BDI.ToString("C")
+                                                            </td>
+
+                                                            <td style="white-space: nowrap">
+                                                                @servico.VALOR_MO_BDI.ToString("C")
+                                                            </td>
+
+                                                            <td style="white-space: nowrap">
+                                                                @((servico.VALOR_MA_BDI * servico.QUANTIDADE).ToString("C"))
+                                                            </td>
+
+                                                            <td style="white-space: nowrap">
+                                                                @((servico.VALOR_MO_BDI * servico.QUANTIDADE).ToString("C"))
+                                                            </td>
+
+                                                            <td style="white-space: nowrap">
+                                                                @(((servico.VALOR_MO_BDI + servico.VALOR_MA_BDI) * servico.QUANTIDADE).ToString("C"))
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+
+
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr class="active">
+                                                    <td></td>
+
+                                                    <td colspan="7"></td>
+
+                                                    <td style="white-space: nowrap">
+                                                        @(((ViewBag.ADICIONADOS as IEnumerable<ATIMO.Models.OSSB_SERVICO>).Select(s => (s.VALOR_MA_BDI + s.VALOR_MO_BDI) * s.QUANTIDADE)).Sum().ToString("C"))
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+
+                                        </table>
+                                    </div>
+                                </font>
+                            </div>
+                        </fieldset>
+                                                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script src="/Scripts/accounting.min.js"></script>
+
+    <script>
+        function update_mo_bdi() {
+            var valormo = accounting.unformat($("#valormo").val(), ',');
+
+            if (valormo != 0) {
+                $("#valormobdi").val(accounting.formatNumber((accounting.unformat($("#bdimo").val(), ',') / 100 + 1) * valormo, 2, '.', ','))
+            }
+        }
+
+        function update_ma_bdi() {
+            var valorma = accounting.unformat($("#valorma").val(), ',');
+
+            if (valorma != 0) {
+                $("#valormabdi").val(accounting.formatNumber((accounting.unformat($("#bdima").val(), ',') / 100 + 1) * valorma, 2, '.', ','))
+            }
+        }
+
+        $("#valormo").on("propertychange change keyup paste input", function () {
+            update_mo_bdi();
+        })
+
+        $("#bdimo").on("propertychange keyup paste input", function () {
+            update_mo_bdi();
+        })
+
+        $("#valormobdi").on("propertychange keyup paste input", function () {
+            var valormo = accounting.unformat($("#valormo").val(), ',');
+
+            if (valormo != 0) {
+                $("#bdimo").val(accounting.formatNumber((accounting.unformat($("#valormobdi").val(), ',') / valormo * 100) - 100, 2, '.', ','))
+            }
+        })
+
+
+        $("#valorma").on("propertychange change keyup paste input", function () {
+            update_ma_bdi();
+        })
+
+        $("#bdima").on("propertychange keyup paste input", function () {
+            update_ma_bdi();
+        })
+
+        $("#valormabdi").on("propertychange keyup paste input", function () {
+            var valorma = accounting.unformat($("#valorma").val(), ',');
+
+            if (valorma != 0) {
+                $("#bdima").val(accounting.formatNumber((accounting.unformat($("#valormabdi").val(), ',') / valorma * 100) - 100, 2, '.', ','))
+            }
+        })
+    </script>
+}

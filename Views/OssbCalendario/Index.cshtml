@@ -1,0 +1,238 @@
+﻿@model System.Collections.Generic.Dictionary<DateTime, IEnumerable<ATIMO.Models.OSSB_CHECK_LIST>>
+
+@{
+    ViewBag.Title = "ÁTIMO - Calendário de O.S";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ATIMO;
+
+
+@Html.Partial("MenuAreaFuncionario")
+
+
+<div class="main">
+    <div class="container">
+
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>RELATÓRIOS</h3>
+            </div>
+
+            <div class="widget-content">
+                <div class="form-group col-md-12">
+                    <div>
+                        <label>MÊS / ANO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <input id="mes_ano" class="form-control input-lg monthpicker" maxlength="7" value="@ViewBag.MES_ANO" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <div>
+                        <label>PROJETO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new { id = "projeto" })
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <div>
+                        <label>SITUAÇÃO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <select id="situacao" multiple="multiple">
+                            <option value="I">VISITA INICIAL</option>
+                            <option value="O">ORÇAR</option>
+                            <option value="R">ORÇAMENTO</option>
+                            <option value="E">EXECUTANDO</option>
+                            <option value="P">PARCELAMENTO</option>
+                            <option value="K">COBRANÇA</option>
+                            <option value="F">FINALIZADA</option>
+                            <option value="C">CANCELADA</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <div>
+                        <label>TIPO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <select id="tipo" multiple="multiple">
+                            <option value="C">CORRETIVA</option>
+                            <option value="O">ACOMPANHAMENTO</option>
+                            <option value="E">EMERGENCIAL</option>
+                            <option value="X">EXTRA CONTRATUAL</option>
+                            <option value="G">GARANTIA</option>
+                            <option value="P">PREVENTIVA</option>
+                        </select>
+                    </div>
+                    <hr />
+                </div>
+
+                <div class="col-md-12">
+                    <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar();">
+                        <i class="glyphicon glyphicon-search"></i>
+                        Pesquisar
+                    </button>
+                </div>
+
+                <div style="overflow:auto; width: 100%">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td style="width: 100px;">
+                                    Domingo
+                                </td>
+                                <td style="width: 100px;">
+                                    Segunda Feira
+                                </td>
+                                <td style="width: 100px;">
+                                    Terça Feira
+                                </td>
+                                <td style="width: 100px;">
+                                    Quarta Feira
+                                </td>
+                                <td style="width: 100px;">
+                                    Quinta Feira
+                                </td>
+                                <td style="width: 100px;">
+                                    Sexta Feira
+                                </td>
+                                <td style="width: 100px;">
+                                    Sábado
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @{
+                            DateTime first_sunday = (DateTime)(ViewBag.FIRST_SUNDAY);
+                            DateTime start = (DateTime)(ViewBag.START);
+                            DateTime end = (DateTime)(ViewBag.END);
+                            }
+
+                            @for (Int32 y = 0; y < 6; ++y)
+                        {
+                                <tr>
+                                    @for (Int32 x = 0; x < 7; ++x)
+                                {
+
+                                    DateTime today = first_sunday.AddDays(y * 7 + x);
+
+
+                                        <td style="min-width: 100px; min-height: 100px;">
+
+                                            @if (today >= start && today < end)
+                                        {
+                                                <span style="float: right; display: block;">
+                                                    @today.Day
+                                                </span>
+
+                                            IEnumerable<ATIMO.Models.OSSB_CHECK_LIST> checklists;
+
+                                            if (Model.TryGetValue(today, out checklists))
+                                            {
+                                                foreach (var item in checklists.OrderBy(ocl => ocl.AGENDADO))
+                                                {
+                                                        <a class="label label-primary" style="min-width: 100%; display: block; font-size: 8px; line-height: 150%; text-overflow: ellipsis; max-width: 150px; margin-bottom: 8px; white-space: nowrap; overflow: hidden;"  href="~/VisitaInicial/Index/?num=@item.OSSB">
+                                                            @item.AGENDADO.ToString("HH:mm") @item.OSSB
+
+                                                            @if (item.OSSB1.OSSB_TECNICO.Any())
+                                                        {
+                                                                <br> @item.OSSB1.OSSB_TECNICO.First().TECNICO1.RAZAO
+                                                        }
+
+                                                            <br> @item.OSSB1.PESSOA.RAZAO
+
+                                                            @if (item.OSSB1.LOJA != null)
+                                                        {
+                                                                <br> @item.OSSB1.LOJA1.APELIDO
+                                                        }
+                                                        </a>
+                                                }
+                                            }
+                                        }
+                                        </td>
+                                }
+                                </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("Rodape")
+
+@section Scripts
+{
+
+    <style>
+        .table-hover > tbody > tr > td:hover, .table-hover > tbody > tr > td:hover {
+            background-color: #f5f5f5 !important;
+        }
+    </style>
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+<script src="../../Scripts/select2/js/select2.min.js"></script>
+<link href="../../Scripts/select2/css/select2.min.css" rel="stylesheet" />
+<link href="../../Scripts/select2/css/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <script>
+
+        $("#situacao").select2({
+
+        });
+
+        $("#tipo").select2({
+
+        });
+
+
+        function pesquisar() {
+            var params = {
+            }
+
+            if ($("#tipo").val()) {
+                params.tipo = $("#tipo").val();
+            }
+
+            if ($("#situacao").val()) {
+                params.situacao = $("#situacao").val();
+            }
+
+            if ($("#projeto").val() > 0) {
+                params.projeto = $("#projeto").val();
+            }
+
+            if ($("#mes_ano").val() != "") {
+                params.mes_ano = $("#mes_ano").val();
+            }
+
+            location.href = "/OssbCalendario/Index/?" + jQuery.param(params, true);
+        }
+
+        $(".monthpicker").datepicker({
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true,
+            format: "mm/yyyy",
+            startView: "months",
+            minViewMode: "months"
+        });
+    </script>
+}

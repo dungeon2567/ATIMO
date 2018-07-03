@@ -1,0 +1,1861 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ATIMOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ANEXO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NOME" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ANEXO" Type="varbinary(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AREA_MANUTENCAO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="BANCO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CODIGO" Type="char" MaxLength="6" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BENEFICIO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FORNECEDOR" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="CUMULATIVO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CAIXINHA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATA_ENTREGA" Type="date" Nullable="false" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="PESSOA" Type="int" Nullable="false" />
+    <Property Name="CONTA_BANCARIA" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CAIXINHA_ITEM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PESSOA" Type="int" Nullable="false" />
+    <Property Name="OSSB" Type="int" />
+    <Property Name="DESPESA" Type="int" Nullable="false" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" />
+    <Property Name="NOTA_FISCAL" Type="varchar(max)" />
+    <Property Name="DATA_QUITADO" Type="date" Nullable="false" />
+    <Property Name="ANEXO" Type="int" />
+    <Property Name="VALIDACAO_FINANCEIRO" Type="bit" Nullable="false" />
+    <Property Name="VALIDACAO_OPERACIONAL" Type="bit" Nullable="false" />
+    <Property Name="PROJETO" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CLIENTE_COMO_CONHECEU">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CLIENTE" Type="int" Nullable="false" />
+    <Property Name="COMO_CONHECEU" Type="int" Nullable="false" />
+    <Property Name="OUTROS" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="CLIENTE_SATISFACAO">
+    <Key>
+      <PropertyRef Name="OSSB" />
+    </Key>
+    <Property Name="POSTURA_EQUIPE" Type="int" Nullable="false" />
+    <Property Name="CUMPRIMENTO_HORARIO" Type="int" Nullable="false" />
+    <Property Name="SATISFACAO_SERVICO" Type="int" Nullable="false" />
+    <Property Name="ASSINATURA" Type="varchar" MaxLength="100" />
+    <Property Name="COBRANCA" Type="varchar" MaxLength="100" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="MEDIA" Type="int" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COMO_CONHECEU">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COMPRA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OSSB" Type="int" />
+    <Property Name="DESPESA" Type="int" Nullable="false" />
+    <Property Name="PROJETO" Type="int" Nullable="false" />
+    <Property Name="FORNECEDOR" Type="int" Nullable="false" />
+    <Property Name="OBSERVACAO" Type="varchar(max)" />
+    <Property Name="NOTA_FISCAL" Type="varchar" MaxLength="80" />
+  </EntityType>
+  <EntityType Name="COMPRA_ITEM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="COMPRA" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="UNIDADE" Type="int" Nullable="false" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="QUANTIDADE" Type="decimal" Precision="7" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="COMPRA_PARCELA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="DATA_VENCIMENTO" Type="date" Nullable="false" />
+    <Property Name="DATA_PAGAMENTO" Type="date" />
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FORMA_PAGAMENTO" Type="int" />
+    <Property Name="COMPRA" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTA_BANCARIA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PESSOA" Type="int" Nullable="false" />
+    <Property Name="BANCO" Type="int" Nullable="false" />
+    <Property Name="TIPO_CONTA" Type="int" Nullable="false" />
+    <Property Name="NUM_CONTA" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DIG_CONTA" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="NUM_AGENCIA" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="DIG_AGENCIA" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SALDO_INICIAL" Type="money" Nullable="false" />
+    <Property Name="CONTA" Type="varchar" MaxLength="201" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTAS_RECEBER">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="DATA_EMISSAO" Type="date" Nullable="false" />
+    <Property Name="DATA_VENCIMENTO" Type="date" Nullable="false" />
+    <Property Name="VALOR_LIQUIDO" Type="money" Nullable="false" />
+    <Property Name="VALOR_BRUTO" Type="money" Nullable="false" />
+    <Property Name="DATA_RECEBIMENTO" Type="date" />
+    <Property Name="NOTA_FISCAL" Type="varchar" MaxLength="80" />
+    <Property Name="OBSERVACAO" Type="varchar(max)" />
+    <Property Name="CONTA_BANCARIA" Type="int" />
+  </EntityType>
+  <EntityType Name="CONTRATO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="GERADO" Type="varchar" MaxLength="1" Nullable="false" />
+    <Property Name="CLIENTE" Type="int" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" />
+  </EntityType>
+  <EntityType Name="CONTRATO_AREA_MANUTENCAO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CONTRATO" Type="int" Nullable="false" />
+    <Property Name="AREA_MANUTENCAO" Type="int" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTRATO_ESPECIALIDADE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CONTRATO" Type="int" Nullable="false" />
+    <Property Name="ESPECIALIDADE" Type="int" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTRATO_LOJA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CONTRATO" Type="int" Nullable="false" />
+    <Property Name="LOJA" Type="int" Nullable="false" />
+    <Property Name="QUANTIDADE" Type="int" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="QTD_CORTESIA" Type="int" Nullable="false" />
+    <Property Name="VALOR_CONTRATO" Type="money" Nullable="false" />
+    <Property Name="VALOR_TERCEIRO" Type="money" Nullable="false" />
+    <Property Name="VALOR_EXTRA" Type="money" Nullable="false" />
+    <Property Name="PERIODICIDADE" Type="varchar" MaxLength="512" Nullable="false" />
+    <Property Name="VALOR" Type="money" StoreGeneratedPattern="Computed" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CONTRATO_SERVICO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CONTRATO" Type="int" Nullable="false" />
+    <Property Name="UNIDADE" Type="int" Nullable="false" />
+    <Property Name="TERCEIRO" Type="int" Nullable="false" />
+    <Property Name="QUANTIDADE" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="VALOR_MO" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="VALOR_MAT" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="AREA_MANUTENCAO" Type="int" Nullable="false" />
+    <Property Name="SERVICO" Type="int" Nullable="false" />
+    <Property Name="VALOR_TERCEIRO" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DEPARTAMENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DESPESA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" />
+    <Property Name="MASCARA" Type="int" Nullable="false" />
+    <Property Name="CLASSE" Type="int" Nullable="false" />
+    <Property Name="TIPO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DESPESA_CLASSE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DESPESA_RECORRENTE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESPESA" Type="int" Nullable="false" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="DIA" Type="int" Nullable="false" />
+    <Property Name="PESSOA" Type="int" Nullable="false" />
+    <Property Name="PROJETO" Type="int" Nullable="false" />
+    <Property Name="CRITICIDADE" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EMPRESA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NOME" Type="varchar" MaxLength="200" />
+    <Property Name="SERIAL_CERTIFICADO" Type="varchar" MaxLength="300" />
+    <Property Name="CNPJ" Type="varchar" MaxLength="14" />
+    <Property Name="COD_SERVICO_PMSP" Type="varchar" MaxLength="100" />
+    <Property Name="CCM_PMSP" Type="varchar" MaxLength="100" />
+    <Property Name="FLG_EMITE_NF" Type="char" MaxLength="1" />
+    <Property Name="NUM_ULTIMA_RPS" Type="int" />
+    <Property Name="FLG_OPTANTE_SIMPLES_NACIONAL" Type="char" MaxLength="1" />
+    <Property Name="NOM_FONTE_CARGA_TRIB" Type="varchar" MaxLength="100" />
+    <Property Name="PERC_CARGA_TRIB" Type="decimal" Precision="4" Scale="2" />
+    <Property Name="SERIE_RPS" Type="varchar" MaxLength="5" />
+    <Property Name="ALIQUOTA_ISS_FORA_MUNICIPIO" Type="decimal" Precision="7" Scale="2" />
+  </EntityType>
+  <EntityType Name="EMPRESA_SERVICOPMSP">
+    <Key>
+      <PropertyRef Name="ID_EMPRESA" />
+      <PropertyRef Name="ID_CODIGOSERVICO" />
+    </Key>
+    <Property Name="ID_EMPRESA" Type="int" Nullable="false" />
+    <Property Name="ID_CODIGOSERVICO" Type="varchar" MaxLength="6" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EQUIPAMENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GRUPO" Type="int" Nullable="false" />
+    <Property Name="TIPO" Type="int" Nullable="false" />
+    <Property Name="MARCA" Type="int" />
+    <Property Name="MODELO" Type="int" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="FABRICANTE" Type="varchar" MaxLength="200" />
+    <Property Name="NUM_SERIE" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="OBSERVACAO" Type="text" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ESPECIALIDADE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FAT_FATURAMENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ID_OSSB" Type="int" Nullable="false" />
+    <Property Name="VALOR_BRUTO" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+    <Property Name="DATA_EMISSAO_NF" Type="datetime" />
+    <Property Name="NUMERO_NF" Type="int" />
+    <Property Name="COD_VERIFICACAO_NF" Type="varchar" MaxLength="8" />
+    <Property Name="ID_EMPRESA" Type="int" Nullable="false" />
+    <Property Name="DATA_CADASTRO" Type="datetime" Nullable="false" />
+    <Property Name="DESCRICAO_NF" Type="varchar" MaxLength="8000" />
+    <Property Name="FLAG_CANCELADA" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="NUMERO_RPS" Type="int" Nullable="false" />
+    <Property Name="ID_SERVICO_PMSP" Type="varchar" MaxLength="5" />
+    <Property Name="ID_CLIENTE" Type="int" Nullable="false" />
+    <Property Name="NUM_SERIE_RPS" Type="varchar" MaxLength="50" />
+    <Property Name="VALOR_MAO_DE_OBRA" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="ID_TIPOPAGTO" Type="int" />
+    <Property Name="ID_SITUACAOPAGTO" Type="int" />
+    <Property Name="VALOR_SERVICO" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CAMINHO_PDF_NF" Type="varchar" MaxLength="255" />
+    <Property Name="LOTE_EMISSAO_PMSP" Type="int" />
+    <Property Name="CONREC_HISTORICO" Type="varchar" MaxLength="50" />
+    <Property Name="CONREC_DATAVENCTO" Type="datetime" />
+    <Property Name="CONREC_CAMINHO_PDF_BOLETO" Type="varchar" MaxLength="255" />
+    <Property Name="VALOR_LIQUIDO" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="CONREC_DATAPAGTO" Type="datetime" />
+    <Property Name="CONREC_TIPOPAGTO" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="FAT_SERVICOS_PMSP">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="6" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="700" />
+    <Property Name="ALIQUOTA" Type="decimal" Precision="3" Scale="2" />
+    <Property Name="DATA_INICIO" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FERIADO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DATA" Type="varchar" MaxLength="5" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FERRAMENTA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GRUPO" Type="int" Nullable="false" />
+    <Property Name="TIPO" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="MINIMO" Type="int" Nullable="false" />
+    <Property Name="OBSERVACAO" Type="text" />
+    <Property Name="FLG_CONSUMIVEL" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FORMA_PAGAMENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="BANCO" Type="int" Nullable="false" />
+    <Property Name="NUMERO_CONTA" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="AGENCIA" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="FORNECEDOR_TIPO_MATERIAL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FORNECEDOR" Type="int" Nullable="false" />
+    <Property Name="TIPO" Type="int" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FUNCAO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" />
+    <Property Name="SITUCAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FUNCIONARIO_CARTAO_PONTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FUNCIONARIO" Type="int" Nullable="false" />
+    <Property Name="MOMENTO" Type="datetime" Nullable="false" />
+    <Property Name="LONGITUDE" Type="float" Nullable="false" />
+    <Property Name="LATITUDE" Type="float" Nullable="false" />
+    <Property Name="OBSERVACAO" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="FUNCIONARIO_CHECK_LIST">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FUNCIONARIO" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="ANEXO" Type="int" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FUNCIONARIO_DEPARTAMENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FUNCIONARIO" Type="int" Nullable="false" />
+    <Property Name="DEPARTAMENTO" Type="int" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FUNCIONARIO_DOCUMENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FUNCIONARIO" Type="int" Nullable="false" />
+    <Property Name="ANEXO" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" Nullable="false" />
+    <Property Name="DATA_CRIACAO" Type="datetime" Nullable="false" />
+    <Property Name="CATEGORIA" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FUNCIONARIO_TIPO_ACESSO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" Nullable="false" />
+    <Property Name="ACESSO" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GRUPO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TIPO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LOJA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NUM_DOC" Type="varchar" MaxLength="18" Nullable="false" />
+    <Property Name="CEP" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="ENDERECO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="COMPLEMENTO" Type="text" />
+    <Property Name="BAIRRO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="CIDADE" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="UF" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="ZONA" Type="varchar" MaxLength="50" />
+    <Property Name="TELEFONE1" Type="varchar" MaxLength="15" />
+    <Property Name="TELEFONE2" Type="varchar" MaxLength="15" />
+    <Property Name="TELEFONE3" Type="varchar" MaxLength="15" />
+    <Property Name="CONTATO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="OBSERVACAO" Type="text" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="APELIDO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="CLIENTE" Type="int" Nullable="false" />
+    <Property Name="INSC_ESTADUAL" Type="varchar" MaxLength="1024" />
+  </EntityType>
+  <EntityType Name="LOJA_EQUIPAMENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LOJA" Type="int" Nullable="false" />
+    <Property Name="SETOR" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="SUBSETOR" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="TIPO" Type="int" Nullable="false" />
+    <Property Name="MODELO" Type="int" Nullable="false" />
+    <Property Name="SERIE" Type="varchar" MaxLength="100" />
+    <Property Name="NUM_MODELO" Type="varchar" MaxLength="100" />
+    <Property Name="TENSAO_NOMINAL" Type="varchar" MaxLength="100" />
+    <Property Name="CORRENTE_NOMINAL" Type="varchar" MaxLength="100" />
+    <Property Name="FABRICANTE" Type="varchar" MaxLength="100" />
+    <Property Name="POTENCIA" Type="varchar" MaxLength="100" />
+    <Property Name="DATA_FABRICACAO" Type="date" />
+    <Property Name="CAPACIDADE" Type="varchar" MaxLength="100" />
+    <Property Name="TAG" Type="varchar" MaxLength="100" />
+    <Property Name="DATA_VENCIMENTO" Type="date" />
+    <Property Name="IMAGEM" Type="int" />
+  </EntityType>
+  <EntityType Name="MARCA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TIPO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MATERIAL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TIPO" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="UNIDADE" Type="int" Nullable="false" />
+    <Property Name="FORNECEDOR" Type="int" Nullable="false" />
+    <Property Name="PRECO" Type="money" Nullable="false" />
+    <Property Name="DATA_ORCAMENTO" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MODELO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="TIPO" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="RESPONSAVEL" Type="int" />
+    <Property Name="SUPERVISOR" Type="int" />
+    <Property Name="CONTRATO" Type="int" />
+    <Property Name="DATA_CADASTRO" Type="date" Nullable="false" />
+    <Property Name="PROJETO" Type="int" Nullable="false" />
+    <Property Name="CLIENTE" Type="int" />
+    <Property Name="OCORRENCIA" Type="varchar(max)" />
+    <Property Name="PORTE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="AMBIENTE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="TIPO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="EXECUCAO_INICIO" Type="date" />
+    <Property Name="EXECUCAO_FIM" Type="date" />
+    <Property Name="PREVISAO_INICIO" Type="date" />
+    <Property Name="PREVISAO_FIM" Type="date" />
+    <Property Name="EFETIVO_INICIO" Type="date" />
+    <Property Name="EFETIVO_FIM" Type="date" />
+    <Property Name="OBSERVACAO" Type="text" />
+    <Property Name="ORCAMENTISTA" Type="int" />
+    <Property Name="LOJA" Type="int" />
+    <Property Name="QUANDO_PRECISA_ORCAMENTO" Type="datetime" />
+    <Property Name="DATA_VISITA" Type="datetime" />
+    <Property Name="DATA_FOLLOW_UP" Type="datetime" />
+    <Property Name="PRAZO_PAGAMENTO" Type="varchar" MaxLength="1024" />
+    <Property Name="PRAZO_EXECUCAO" Type="varchar" MaxLength="1024" />
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+  </EntityType>
+  <EntityType Name="OSSB_ALBUM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB_CHECK_LIST">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="AGENDADO" Type="datetime" Nullable="false" />
+    <Property Name="VISITADO" Type="datetime" />
+    <Property Name="ANEXO" Type="int" />
+  </EntityType>
+  <EntityType Name="OSSB_COMUNICACAO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="PESSOA" Type="int" Nullable="false" />
+    <Property Name="TEXTO" Type="varchar(max)" Nullable="false" />
+    <Property Name="DATA" Type="date" Nullable="false" />
+    <Property Name="TIPO" Type="varchar" MaxLength="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB_ESPECIALIDADE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="ESPECIALIDADE" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB_IMAGEM">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" />
+    <Property Name="ANEXO" Type="int" Nullable="false" />
+    <Property Name="ALBUM" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB_MATERIAL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="QUANTIDADE" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+    <Property Name="VALOR" Type="money" />
+    <Property Name="UNIDADE" Type="int" Nullable="false" />
+    <Property Name="FORNECEDOR" Type="int" />
+    <Property Name="DATA" Type="date" Nullable="false" />
+    <Property Name="VALOR_COMPRADO" Type="money" />
+    <Property Name="DATA_COMPRADO" Type="date" />
+    <Property Name="LOCAL_ENTREGA" Type="varchar" MaxLength="200" />
+    <Property Name="OBSERVACAO" Type="varchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="OSSB_SERVICO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UNIDADE" Type="int" Nullable="false" />
+    <Property Name="QUANTIDADE" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="VALOR_MO" Type="money" Nullable="false" />
+    <Property Name="FLG_ABANDONO" Type="char" MaxLength="1" />
+    <Property Name="VALOR_PAGO_ABANDONO" Type="decimal" Precision="15" Scale="2" />
+    <Property Name="VALOR_MA" Type="money" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="SUBDIVISAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="VALOR_MA_BDI" Type="money" Nullable="false" />
+    <Property Name="VALOR_MO_BDI" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB_SERVICO_TERCEIRO">
+    <Key>
+      <PropertyRef Name="OSSB_SERVICO" />
+      <PropertyRef Name="TERCEIRO" />
+    </Key>
+    <Property Name="OSSB_SERVICO" Type="int" Nullable="false" />
+    <Property Name="TERCEIRO" Type="int" Nullable="false" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="DATE_VENCIMENTO" Type="date" />
+    <Property Name="DESPESA" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB_SITUACAO_HISTORICO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PESSOA" Type="int" Nullable="false" />
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="DATA_ALTERACAO" Type="datetime" Nullable="false" />
+    <Property Name="DE" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="PARA" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB_TECNICO">
+    <Key>
+      <PropertyRef Name="OSSB" />
+      <PropertyRef Name="TECNICO" />
+    </Key>
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="TECNICO" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OSSB_VISTORIADOR">
+    <Key>
+      <PropertyRef Name="OSSB" />
+      <PropertyRef Name="VISTORIADOR" />
+    </Key>
+    <Property Name="OSSB" Type="int" Nullable="false" />
+    <Property Name="VISTORIADOR" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PAGAMENTO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" />
+    <Property Name="PESSOA" Type="int" Nullable="false" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="DATA_VENCIMENTO" Type="date" />
+    <Property Name="DESPESA" Type="int" Nullable="false" />
+    <Property Name="OSSB" Type="int" />
+    <Property Name="DATA_PAGAMENTO" Type="date" />
+    <Property Name="PROJETO" Type="int" />
+    <Property Name="CRITICIDADE" Type="int" Nullable="false" />
+    <Property Name="SERVICO" Type="int" />
+    <Property Name="ANEXO" Type="int" />
+    <Property Name="PROTESTO" Type="bit" Nullable="false" />
+    <Property Name="FORMA_PAGAMENTO" Type="int" Nullable="false" />
+    <Property Name="PROVISIONADO" Type="bit" Nullable="false" />
+    <Property Name="CONTA_BANCARIA" Type="int" />
+  </EntityType>
+  <EntityType Name="PAGAMENTO_TERCEIRO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TERCEIRO" Type="int" Nullable="false" />
+    <Property Name="OSSB_SERVICO" Type="int" Nullable="false" />
+    <Property Name="OBSERVACAO" Type="varchar(max)" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="DATA_PAGAMENTO" Type="date" Nullable="false" />
+    <Property Name="ANEXO" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PATRIMONIO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NUMERO" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="FLG_DEPRECIA" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DATA_AQUISICAO" Type="date" Nullable="false" />
+    <Property Name="VALOR_COMPRA" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="TIPO_DEPRECIACAO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DEPRECIACAO" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="FERRAMENTA" Type="int" />
+    <Property Name="VEICULO" Type="int" />
+    <Property Name="EQUIPAMENTO" Type="int" />
+  </EntityType>
+  <EntityType Name="PESSOA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TIPO_DOC" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="NUM_DOC" Type="varchar" MaxLength="18" Nullable="false" />
+    <Property Name="INSC_ESTADUAL" Type="varchar" MaxLength="50" />
+    <Property Name="RAZAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="NOME" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="CEP" Type="varchar" MaxLength="9" Nullable="false" />
+    <Property Name="ENDERECO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="COMPLEMENTO" Type="text" />
+    <Property Name="BAIRRO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="CIDADE" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="UF" Type="char" MaxLength="2" Nullable="false" />
+    <Property Name="ZONA" Type="varchar" MaxLength="50" />
+    <Property Name="TELEFONE1" Type="varchar" MaxLength="15" />
+    <Property Name="TELEFONE2" Type="varchar" MaxLength="15" />
+    <Property Name="TELEFONE3" Type="varchar" MaxLength="15" />
+    <Property Name="CONTATO" Type="varchar" MaxLength="50" />
+    <Property Name="EMAIL" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="OBSERVACAO" Type="text" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="CLIENTE" Type="int" Nullable="false" />
+    <Property Name="FUNCIONARIO" Type="int" Nullable="false" />
+    <Property Name="TERCEIRO" Type="int" Nullable="false" />
+    <Property Name="FORNECEDOR" Type="int" Nullable="false" />
+    <Property Name="COMO_CONHECEU" Type="int" Nullable="false" />
+    <Property Name="SENHA" Type="varchar" MaxLength="20" />
+    <Property Name="TIPO_PESSOA_TRIBUTACAO" Type="int" />
+    <Property Name="INSC_MUNICIPAL" Type="varchar" MaxLength="70" />
+    <Property Name="RESPONSAVEL" Type="int" Nullable="false" />
+    <Property Name="ADMINISTRADOR" Type="int" />
+    <Property Name="DATA_ADMISSAO" Type="int" />
+    <Property Name="DATA_DEMISSAO" Type="int" />
+    <Property Name="SALARIO" Type="money" />
+    <Property Name="DATA_EFETIVACAO" Type="date" />
+    <Property Name="VALE_TRANSPORTE" Type="money" />
+    <Property Name="VALE_ALIMENTACAO" Type="money" />
+    <Property Name="PROJETO" Type="int" />
+    <Property Name="ESPECIALIDADE1" Type="int" />
+    <Property Name="ESPECIALIDADE2" Type="int" />
+    <Property Name="ESPECIALIDADE3" Type="int" />
+    <Property Name="TIPO_ACESSO" Type="int" />
+    <Property Name="IMAGEM" Type="int" />
+  </EntityType>
+  <EntityType Name="PESSOA_CLIENTE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CLIENTE" Type="int" Nullable="false" />
+    <Property Name="FLG_LOJA" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="FLG_CONTRATO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="COMO_CONHECEU" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PESSOA_FUNCIONARIO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FUNCIONARIO" Type="int" Nullable="false" />
+    <Property Name="FUNCAO" Type="int" Nullable="false" />
+    <Property Name="DATA_ADMISSAO" Type="date" Nullable="false" />
+    <Property Name="DATA_DEMISSAO" Type="date" />
+    <Property Name="SALARIO" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PROJETO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RATEIO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PROJETO" Type="int" Nullable="false" />
+    <Property Name="FERRAMENTA" Type="int" />
+    <Property Name="DEPARTAMENTO" Type="int" />
+    <Property Name="VEICULO" Type="int" />
+    <Property Name="EQUIPAMENTO" Type="int" />
+    <Property Name="PESSOA" Type="int" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="REGISTRO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="USUARIO" Type="int" Nullable="false" />
+    <Property Name="DATA_CRIACAO" Type="datetime" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SERVICO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ESPECIALIDADE" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SUBTAREFA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TAREFA" Type="int" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TAREFA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar(max)" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TAREFA_MEMBRO">
+    <Key>
+      <PropertyRef Name="MEMBRO" />
+      <PropertyRef Name="TAREFA" />
+    </Key>
+    <Property Name="MEMBRO" Type="int" Nullable="false" />
+    <Property Name="TAREFA" Type="int" Nullable="false" />
+    <Property Name="TIPO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TERCEIRO_SERVICO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TERCEIRO" Type="int" Nullable="false" />
+    <Property Name="SERVICO" Type="int" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="AREA_MANUTENCAO" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TIPO" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPO_CONTA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SIGLA" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UNIDADE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DESCRICAO" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="SIGLA" Type="char" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VEICULO">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MARCA" Type="int" />
+    <Property Name="MODELO" Type="int" />
+    <Property Name="ANO" Type="int" Nullable="false" />
+    <Property Name="CHASSI" Type="varchar" MaxLength="50" />
+    <Property Name="PLACA" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="COMBUSTIVEL" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="SEGURO" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="IPVA" Type="decimal" Precision="15" Scale="2" Nullable="false" />
+    <Property Name="OBSERVACAO" Type="text" />
+    <Property Name="SITUACAO" Type="char" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VEICULO_MULTA">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VEICULO" Type="int" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+    <Property Name="DATA_VENCIMENTO" Type="date" />
+    <Property Name="DATA_PAGAMENTO" Type="date" />
+    <Property Name="SITUACAO" Type="int" Nullable="false" />
+    <Property Name="ANEXO" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ATIMO.saobento_sistema.CONTAS_PAGAR' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CONTAS_PAGAR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" />
+    <Property Name="OSSB" Type="int" />
+    <Property Name="PARA" Type="int" Nullable="false" />
+    <Property Name="DATA_VENCIMENTO" Type="date" />
+    <Property Name="DESPESA" Type="int" Nullable="false" />
+    <Property Name="VALOR" Type="money" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ATIMO.saobento_sistema.CONTAS_PAGAS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="CONTAS_PAGAS">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" />
+    <Property Name="OSSB" Type="int" />
+    <Property Name="PESSOA" Type="int" Nullable="false" />
+    <Property Name="DESPESA" Type="int" Nullable="false" />
+    <Property Name="DATA_PAGAMENTO" Type="date" />
+    <Property Name="VALOR" Type="money" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__CAIXINHA___DESPE__59904A2C">
+    <End Role="DESPESA" Type="Self.DESPESA" Multiplicity="1" />
+    <End Role="CAIXINHA_ITEM" Type="Self.CAIXINHA_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DESPESA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CAIXINHA_ITEM">
+        <PropertyRef Name="DESPESA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CAIXINHA___PESSO__57A801BA">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="CAIXINHA_ITEM" Type="Self.CAIXINHA_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CAIXINHA_ITEM">
+        <PropertyRef Name="PESSOA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CAIXINHA__CONTA___53584DE9">
+    <End Role="CONTA_BANCARIA" Type="Self.CONTA_BANCARIA" Multiplicity="1" />
+    <End Role="CAIXINHA" Type="Self.CAIXINHA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONTA_BANCARIA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CAIXINHA">
+        <PropertyRef Name="CONTA_BANCARIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CAIXINHA__PESSOA__54CB950F">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="CAIXINHA" Type="Self.CAIXINHA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CAIXINHA">
+        <PropertyRef Name="PESSOA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CAIXINHA_I__OSSB__39987BE6">
+    <End Role="OSSB" Type="Self.OSSB" Multiplicity="0..1" />
+    <End Role="CAIXINHA_ITEM" Type="Self.CAIXINHA_ITEM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CAIXINHA_ITEM">
+        <PropertyRef Name="OSSB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CLIENTE_SA__OSSB__38A457AD">
+    <End Role="OSSB" Type="Self.OSSB" Multiplicity="1" />
+    <End Role="CLIENTE_SATISFACAO" Type="Self.CLIENTE_SATISFACAO" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CLIENTE_SATISFACAO">
+        <PropertyRef Name="OSSB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__COMPRA_PA__COMPR__3429BB53">
+    <End Role="COMPRA" Type="Self.COMPRA" Multiplicity="1" />
+    <End Role="COMPRA_PARCELA" Type="Self.COMPRA_PARCELA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COMPRA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="COMPRA_PARCELA">
+        <PropertyRef Name="COMPRA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__COMPRA_PA__FORMA__324172E1">
+    <End Role="FORMA_PAGAMENTO" Type="Self.FORMA_PAGAMENTO" Multiplicity="0..1" />
+    <End Role="COMPRA_PARCELA" Type="Self.COMPRA_PARCELA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FORMA_PAGAMENTO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="COMPRA_PARCELA">
+        <PropertyRef Name="FORMA_PAGAMENTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CONTA_BAN__BANCO__4262CC11">
+    <End Role="BANCO" Type="Self.BANCO" Multiplicity="1" />
+    <End Role="CONTA_BANCARIA" Type="Self.CONTA_BANCARIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BANCO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CONTA_BANCARIA">
+        <PropertyRef Name="BANCO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CONTA_BAN__PESSO__416EA7D8">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="CONTA_BANCARIA" Type="Self.CONTA_BANCARIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CONTA_BANCARIA">
+        <PropertyRef Name="PESSOA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CONTA_BAN__TIPO___4356F04A">
+    <End Role="TIPO_CONTA" Type="Self.TIPO_CONTA" Multiplicity="1" />
+    <End Role="CONTA_BANCARIA" Type="Self.CONTA_BANCARIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_CONTA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CONTA_BANCARIA">
+        <PropertyRef Name="TIPO_CONTA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CONTAS_RE__CONTA__1B13F4C6">
+    <End Role="CONTA_BANCARIA" Type="Self.CONTA_BANCARIA" Multiplicity="0..1" />
+    <End Role="CONTAS_RECEBER" Type="Self.CONTAS_RECEBER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONTA_BANCARIA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CONTAS_RECEBER">
+        <PropertyRef Name="CONTA_BANCARIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__CONTAS_REC__OSSB__3B80C458">
+    <End Role="OSSB" Type="Self.OSSB" Multiplicity="1" />
+    <End Role="CONTAS_RECEBER" Type="Self.CONTAS_RECEBER" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CONTAS_RECEBER">
+        <PropertyRef Name="OSSB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DESPESA__CLASSE__1F83A428">
+    <End Role="DESPESA_CLASSE" Type="Self.DESPESA_CLASSE" Multiplicity="1" />
+    <End Role="DESPESA" Type="Self.DESPESA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DESPESA_CLASSE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DESPESA">
+        <PropertyRef Name="CLASSE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DESPESA_R__DESPE__50E5F592">
+    <End Role="DESPESA" Type="Self.DESPESA" Multiplicity="1" />
+    <End Role="DESPESA_RECORRENTE" Type="Self.DESPESA_RECORRENTE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DESPESA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DESPESA_RECORRENTE">
+        <PropertyRef Name="DESPESA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DESPESA_R__PESSO__51DA19CB">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="DESPESA_RECORRENTE" Type="Self.DESPESA_RECORRENTE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DESPESA_RECORRENTE">
+        <PropertyRef Name="PESSOA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DESPESA_R__PROJE__52CE3E04">
+    <End Role="PROJETO" Type="Self.PROJETO" Multiplicity="1" />
+    <End Role="DESPESA_RECORRENTE" Type="Self.DESPESA_RECORRENTE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJETO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="DESPESA_RECORRENTE">
+        <PropertyRef Name="PROJETO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FUNCIONAR__ANEXO__0E04126B">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="FUNCIONARIO_DOCUMENTO" Type="Self.FUNCIONARIO_DOCUMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FUNCIONARIO_DOCUMENTO">
+        <PropertyRef Name="FUNCIONARIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FUNCIONAR__ANEXO__14B10FFA">
+    <End Role="ANEXO" Type="Self.ANEXO" Multiplicity="1" />
+    <End Role="FUNCIONARIO_DOCUMENTO" Type="Self.FUNCIONARIO_DOCUMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANEXO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FUNCIONARIO_DOCUMENTO">
+        <PropertyRef Name="ANEXO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FUNCIONAR__OBSER__320C68B7">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="FUNCIONARIO_CARTAO_PONTO" Type="Self.FUNCIONARIO_CARTAO_PONTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="FUNCIONARIO_CARTAO_PONTO">
+        <PropertyRef Name="FUNCIONARIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LOJA_EQUI__IMAGE__17236851">
+    <End Role="ANEXO" Type="Self.ANEXO" Multiplicity="0..1" />
+    <End Role="LOJA_EQUIPAMENTO" Type="Self.LOJA_EQUIPAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANEXO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LOJA_EQUIPAMENTO">
+        <PropertyRef Name="IMAGEM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LOJA_EQUI__MODEL__0169315C">
+    <End Role="MODELO" Type="Self.MODELO" Multiplicity="1" />
+    <End Role="LOJA_EQUIPAMENTO" Type="Self.LOJA_EQUIPAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MODELO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LOJA_EQUIPAMENTO">
+        <PropertyRef Name="MODELO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LOJA_EQUIP__LOJA__00750D23">
+    <End Role="LOJA" Type="Self.LOJA" Multiplicity="1" />
+    <End Role="LOJA_EQUIPAMENTO" Type="Self.LOJA_EQUIPAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOJA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LOJA_EQUIPAMENTO">
+        <PropertyRef Name="LOJA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LOJA_EQUIP__TIPO__025D5595">
+    <End Role="TIPO" Type="Self.TIPO" Multiplicity="1" />
+    <End Role="LOJA_EQUIPAMENTO" Type="Self.LOJA_EQUIPAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LOJA_EQUIPAMENTO">
+        <PropertyRef Name="TIPO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MATERIAL__FORNEC__4B2D1C3C">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="MATERIAL" Type="Self.MATERIAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MATERIAL">
+        <PropertyRef Name="FORNECEDOR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MATERIAL__UNIDAD__4A38F803">
+    <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="1" />
+    <End Role="MATERIAL" Type="Self.MATERIAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIDADE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MATERIAL">
+        <PropertyRef Name="UNIDADE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MODELO__TIPO__71F1E3A2">
+    <End Role="TIPO" Type="Self.TIPO" Multiplicity="1" />
+    <End Role="MODELO" Type="Self.MODELO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MODELO">
+        <PropertyRef Name="TIPO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_CHECK__OSSB__3C74E891">
+    <End Role="OSSB" Type="Self.OSSB" Multiplicity="1" />
+    <End Role="OSSB_CHECK_LIST" Type="Self.OSSB_CHECK_LIST" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_CHECK_LIST">
+        <PropertyRef Name="OSSB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_MATE__FORNE__0FA2421A">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="0..1" />
+    <End Role="OSSB_MATERIAL" Type="Self.OSSB_MATERIAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_MATERIAL">
+        <PropertyRef Name="FORNECEDOR" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_MATE__UNIDA__0EAE1DE1">
+    <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="1" />
+    <End Role="OSSB_MATERIAL" Type="Self.OSSB_MATERIAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIDADE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_MATERIAL">
+        <PropertyRef Name="UNIDADE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_MATER__OSSB__3D690CCA">
+    <End Role="OSSB" Type="Self.OSSB" Multiplicity="1" />
+    <End Role="OSSB_MATERIAL" Type="Self.OSSB_MATERIAL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_MATERIAL">
+        <PropertyRef Name="OSSB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_SERV__UNIDA__1E6F845E">
+    <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="1" />
+    <End Role="OSSB_SERVICO" Type="Self.OSSB_SERVICO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIDADE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_SERVICO">
+        <PropertyRef Name="UNIDADE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_SERV__UNIDA__214BF109">
+    <End Role="UNIDADE" Type="Self.UNIDADE" Multiplicity="1" />
+    <End Role="OSSB_SERVICO" Type="Self.OSSB_SERVICO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIDADE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_SERVICO">
+        <PropertyRef Name="UNIDADE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_SITU__PESSO__7152C524">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="OSSB_SITUACAO_HISTORICO" Type="Self.OSSB_SITUACAO_HISTORICO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_SITUACAO_HISTORICO">
+        <PropertyRef Name="PESSOA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_SITUA__OSSB__310335E5">
+    <End Role="OSSB" Type="Self.OSSB" Multiplicity="1" />
+    <End Role="OSSB_SITUACAO_HISTORICO" Type="Self.OSSB_SITUACAO_HISTORICO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_SITUACAO_HISTORICO">
+        <PropertyRef Name="OSSB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__OSSB_SITUA__OSSB__37B03374">
+    <End Role="OSSB" Type="Self.OSSB" Multiplicity="1" />
+    <End Role="OSSB_SITUACAO_HISTORICO" Type="Self.OSSB_SITUACAO_HISTORICO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OSSB_SITUACAO_HISTORICO">
+        <PropertyRef Name="OSSB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PAGAMENTO__ANEXO__100C566E">
+    <End Role="ANEXO" Type="Self.ANEXO" Multiplicity="0..1" />
+    <End Role="PAGAMENTO" Type="Self.PAGAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANEXO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PAGAMENTO">
+        <PropertyRef Name="ANEXO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PAGAMENTO__CONTA__1A1FD08D">
+    <End Role="CONTA_BANCARIA" Type="Self.CONTA_BANCARIA" Multiplicity="0..1" />
+    <End Role="PAGAMENTO" Type="Self.PAGAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CONTA_BANCARIA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PAGAMENTO">
+        <PropertyRef Name="CONTA_BANCARIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PAGAMENTO__DESPE__477199F1">
+    <End Role="DESPESA" Type="Self.DESPESA" Multiplicity="1" />
+    <End Role="PAGAMENTO" Type="Self.PAGAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DESPESA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PAGAMENTO">
+        <PropertyRef Name="DESPESA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PAGAMENTO__OSSB__3A8CA01F">
+    <End Role="OSSB" Type="Self.OSSB" Multiplicity="0..1" />
+    <End Role="PAGAMENTO" Type="Self.PAGAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PAGAMENTO">
+        <PropertyRef Name="OSSB" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PAGAMENTO__PESSO__43A1090D">
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="1" />
+    <End Role="PAGAMENTO" Type="Self.PAGAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PESSOA">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PAGAMENTO">
+        <PropertyRef Name="PESSOA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PAGAMENTO__PROJE__42CCE065">
+    <End Role="PROJETO" Type="Self.PROJETO" Multiplicity="0..1" />
+    <End Role="PAGAMENTO" Type="Self.PAGAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJETO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PAGAMENTO">
+        <PropertyRef Name="PROJETO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PAGAMENTO__SERVI__0F183235">
+    <End Role="OSSB_SERVICO" Type="Self.OSSB_SERVICO" Multiplicity="0..1" />
+    <End Role="PAGAMENTO" Type="Self.PAGAMENTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OSSB_SERVICO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PAGAMENTO">
+        <PropertyRef Name="SERVICO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PESSOA__ESPECIAL__58671BC9">
+    <End Role="ESPECIALIDADE" Type="Self.ESPECIALIDADE" Multiplicity="0..1" />
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ESPECIALIDADE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PESSOA">
+        <PropertyRef Name="ESPECIALIDADE1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PESSOA__ESPECIAL__595B4002">
+    <End Role="ESPECIALIDADE" Type="Self.ESPECIALIDADE" Multiplicity="0..1" />
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ESPECIALIDADE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PESSOA">
+        <PropertyRef Name="ESPECIALIDADE2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PESSOA__ESPECIAL__5A4F643B">
+    <End Role="ESPECIALIDADE" Type="Self.ESPECIALIDADE" Multiplicity="0..1" />
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ESPECIALIDADE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PESSOA">
+        <PropertyRef Name="ESPECIALIDADE3" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PESSOA__IMAGEM__6E765879">
+    <End Role="ANEXO" Type="Self.ANEXO" Multiplicity="0..1" />
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANEXO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PESSOA">
+        <PropertyRef Name="IMAGEM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PESSOA__PROJETO__66EA454A">
+    <End Role="PROJETO" Type="Self.PROJETO" Multiplicity="0..1" />
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROJETO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PESSOA">
+        <PropertyRef Name="PROJETO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PESSOA__TIPO_ACE__08162EEB">
+    <End Role="FUNCIONARIO_TIPO_ACESSO" Type="Self.FUNCIONARIO_TIPO_ACESSO" Multiplicity="0..1" />
+    <End Role="PESSOA" Type="Self.PESSOA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FUNCIONARIO_TIPO_ACESSO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="PESSOA">
+        <PropertyRef Name="TIPO_ACESSO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VEICULO_M__ANEXO__53385258">
+    <End Role="ANEXO" Type="Self.ANEXO" Multiplicity="0..1" />
+    <End Role="VEICULO_MULTA" Type="Self.VEICULO_MULTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANEXO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="VEICULO_MULTA">
+        <PropertyRef Name="ANEXO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__VEICULO_M__VEICU__52442E1F">
+    <End Role="VEICULO" Type="Self.VEICULO" Multiplicity="0..1" />
+    <End Role="VEICULO_MULTA" Type="Self.VEICULO_MULTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VEICULO">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="VEICULO_MULTA">
+        <PropertyRef Name="VEICULO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="COPIAR_SERVICOS_OSSB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="saobento_sistema">
+    <Parameter Name="From" Type="int" Mode="In" />
+    <Parameter Name="To" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="ATIMOModelStoreContainer">
+    <EntitySet Name="ANEXO" EntityType="Self.ANEXO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="AREA_MANUTENCAO" EntityType="Self.AREA_MANUTENCAO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="BANCO" EntityType="Self.BANCO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="BENEFICIO" EntityType="Self.BENEFICIO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CAIXINHA" EntityType="Self.CAIXINHA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CAIXINHA_ITEM" EntityType="Self.CAIXINHA_ITEM" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CLIENTE_COMO_CONHECEU" EntityType="Self.CLIENTE_COMO_CONHECEU" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CLIENTE_SATISFACAO" EntityType="Self.CLIENTE_SATISFACAO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="COMO_CONHECEU" EntityType="Self.COMO_CONHECEU" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="COMPRA" EntityType="Self.COMPRA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="COMPRA_ITEM" EntityType="Self.COMPRA_ITEM" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="COMPRA_PARCELA" EntityType="Self.COMPRA_PARCELA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CONTA_BANCARIA" EntityType="Self.CONTA_BANCARIA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CONTAS_RECEBER" EntityType="Self.CONTAS_RECEBER" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CONTRATO" EntityType="Self.CONTRATO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CONTRATO_AREA_MANUTENCAO" EntityType="Self.CONTRATO_AREA_MANUTENCAO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CONTRATO_ESPECIALIDADE" EntityType="Self.CONTRATO_ESPECIALIDADE" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CONTRATO_LOJA" EntityType="Self.CONTRATO_LOJA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CONTRATO_SERVICO" EntityType="Self.CONTRATO_SERVICO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="DEPARTAMENTO" EntityType="Self.DEPARTAMENTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="DESPESA" EntityType="Self.DESPESA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="DESPESA_CLASSE" EntityType="Self.DESPESA_CLASSE" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="DESPESA_RECORRENTE" EntityType="Self.DESPESA_RECORRENTE" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="EMPRESA" EntityType="Self.EMPRESA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="EMPRESA_SERVICOPMSP" EntityType="Self.EMPRESA_SERVICOPMSP" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="EQUIPAMENTO" EntityType="Self.EQUIPAMENTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="ESPECIALIDADE" EntityType="Self.ESPECIALIDADE" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FAT_FATURAMENTO" EntityType="Self.FAT_FATURAMENTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FAT_SERVICOS_PMSP" EntityType="Self.FAT_SERVICOS_PMSP" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FERIADO" EntityType="Self.FERIADO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FERRAMENTA" EntityType="Self.FERRAMENTA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FORMA_PAGAMENTO" EntityType="Self.FORMA_PAGAMENTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FORNECEDOR_TIPO_MATERIAL" EntityType="Self.FORNECEDOR_TIPO_MATERIAL" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FUNCAO" EntityType="Self.FUNCAO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FUNCIONARIO_CARTAO_PONTO" EntityType="Self.FUNCIONARIO_CARTAO_PONTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FUNCIONARIO_CHECK_LIST" EntityType="Self.FUNCIONARIO_CHECK_LIST" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FUNCIONARIO_DEPARTAMENTO" EntityType="Self.FUNCIONARIO_DEPARTAMENTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FUNCIONARIO_DOCUMENTO" EntityType="Self.FUNCIONARIO_DOCUMENTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="FUNCIONARIO_TIPO_ACESSO" EntityType="Self.FUNCIONARIO_TIPO_ACESSO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="GRUPO" EntityType="Self.GRUPO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="LOJA" EntityType="Self.LOJA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="LOJA_EQUIPAMENTO" EntityType="Self.LOJA_EQUIPAMENTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="MARCA" EntityType="Self.MARCA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="MATERIAL" EntityType="Self.MATERIAL" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="MODELO" EntityType="Self.MODELO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB" EntityType="Self.OSSB" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_ALBUM" EntityType="Self.OSSB_ALBUM" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_CHECK_LIST" EntityType="Self.OSSB_CHECK_LIST" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_COMUNICACAO" EntityType="Self.OSSB_COMUNICACAO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_ESPECIALIDADE" EntityType="Self.OSSB_ESPECIALIDADE" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_IMAGEM" EntityType="Self.OSSB_IMAGEM" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_MATERIAL" EntityType="Self.OSSB_MATERIAL" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_SERVICO" EntityType="Self.OSSB_SERVICO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_SERVICO_TERCEIRO" EntityType="Self.OSSB_SERVICO_TERCEIRO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_SITUACAO_HISTORICO" EntityType="Self.OSSB_SITUACAO_HISTORICO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_TECNICO" EntityType="Self.OSSB_TECNICO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="OSSB_VISTORIADOR" EntityType="Self.OSSB_VISTORIADOR" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="PAGAMENTO" EntityType="Self.PAGAMENTO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="PAGAMENTO_TERCEIRO" EntityType="Self.PAGAMENTO_TERCEIRO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="PATRIMONIO" EntityType="Self.PATRIMONIO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="PESSOA" EntityType="Self.PESSOA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="PESSOA_CLIENTE" EntityType="Self.PESSOA_CLIENTE" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="PESSOA_FUNCIONARIO" EntityType="Self.PESSOA_FUNCIONARIO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="PROJETO" EntityType="Self.PROJETO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="RATEIO" EntityType="Self.RATEIO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="REGISTRO" EntityType="Self.REGISTRO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="SERVICO" EntityType="Self.SERVICO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="SUBTAREFA" EntityType="Self.SUBTAREFA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="TAREFA" EntityType="Self.TAREFA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="TAREFA_MEMBRO" EntityType="Self.TAREFA_MEMBRO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="TERCEIRO_SERVICO" EntityType="Self.TERCEIRO_SERVICO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="TIPO" EntityType="Self.TIPO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="TIPO_CONTA" EntityType="Self.TIPO_CONTA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="UNIDADE" EntityType="Self.UNIDADE" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="VEICULO" EntityType="Self.VEICULO" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="VEICULO_MULTA" EntityType="Self.VEICULO_MULTA" Schema="saobento_sistema" store:Type="Tables" />
+    <EntitySet Name="CONTAS_PAGAR" EntityType="Self.CONTAS_PAGAR" store:Type="Views" store:Schema="saobento_sistema">
+      <DefiningQuery>SELECT 
+    [CONTAS_PAGAR].[ID] AS [ID], 
+    [CONTAS_PAGAR].[OSSB] AS [OSSB], 
+    [CONTAS_PAGAR].[PARA] AS [PARA], 
+    [CONTAS_PAGAR].[DATA_VENCIMENTO] AS [DATA_VENCIMENTO], 
+    [CONTAS_PAGAR].[DESPESA] AS [DESPESA], 
+    [CONTAS_PAGAR].[VALOR] AS [VALOR]
+    FROM [saobento_sistema].[CONTAS_PAGAR] AS [CONTAS_PAGAR]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="CONTAS_PAGAS" EntityType="Self.CONTAS_PAGAS" store:Type="Views" store:Schema="saobento_sistema">
+      <DefiningQuery>SELECT 
+    [CONTAS_PAGAS].[ID] AS [ID], 
+    [CONTAS_PAGAS].[OSSB] AS [OSSB], 
+    [CONTAS_PAGAS].[PESSOA] AS [PESSOA], 
+    [CONTAS_PAGAS].[DESPESA] AS [DESPESA], 
+    [CONTAS_PAGAS].[DATA_PAGAMENTO] AS [DATA_PAGAMENTO], 
+    [CONTAS_PAGAS].[VALOR] AS [VALOR]
+    FROM [saobento_sistema].[CONTAS_PAGAS] AS [CONTAS_PAGAS]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__CAIXINHA___DESPE__59904A2C" Association="Self.FK__CAIXINHA___DESPE__59904A2C">
+      <End Role="DESPESA" EntitySet="DESPESA" />
+      <End Role="CAIXINHA_ITEM" EntitySet="CAIXINHA_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CAIXINHA___PESSO__57A801BA" Association="Self.FK__CAIXINHA___PESSO__57A801BA">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="CAIXINHA_ITEM" EntitySet="CAIXINHA_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CAIXINHA__CONTA___53584DE9" Association="Self.FK__CAIXINHA__CONTA___53584DE9">
+      <End Role="CONTA_BANCARIA" EntitySet="CONTA_BANCARIA" />
+      <End Role="CAIXINHA" EntitySet="CAIXINHA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CAIXINHA__PESSOA__54CB950F" Association="Self.FK__CAIXINHA__PESSOA__54CB950F">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="CAIXINHA" EntitySet="CAIXINHA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CAIXINHA_I__OSSB__39987BE6" Association="Self.FK__CAIXINHA_I__OSSB__39987BE6">
+      <End Role="OSSB" EntitySet="OSSB" />
+      <End Role="CAIXINHA_ITEM" EntitySet="CAIXINHA_ITEM" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CLIENTE_SA__OSSB__38A457AD" Association="Self.FK__CLIENTE_SA__OSSB__38A457AD">
+      <End Role="OSSB" EntitySet="OSSB" />
+      <End Role="CLIENTE_SATISFACAO" EntitySet="CLIENTE_SATISFACAO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__COMPRA_PA__COMPR__3429BB53" Association="Self.FK__COMPRA_PA__COMPR__3429BB53">
+      <End Role="COMPRA" EntitySet="COMPRA" />
+      <End Role="COMPRA_PARCELA" EntitySet="COMPRA_PARCELA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__COMPRA_PA__FORMA__324172E1" Association="Self.FK__COMPRA_PA__FORMA__324172E1">
+      <End Role="FORMA_PAGAMENTO" EntitySet="FORMA_PAGAMENTO" />
+      <End Role="COMPRA_PARCELA" EntitySet="COMPRA_PARCELA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CONTA_BAN__BANCO__4262CC11" Association="Self.FK__CONTA_BAN__BANCO__4262CC11">
+      <End Role="BANCO" EntitySet="BANCO" />
+      <End Role="CONTA_BANCARIA" EntitySet="CONTA_BANCARIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CONTA_BAN__PESSO__416EA7D8" Association="Self.FK__CONTA_BAN__PESSO__416EA7D8">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="CONTA_BANCARIA" EntitySet="CONTA_BANCARIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CONTA_BAN__TIPO___4356F04A" Association="Self.FK__CONTA_BAN__TIPO___4356F04A">
+      <End Role="TIPO_CONTA" EntitySet="TIPO_CONTA" />
+      <End Role="CONTA_BANCARIA" EntitySet="CONTA_BANCARIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CONTAS_RE__CONTA__1B13F4C6" Association="Self.FK__CONTAS_RE__CONTA__1B13F4C6">
+      <End Role="CONTA_BANCARIA" EntitySet="CONTA_BANCARIA" />
+      <End Role="CONTAS_RECEBER" EntitySet="CONTAS_RECEBER" />
+    </AssociationSet>
+    <AssociationSet Name="FK__CONTAS_REC__OSSB__3B80C458" Association="Self.FK__CONTAS_REC__OSSB__3B80C458">
+      <End Role="OSSB" EntitySet="OSSB" />
+      <End Role="CONTAS_RECEBER" EntitySet="CONTAS_RECEBER" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DESPESA__CLASSE__1F83A428" Association="Self.FK__DESPESA__CLASSE__1F83A428">
+      <End Role="DESPESA_CLASSE" EntitySet="DESPESA_CLASSE" />
+      <End Role="DESPESA" EntitySet="DESPESA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DESPESA_R__DESPE__50E5F592" Association="Self.FK__DESPESA_R__DESPE__50E5F592">
+      <End Role="DESPESA" EntitySet="DESPESA" />
+      <End Role="DESPESA_RECORRENTE" EntitySet="DESPESA_RECORRENTE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DESPESA_R__PESSO__51DA19CB" Association="Self.FK__DESPESA_R__PESSO__51DA19CB">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="DESPESA_RECORRENTE" EntitySet="DESPESA_RECORRENTE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DESPESA_R__PROJE__52CE3E04" Association="Self.FK__DESPESA_R__PROJE__52CE3E04">
+      <End Role="PROJETO" EntitySet="PROJETO" />
+      <End Role="DESPESA_RECORRENTE" EntitySet="DESPESA_RECORRENTE" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FUNCIONAR__ANEXO__0E04126B" Association="Self.FK__FUNCIONAR__ANEXO__0E04126B">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="FUNCIONARIO_DOCUMENTO" EntitySet="FUNCIONARIO_DOCUMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FUNCIONAR__ANEXO__14B10FFA" Association="Self.FK__FUNCIONAR__ANEXO__14B10FFA">
+      <End Role="ANEXO" EntitySet="ANEXO" />
+      <End Role="FUNCIONARIO_DOCUMENTO" EntitySet="FUNCIONARIO_DOCUMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FUNCIONAR__OBSER__320C68B7" Association="Self.FK__FUNCIONAR__OBSER__320C68B7">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="FUNCIONARIO_CARTAO_PONTO" EntitySet="FUNCIONARIO_CARTAO_PONTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LOJA_EQUI__IMAGE__17236851" Association="Self.FK__LOJA_EQUI__IMAGE__17236851">
+      <End Role="ANEXO" EntitySet="ANEXO" />
+      <End Role="LOJA_EQUIPAMENTO" EntitySet="LOJA_EQUIPAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LOJA_EQUI__MODEL__0169315C" Association="Self.FK__LOJA_EQUI__MODEL__0169315C">
+      <End Role="MODELO" EntitySet="MODELO" />
+      <End Role="LOJA_EQUIPAMENTO" EntitySet="LOJA_EQUIPAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LOJA_EQUIP__LOJA__00750D23" Association="Self.FK__LOJA_EQUIP__LOJA__00750D23">
+      <End Role="LOJA" EntitySet="LOJA" />
+      <End Role="LOJA_EQUIPAMENTO" EntitySet="LOJA_EQUIPAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LOJA_EQUIP__TIPO__025D5595" Association="Self.FK__LOJA_EQUIP__TIPO__025D5595">
+      <End Role="TIPO" EntitySet="TIPO" />
+      <End Role="LOJA_EQUIPAMENTO" EntitySet="LOJA_EQUIPAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MATERIAL__FORNEC__4B2D1C3C" Association="Self.FK__MATERIAL__FORNEC__4B2D1C3C">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="MATERIAL" EntitySet="MATERIAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MATERIAL__UNIDAD__4A38F803" Association="Self.FK__MATERIAL__UNIDAD__4A38F803">
+      <End Role="UNIDADE" EntitySet="UNIDADE" />
+      <End Role="MATERIAL" EntitySet="MATERIAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MODELO__TIPO__71F1E3A2" Association="Self.FK__MODELO__TIPO__71F1E3A2">
+      <End Role="TIPO" EntitySet="TIPO" />
+      <End Role="MODELO" EntitySet="MODELO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_CHECK__OSSB__3C74E891" Association="Self.FK__OSSB_CHECK__OSSB__3C74E891">
+      <End Role="OSSB" EntitySet="OSSB" />
+      <End Role="OSSB_CHECK_LIST" EntitySet="OSSB_CHECK_LIST" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_MATE__FORNE__0FA2421A" Association="Self.FK__OSSB_MATE__FORNE__0FA2421A">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="OSSB_MATERIAL" EntitySet="OSSB_MATERIAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_MATE__UNIDA__0EAE1DE1" Association="Self.FK__OSSB_MATE__UNIDA__0EAE1DE1">
+      <End Role="UNIDADE" EntitySet="UNIDADE" />
+      <End Role="OSSB_MATERIAL" EntitySet="OSSB_MATERIAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_MATER__OSSB__3D690CCA" Association="Self.FK__OSSB_MATER__OSSB__3D690CCA">
+      <End Role="OSSB" EntitySet="OSSB" />
+      <End Role="OSSB_MATERIAL" EntitySet="OSSB_MATERIAL" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_SERV__UNIDA__1E6F845E" Association="Self.FK__OSSB_SERV__UNIDA__1E6F845E">
+      <End Role="UNIDADE" EntitySet="UNIDADE" />
+      <End Role="OSSB_SERVICO" EntitySet="OSSB_SERVICO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_SERV__UNIDA__214BF109" Association="Self.FK__OSSB_SERV__UNIDA__214BF109">
+      <End Role="UNIDADE" EntitySet="UNIDADE" />
+      <End Role="OSSB_SERVICO" EntitySet="OSSB_SERVICO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_SITU__PESSO__7152C524" Association="Self.FK__OSSB_SITU__PESSO__7152C524">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="OSSB_SITUACAO_HISTORICO" EntitySet="OSSB_SITUACAO_HISTORICO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_SITUA__OSSB__310335E5" Association="Self.FK__OSSB_SITUA__OSSB__310335E5">
+      <End Role="OSSB" EntitySet="OSSB" />
+      <End Role="OSSB_SITUACAO_HISTORICO" EntitySet="OSSB_SITUACAO_HISTORICO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__OSSB_SITUA__OSSB__37B03374" Association="Self.FK__OSSB_SITUA__OSSB__37B03374">
+      <End Role="OSSB" EntitySet="OSSB" />
+      <End Role="OSSB_SITUACAO_HISTORICO" EntitySet="OSSB_SITUACAO_HISTORICO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PAGAMENTO__ANEXO__100C566E" Association="Self.FK__PAGAMENTO__ANEXO__100C566E">
+      <End Role="ANEXO" EntitySet="ANEXO" />
+      <End Role="PAGAMENTO" EntitySet="PAGAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PAGAMENTO__CONTA__1A1FD08D" Association="Self.FK__PAGAMENTO__CONTA__1A1FD08D">
+      <End Role="CONTA_BANCARIA" EntitySet="CONTA_BANCARIA" />
+      <End Role="PAGAMENTO" EntitySet="PAGAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PAGAMENTO__DESPE__477199F1" Association="Self.FK__PAGAMENTO__DESPE__477199F1">
+      <End Role="DESPESA" EntitySet="DESPESA" />
+      <End Role="PAGAMENTO" EntitySet="PAGAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PAGAMENTO__OSSB__3A8CA01F" Association="Self.FK__PAGAMENTO__OSSB__3A8CA01F">
+      <End Role="OSSB" EntitySet="OSSB" />
+      <End Role="PAGAMENTO" EntitySet="PAGAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PAGAMENTO__PESSO__43A1090D" Association="Self.FK__PAGAMENTO__PESSO__43A1090D">
+      <End Role="PESSOA" EntitySet="PESSOA" />
+      <End Role="PAGAMENTO" EntitySet="PAGAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PAGAMENTO__PROJE__42CCE065" Association="Self.FK__PAGAMENTO__PROJE__42CCE065">
+      <End Role="PROJETO" EntitySet="PROJETO" />
+      <End Role="PAGAMENTO" EntitySet="PAGAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PAGAMENTO__SERVI__0F183235" Association="Self.FK__PAGAMENTO__SERVI__0F183235">
+      <End Role="OSSB_SERVICO" EntitySet="OSSB_SERVICO" />
+      <End Role="PAGAMENTO" EntitySet="PAGAMENTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PESSOA__ESPECIAL__58671BC9" Association="Self.FK__PESSOA__ESPECIAL__58671BC9">
+      <End Role="ESPECIALIDADE" EntitySet="ESPECIALIDADE" />
+      <End Role="PESSOA" EntitySet="PESSOA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PESSOA__ESPECIAL__595B4002" Association="Self.FK__PESSOA__ESPECIAL__595B4002">
+      <End Role="ESPECIALIDADE" EntitySet="ESPECIALIDADE" />
+      <End Role="PESSOA" EntitySet="PESSOA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PESSOA__ESPECIAL__5A4F643B" Association="Self.FK__PESSOA__ESPECIAL__5A4F643B">
+      <End Role="ESPECIALIDADE" EntitySet="ESPECIALIDADE" />
+      <End Role="PESSOA" EntitySet="PESSOA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PESSOA__IMAGEM__6E765879" Association="Self.FK__PESSOA__IMAGEM__6E765879">
+      <End Role="ANEXO" EntitySet="ANEXO" />
+      <End Role="PESSOA" EntitySet="PESSOA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PESSOA__PROJETO__66EA454A" Association="Self.FK__PESSOA__PROJETO__66EA454A">
+      <End Role="PROJETO" EntitySet="PROJETO" />
+      <End Role="PESSOA" EntitySet="PESSOA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PESSOA__TIPO_ACE__08162EEB" Association="Self.FK__PESSOA__TIPO_ACE__08162EEB">
+      <End Role="FUNCIONARIO_TIPO_ACESSO" EntitySet="FUNCIONARIO_TIPO_ACESSO" />
+      <End Role="PESSOA" EntitySet="PESSOA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VEICULO_M__ANEXO__53385258" Association="Self.FK__VEICULO_M__ANEXO__53385258">
+      <End Role="ANEXO" EntitySet="ANEXO" />
+      <End Role="VEICULO_MULTA" EntitySet="VEICULO_MULTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__VEICULO_M__VEICU__52442E1F" Association="Self.FK__VEICULO_M__VEICU__52442E1F">
+      <End Role="VEICULO" EntitySet="VEICULO" />
+      <End Role="VEICULO_MULTA" EntitySet="VEICULO_MULTA" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

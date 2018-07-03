@@ -1,0 +1,343 @@
+﻿@model ATIMO.Models.Faturamento.FaturamentoCrudViewModel
+@using ATIMO.Helpers.ModelsUtils
+@{
+    ViewBag.Title = "Dados do Contas a Receber - Nota Fiscal Eletrônica de Serviço";
+}
+
+<link href="@Url.Content("~/Content/bootstrap-datepicker.css")" rel="stylesheet" />
+
+
+@Html.Partial("MenuFinanceiro")
+
+
+@Html.LayoutMessage()
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>@ViewBag.Title</h3>
+                </div>
+
+                <div class="widget-content">
+
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-horizontal">
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+
+                            <fieldset>
+                                <legend></legend>
+
+                                <ul class="nav nav-tabs" role="tablist" id="ul_nf_tab_panel" style="margin-bottom:20px;">
+                                    <li role="presentation"><a href="@Url.Action("Edit","NotasFiscais", new { id = Model.Faturamento.ID })" aria-controls="notafiscal" role="tab">Nota Fiscal</a></li>
+                                    <li role="presentation" class="active"><a href="#" aria-controls="contasareceber" role="tab" >Contas a Receber</a></li>
+                                </ul>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="hidden" name="ID" value="@Model.Faturamento.ID" id="txtIdNotaFiscal" />
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <strong class="panel-title">Dados do Faturamento</strong>
+                                            </div>
+                                            <div class="panel-body">
+
+                                                <table class="table table-striped" style="margin-bottom:0px;">
+                                                    <tr>
+                                                        <td style="width:33%">
+                                                            <strong>OSSB:</strong> <span>@Model.Faturamento.OSSBID</span>
+                                                        </td>
+                                                        <td style="width:33%">
+                                                            <strong>Código do Faturamento: </strong> <span>@Model.Faturamento.ID</span>
+                                                        </td>
+                                                        <td style="width:33%">
+                                                            <strong>Número da NF:</strong> <span>@( (!Model.Faturamento.NumeroNF.HasValue) ? "(Não emitida)" : Convert.ToString(Model.Faturamento.NumeroNF))</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <strong>Cliente: </strong> <span>@Model.Faturamento.Cliente.ID - @Model.Faturamento.Cliente.NOME</span>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="3">
+                                                            <div class="pull-left" style="margin-right:10px;"><strong>Descrição da NF: </strong> </div>
+                                                            <div class="pull-left">
+                                                                @Html.Raw(Model.Faturamento.Descricao.Replace(Environment.NewLine, "<br>"));
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <strong>Valor Total:</strong> <span>@Model.Faturamento.GetValorTotal()</span>
+                                                        </td>
+                                                        <td>
+                                                            <strong>Valor Líquido:</strong> <span>@Model.Faturamento.GetValorLiquido()</span>
+                                                        </td>
+                                                        <td>
+
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                <strong class="panel-title">Dados do Contas a Receber</strong>
+                                            </div>
+                                            <div class="panel-body">
+                                                <div class="form-group">
+                                                    <label for="txtHistoricoConRec" class="col-sm-2 control-label">Descrição</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" id="txtHistoricoConRec" placeholder="Descrição para o Contas a Receber" value="@Model.Faturamento.HistoricoContasReceber" name="HistoricoContasReceber">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="datepickerDataVencimentoContasReceber" class="col-sm-2 control-label">Data Vencimento</label>
+                                                    <div class="col-md-10">
+                                                        <div style="width:150px;" class="input-group date" data-provide="datepicker" id="datepickerDataVencimentoContasReceber">
+                                                            <input type="text" class="form-control" value="@( (Model.Faturamento.DataVencimentoContasReceber.HasValue) ? Model.Faturamento.DataVencimentoContasReceber.Value.ToString("dd/MM/yyyy") : "")" name="DataVencimentoContasReceber" id="txtDataVencimentoContasReceber">
+                                                            <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="txtHistoricoConRec" class="col-sm-2 control-label">Valor a Receber:</label>
+                                                    <div class="col-sm-10">
+                                                        <span>R$ @Model.Faturamento.GetValorLiquido()</span>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="cboTipoPagamento" class="col-sm-2 control-label">Tipo Pagamento:</label>
+                                                    <div class="col-md-10">
+                                                        <select id="cboTipoPagamento" name="TipoPagamentoContasReceber" class="form-control">
+                                                            <option @((Model.Faturamento.TipoPagamentoContasReceber == "BOLETO") ? "selected=selected" : "" ) value="BOLETO">BOLETO</option>
+                                                            <option @((Model.Faturamento.TipoPagamentoContasReceber == "DOC_TED") ? "selected=selected" : "" ) value="DOC_TED">DOC/TED</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" id="divUploadBoletoContainer" >
+                                                    <label for="uploadBoleto" class="col-sm-2 control-label">Boleto:</label>
+                                                    <div class="col-md-10">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <div id="divBoletoAnexado" style="display:@((string.IsNullOrEmpty(Model.Faturamento.CaminhoPDFBoletoContasReceber)) ? "none" : "block" );"><strong style="margin-right:10px;"><i class="glyphicon glyphicon-check" style="color:#26c200;"></i> Boleto anexado</strong></div>
+                                                                </td>
+                                                                <td>
+                                                                    <div id="divIncluirBoleto" style="display:@((string.IsNullOrEmpty(Model.Faturamento.CaminhoPDFBoletoContasReceber)) ? "block" : "none" );">
+                                                                        <button type="button" id="btn-upload-file" class="btn btn-primary"><i class="glyphicon glyphicon-paperclip"></i> Anexar boleto</button>
+                                                                    </div>
+                                                                    <div id="divVisualizarBoleto" style="display:@((string.IsNullOrEmpty(Model.Faturamento.CaminhoPDFBoletoContasReceber)) ? "none" : "block" );">
+                                                                        <a href="@Url.Action("AbrirArquivoContasReceber", "NotasFiscais", new { id = Model.Faturamento.ID })" class="btn btn-info" target="_blank" id="linkOpenFile"><i class="glyphicon glyphicon-barcode"></i> Visualizar Boleto</a>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div id="divExcluirBoleto" style="display:@((string.IsNullOrEmpty(Model.Faturamento.CaminhoPDFBoletoContasReceber)) ? "none" : "block" );">
+                                                                        <button type="button" id="btn-remove-file" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Remover</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <div style="display:none;">
+                                                            <span id="spanBoletoFileName">@Model.Faturamento.CaminhoPDFBoletoContasReceber</span>
+                                                            <input type="hidden" id="hidden-caminho-boleto" value="@Model.Faturamento.CaminhoPDFBoletoContasReceber" name="CaminhoPDFBoletoContasReceber" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="cboSituacaoPagamento" class="col-sm-2 control-label">Situação do Pagamento:</label>
+                                                    <div class="col-md-10">
+                                                        <select id="cboSituacaoPagamento" name="SituacaoPagamentoContasReceberId" class="form-control">
+                                                            @foreach (var situacao in ViewBag.ListaSituacaoPagamento)
+                                                            {
+                                                                <option @((Model.Faturamento.SituacaoPagamentoContasReceberId == situacao.ID) ? "selected=selected" : "" ) value="@situacao.ID" >@situacao.Descricao</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" id="divDataPagamento">
+                                                    <label for="datepickerDataPagamentoContasReceber" class="col-sm-2 control-label">Data do Pagamento</label>
+                                                    <div class="col-md-10">
+                                                        <div style="width:150px;" class="input-group date" data-provide="datepicker" id="datepickerDataPagamentoContasReceber">
+                                                            <input type="text" class="form-control" value="@( (Model.Faturamento.DataPagamentoContasReceber.HasValue) ? Model.Faturamento.DataPagamentoContasReceber.Value.ToString("dd/MM/yyyy") : "")" name="DataPagamentoContasReceber" id="txtDataPagamentoContasReceber">
+                                                            <div class="input-group-addon">
+                                                                <span class="glyphicon glyphicon-calendar"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="panel-footer text-right">
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-check-square-o"></i> Salvar</button>
+                                                <a class="btn btn-danger" href="~/NotasFiscais"><i class="fa fa-rotate-left"></i> Voltar</a>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                </div>
+                                </div>
+                            </fieldset>
+
+                        </div> <!-- /form-horizontal -->
+                    }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptFile("~/Scripts/utils.js");
+    Html.AddScriptFile("~/Scripts/bootstrap-datepicker.min.js");
+    Html.AddScriptFile("~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js");
+    Html.AddScriptFile("~/Scripts/moment.js");
+    Html.AddScriptFile("~/Scripts/moment-with-locales.js");
+    Html.AddScriptFile("~/Helpers/Uploader/Scripts/jquery.ajax_upload.0.6.js");
+
+    Html.AddScriptBlock(
+/// <reference path="Scripts/_references.js" />
+        @<script type="text/javascript">
+            //Controles
+            var datepickerDataVencimentoContasReceber = $("#datepickerDataVencimentoContasReceber");
+            var datepickerDataPagamentoContasReceber = $("#datepickerDataPagamentoContasReceber");
+            var cboTipoPagamento = $("#cboTipoPagamento");
+            var divUploadBoletoContainer = $("#divUploadBoletoContainer");
+            var cboSituacaoPagamento = $("#cboSituacaoPagamento");
+            var divDataPagamento = $("#divDataPagamento");
+
+            //Variáveis
+            var m_AjaxUploadUrl = '@Url.Content("~/Helpers/Uploader/Uploader.ashx")';
+            var m_AppRootUrl = '@ATIMO.Helpers.Utils.ApplicationRootUrl().TrimEnd('/')';
+            var m_AbrirArquivoContasReceberUrl = '@Url.Action("AbrirArquivoContasReceber", "NotasFiscais", new { id = Model.Faturamento.ID })';
+
+            //Binds
+            datepickerDataVencimentoContasReceber.datepicker({
+                format: 'dd/mm/yyyy',
+                startDate: '5d',
+                language : 'pt-BR'
+            });
+            datepickerDataPagamentoContasReceber.datepicker({
+                format: 'dd/mm/yyyy',
+                language: 'pt-BR'
+            });
+
+            cboTipoPagamento.change(function () {
+                CheckTipoPagamento();
+            });
+            cboSituacaoPagamento.change(function () {
+                CheckSituacaoPagamento();
+            });
+
+            $("#btn-remove-file").click(function () {
+                RemoveFile();
+            });
+
+            var AjaxUpload = function (a_ButtonID, a_ClassName, a_UploadCallback) {
+                var button = $(a_ButtonID), lobjAjaxUploadInverval;
+                var l_error = false;
+                $.ajax_upload(button, {
+                    action: function () {
+                        return m_AjaxUploadUrl;
+                    },
+                    name: 'myfile',
+                    fileExtensions: '.pdf,.jpeg,.jpg,.png,.gif,.bmp',
+                    data: {
+                        'className': a_ClassName
+                    },
+                    onSubmit: function (file, ext) {
+                        $(button).data("label_obj", button);
+                        $(button).data("label_txt", button.html());
+                        button.text('Uploading');                                 // change button text, when user selects file
+                        this.disable();                                           // If you want to allow uploading only 1 file at time, you can disable upload button
+                        lobjAjaxUploadInverval = window.setInterval(function () {  // Uploding -> Uploading. -> Uploading...
+                            var text = button.text();
+                            if (button.text().length < 13) { button.text(button.text() + '.'); } else { button.text('Uploading'); }
+                        }, 200);
+                    },
+                    onError: function (file, response) {
+                        var lobjResponse = $.parseJSON(response);
+                        if (lobjResponse.indexOf('HttpException') > -1) {
+                            alert("Erro ao tentar anexar o arquivo. " + "\n" + response);
+                        }
+                    },
+                    onComplete: function (file, response) {
+                        var b = $(button).data("label_obj");
+                        var t = $(button).data("label_txt");
+                        $(b).html(t);
+                        button.removeClass('hover');
+                        window.clearInterval(lobjAjaxUploadInverval);
+                        this.enable();                                 // enable upload button
+
+                        var lobjImg = $.parseJSON(response);
+
+                        if (lobjImg.indexOf('HttpException') == -1) {
+                            a_UploadCallback.call(this, lobjImg[0].relative_url, lobjImg[0].app_relative_url, lobjImg[0].file_size, lobjImg[0].original_filename);
+                        }
+                    }
+                });
+            }
+
+            var ShowFile = function (a_FileRelativeUrl, a_FileRelativePath, a_ParamReturn, a_OriginalFilename) {
+                $("#divVisualizarBoleto").show();
+                $("#divExcluirBoleto").show();
+                $("#divIncluirBoleto").hide();
+                $("#spanBoletoFileName").html(a_FileRelativeUrl);
+                $("#hidden-caminho-boleto").val(a_FileRelativeUrl);
+                $("#linkOpenFile").attr("href", m_AppRootUrl + a_FileRelativeUrl);
+                $("#divBoletoAnexado").show();
+            }
+
+            var RemoveFile = function () {
+                $("#divVisualizarBoleto").hide();
+                $("#divExcluirBoleto").hide();
+                $("#divIncluirBoleto").show();
+                $("#divIncluirBoleto").find("div").first().css({ "width": "auto", "height": "auto" });
+                $("#spanBoletoFileName").html("");
+                $("#hidden-caminho-boleto").val("");
+                $("#linkOpenFile").attr("href", "#");
+                $("#divBoletoAnexado").hide();
+            }
+            
+            var CheckTipoPagamento = function () {
+                if (cboTipoPagamento.val() == "BOLETO") {
+                    divUploadBoletoContainer.show();
+                }
+                else {
+                    divUploadBoletoContainer.hide();
+                }
+            };
+
+            var CheckSituacaoPagamento = function () {
+                if (cboSituacaoPagamento.val() == "2") {
+                    divDataPagamento.show();
+                }
+                else {
+                    divDataPagamento.hide();
+                }
+            };
+
+            //Call On Load
+            AjaxUpload("#btn-upload-file", "FaturamentoHelper", ShowFile);
+
+            CheckTipoPagamento();
+
+            CheckSituacaoPagamento();
+
+
+        </script>
+    );
+}
+

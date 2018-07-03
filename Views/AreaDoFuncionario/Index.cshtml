@@ -1,0 +1,97 @@
+﻿
+    @{
+        ViewBag.Title = "ÁTIMO - Area do Funcionario";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+
+
+
+    @Html.Partial("MenuAreaFuncionario")
+
+    <div class="main">
+        <div class="container">
+            <div class="widget">
+
+
+            <!--Caixa de agrupamento de atalhos-->
+            <div class="widget">
+                <!--Corpo da caixa de agrupamento-->
+                <div class="widget-content">
+                    <div class="shortcuts">
+                        <a href="~/AreaDoFuncionario/NaoValidadas" class="shortcut">
+                            <i class="shortcut-icon fa fa-money "></i>
+                            <span class="shortcut-label">CAIXINHA</span>
+                        </a>
+
+                        <a href="~/Cadastro/Index" class="shortcut">
+                            <i class="shortcut-icon fa fa-cog"></i>
+                            <span class="shortcut-label">CADASTROS</span>
+                        </a>
+
+                        <a href="~/LojaEquipamento/Search" class="shortcut">
+                            <i class="shortcut-icon fa fa-laptop"></i>
+                            <span class="shortcut-label">EQUIPAMENTOS</span>
+                        </a>
+
+                        <a href="~/VisitaInicial/Index/?situacao=I&situacao=O&situacao=E&ate=@HttpUtility.UrlEncode(DateTime.Today.AddDays(3).ToString("dd/MM/yyyy"))" class="shortcut">
+                            <i class="shortcut-icon fa fa-floppy-o"></i>
+                            <span class="shortcut-label">O.S DIÁRIA</span>
+                        </a>
+
+                        <a href="~/AreaDoFuncionario/Vencendo" class="shortcut">
+                            <i class="shortcut-icon fa fa-warning"></i>
+                            <span class="shortcut-label">OSSB VENCENDO</span>
+                        </a>
+
+                        <a href="~/FuncionarioCartaoPonto/Index" class="shortcut">
+                            <i class="shortcut-icon fa fa-clock-o"></i>
+                            <span class="shortcut-label">CARTÃO DE PONTO</span>
+                        </a>
+
+                        <a href="~/LojaEquipamento/Expired" class="shortcut">
+                            <i class="shortcut-icon fa fa-warning"></i>
+                            <span class="shortcut-label">EQUIPAMENTOS VENCENDO</span>
+                        </a>
+
+                        <a href="~/OssbCalendario/Index" class="shortcut">
+                            <i class="shortcut-icon fa fa-calendar"></i>
+                            <span class="shortcut-label">CALENDÁRIO DE CHECKLIST</span>
+                        </a>
+
+
+                        <a href="~/Dashboard/Index"  class="shortcut">
+                            <i class="shortcut-icon fa fa-dashboard"></i>
+                            <span class="shortcut-label">DASHBOARD</span>
+                        </a>
+
+                        <a href="#" onclick="window.open('https://www.wunderlist.com', '_blank');" class="shortcut">
+                            <i class="shortcut-icon fa fa-book"></i>
+                            <span class="shortcut-label">WUNDERLIST</span>
+                        </a>
+
+                        <a href="#" onclick="window.open('https://calendar.google.com/calendar', '_blank');"  class="shortcut">
+                            <i class="shortcut-icon fa fa-calendar"></i>
+                            <span class="shortcut-label">AGENDA</span>
+                        </a>
+
+                        <a href="~/AreaDoFuncionario/Resultado" class="shortcut">
+                            <i class="shortcut-icon fa fa-dollar"></i>
+                            <span class="shortcut-label">RESULTADO</span>
+                        </a>
+
+              
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @Html.Partial("Rodape")
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

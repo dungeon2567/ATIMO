@@ -1,0 +1,158 @@
+﻿@model List<ATIMO.ViewModel.FuncionarioViewModel>
+
+@{
+    ViewBag.Title = "Átimo - Funcionário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-user"></i>
+                    <h3>FUNCIONÁRIOS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-success" href="~/Funcionario/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/AreaDoFuncionario/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Cadastros
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        CPF
+                                    </th>
+
+                                    <th>
+                                        RG
+                                    </th>
+
+                                    <th>
+                                        NOME
+                                    </th>
+
+                                    <th>
+                                        RATEADO?
+                                    </th>
+
+                                    <th>
+                                        SITUAÇÂO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NumDoc)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.InscEstadual)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Razao)
+                                        </td>
+
+                                        @switch (item.FlgRateio)
+                                        {
+                                            case "S":
+                                                <td>
+                                                    <span class="label label-success">SIM</span>
+                                                </td>
+                                                break;
+                                            default:
+                                            <td>
+                                                <span class="label label-default">NÃO</span>
+                                            </td>
+                                                break;
+                                        }
+
+                                        @switch (item.Situacao)
+                                        {
+                                            case "A":
+                                                <td>
+                                                    <span class="label label-success">ATIVO</span>
+                                                </td>
+                                                break;
+                                            default:
+                                            <td>
+                                                <span class="label label-default">INATIVO</span>
+                                            </td>
+                                                break;
+                                        }
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/Funcionario/Edit/@item.Id">
+                                                <i class="fa fa-edit"></i>
+                                                Editar
+                                            </a>
+
+                                            @if (item.Situacao == "A")
+                                            {
+                                                if (item.FlgRateio == "S")
+                                                {
+                                                    <a class="btn btn-warning" href="~/FuncionarioCentroCusto/Index/@item.Id">
+                                                        <i class="fa fa-list"></i>
+                                                        Centro de Custos
+                                                    </a>
+                                                }
+
+                                                <a class="btn btn-success" href="~/PessoaBeneficio/Index/@item.Id">
+                                                    <i class="fa fa-plus-circle"></i>
+                                                    Beneficios
+                                                </a>
+
+                                                <a class="btn btn-danger" href="~/PessoaDespesa/Index/@item.Id">
+                                                    <i class="fa fa-minus-circle"></i>
+                                                    Despesas
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-12">
+                        <hr />
+                        <a class="btn btn-success" href="~/Funcionario/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/AreaDoFuncionario/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Cadastros
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")

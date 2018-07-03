@@ -1,0 +1,120 @@
+﻿@model IEnumerable<ATIMO.Models.FERRAMENTA>
+
+@{
+    ViewBag.Title = "ÁTIMO - Ferramentas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-legal"></i>
+                    <h3>FERRAMENTAS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-success" href="~/Ferramenta/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/AreaDoFuncionario/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Cadastros
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        GRUPO
+                                    </th>
+
+                                    <th>
+                                        TIPO
+                                    </th>
+
+                                    <th>
+                                        DESCRIÇÃO
+                                    </th>
+
+                                    <th>
+                                        QTD. MINIMA
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.GRUPO1.DESCRICAO)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.TIPO1.DESCRICAO)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DESCRICAO)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.MINIMO)
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/Ferramenta/Edit/@item.ID" title="Editar">
+                                                <i class="fa fa-edit"></i>
+                                                    Editar
+                                            </a>
+
+                                            <a class="btn btn-success" href="~/RateioFerramenta/Index/@item.ID" title="Rateio">
+                                                <i class="fa fa-edit"></i>
+                                                Rateio
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr />
+
+                        <a class="btn btn-success" href="~/Ferramenta/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/AreaDoFuncionario/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Cadastros
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

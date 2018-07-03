@@ -1,0 +1,196 @@
+﻿@model ATIMO.Models.OSSB_SERVICO
+@{
+    ViewBag.Title = "Átimo - OSSB Serviço";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-wrench"></i>
+                    <h3>OSSB/SERVIÇOS - EDITAR</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.OSSB)
+                        @Html.HiddenFor(model => model.ID)
+
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>SUBDIVISÃO</label>
+                                </div>
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SUBDIVISAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "SUBDIVISÃO", id = "subdivisao" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>DESCRIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase", maxlength = "1000", placeholder = "DESCRIÇÃO", rows = "5", id = "descricao" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>QUANTIDADE</label>
+                                </div>
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.QUANTIDADE_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "QUANTIDADE", id = "quantidade", required = "", alt = "decimal" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>VALOR MO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALOR_MO_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR MO", id = "valormo", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>VALOR MO COM BDI</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALOR_MO_BDI_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", id = "valormobdi", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>BDI MO (%)</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input class="form-control input-lg uppercase" maxlength="18" id="bdimo" alt="decimal" value="@ViewBag.MO_BDI" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>UNIDADE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("UNIDADE", ViewBag.UNIDADE as IEnumerable<SelectListItem>, null, new { required = "" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>VALOR MA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALOR_MA_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR MA", id = "valorma", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>VALOR MA COM BDI</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALOR_MA_BDI_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR MA COM BDI", id = "valormabdi", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>BDI MA (%)</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input class="form-control input-lg uppercase" maxlength="18" id="bdima" alt="decimal" value="@ViewBag.MA_BDI" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                @Html.ActionLink("Voltar", "Index", new { id = Model.OSSB })
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@Html.Partial("Rodape")
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/accounting.min.js"></script>
+
+    <script>
+        function update_mo_bdi() {
+            var valormo = accounting.unformat($("#valormo").val(), ',');
+
+            if (valormo != 0) {
+                $("#valormobdi").val(accounting.formatNumber((accounting.unformat($("#bdimo").val(), ',') / 100 + 1) * valormo, 2, '.', ','))
+            }
+        }
+
+        function update_ma_bdi() {
+            var valorma = accounting.unformat($("#valorma").val(), ',');
+
+            if (valorma != 0) {
+                $("#valormabdi").val(accounting.formatNumber((accounting.unformat($("#bdima").val(), ',') / 100 + 1) * valorma, 2, '.', ','))
+            }
+        }
+
+        $("#valormo").on("propertychange change keyup paste input", function () {
+            update_mo_bdi();
+        })
+
+        $("#bdimo").on("propertychange keyup paste input", function () {
+            update_mo_bdi();
+        })
+
+        $("#valormobdi").on("propertychange keyup paste input", function () {
+            var valormo = accounting.unformat($("#valormo").val(), ',');
+
+            if (valormo != 0) {
+                $("#bdimo").val(accounting.formatNumber((accounting.unformat($("#valormobdi").val(), ',') / valormo * 100) - 100, 2, '.', ','))
+            }
+        })
+
+
+        $("#valorma").on("propertychange change keyup paste input", function () {
+            update_ma_bdi();
+        })
+
+        $("#bdima").on("propertychange keyup paste input", function () {
+            update_ma_bdi();
+        })
+
+        $("#valormabdi").on("propertychange keyup paste input", function () {
+            var valorma = accounting.unformat($("#valorma").val(), ',');
+
+            if (valorma != 0) {
+                $("#bdima").val(accounting.formatNumber((accounting.unformat($("#valormabdi").val(), ',') / valorma * 100) - 100, 2, '.', ','))
+            }
+        })
+    </script>
+}

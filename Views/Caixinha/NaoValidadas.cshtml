@@ -1,0 +1,192 @@
+﻿@model IEnumerable<ATIMO.Models.CAIXINHA_ITEM>
+@using ATIMO;
+
+@{
+    ViewBag.Title = "Átimo - Caixinha não validadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>CAIXINHAS NÃO VALIDADAS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" href="~/Financeiro/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover tree">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        OSSB
+                                    </th>
+
+                                    <th>
+                                        PESSOA
+                                    </th>
+
+                                    <th>
+                                        DESCRIÇÃO
+                                    </th>
+
+                                    <th>
+                                        DATA
+                                    </th>
+
+                                    <th>
+                                        NOTA FISCAL
+                                    </th>
+
+                                    <th>
+                                        VALOR
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.OSSB.ToString()
+                                        </td>
+
+                                        <td>
+                                            @item.PESSOA1.RAZAO
+                                        </td>
+
+
+                                        <td>
+                                            @item.DESCRICAO
+                                        </td>
+
+                                        <td>
+                                            @item.DATA_QUITADO.ToString("dd/MM/yyyy")
+                                        </td>
+                                        <td>
+                                            @item.NOTA_FISCAL
+                                        </td>
+                                        <td>
+                                            @item.VALOR.ToString("C")
+                                        </td>
+                                        <td>
+                                            @if (item.ANEXO != null)
+                                            {
+                                                <a class="btn btn-info" href="/Caixinha/VisualizarArquivo/?id=@item.ID">
+                                                    <i class="fa fa-download"></i>
+                                                    Visualizar Imagem
+                                                </a>
+                                            }
+
+                                            <!--
+                                            <a class="btn btn-danger" onclick="openConfirmModal('/Caixinha/Deletar/?id=@item.ID');">
+                                                <i class="fa fa-remove"></i>
+                                                Deletar
+                                            </a>
+                                            -->
+
+                                            @if (item.VALIDACAO_OPERACIONAL == false && (Session.UsuarioId() == 72 || Session.UsuarioId() == 58))
+                                            {
+                                                <a class="btn btn-info" onclick="openConfirmModal('/Caixinha/ValidarOperacional/?id=@item.ID');">
+                                                    <i class="fa fa-rotate-left"></i>
+                                                    Validação Operacional
+                                                </a>
+                                            }
+
+                                            @if (item.VALIDACAO_FINANCEIRO == false && (Session.UsuarioId() == 83 || Session.UsuarioId() == 58))
+                                            {
+                                                <a class="btn btn-warning" onclick="openConfirmModal('/Caixinha/ValidarFinanceiro/?id=@item.ID');">
+                                                    <i class="fa fa-rotate-left"></i>
+                                                    Validação Financeiro
+                                                </a>
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <th colspan="4">
+
+                                    </th>
+
+                                    <th>
+                                        TOTAL
+                                    </th>
+                                    <th>
+                                        @Model.Select(ci => ci.VALOR).DefaultIfEmpty().Sum().ToString("C")
+                                    </th>
+
+                                    <th>
+
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirm-action" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirmar Ação</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Essa ação não pode ser desfeita.</p>
+                <p>Você realmente deseja continuar?</p>
+                <p class="debug-url"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-danger btn-ok">Confirmar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts
+{
+    <script>
+        function openConfirmModal(url) {
+            $('.btn-ok').attr('href', url);
+
+            $('.debug-url').html('Delete URL: <strong>' + $('.btn-ok').attr('href') + '</strong>');
+
+            $('#confirm-action').modal('show');
+        }
+
+    </script>
+}

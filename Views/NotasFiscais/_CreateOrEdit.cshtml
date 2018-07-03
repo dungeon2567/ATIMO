@@ -1,0 +1,469 @@
+﻿@model ATIMO.Models.Faturamento.FaturamentoCrudViewModel
+
+<link href = "@Url.Content("~/Content/bootstrap-datepicker.css")" rel = "stylesheet" />
+
+@{ 
+    var l_ViewType = ViewContext.RouteData.Values["action"].ToString();
+    var l_IsCreate = (l_ViewType.ToLower() == "create");
+}
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend></legend>
+
+            <ul class="nav nav-tabs" role="tablist" id="ul_nf_tab_panel" style="margin-bottom:20px; @((l_IsCreate) ? "display:none;" : "")">
+                <li role="presentation" class="active"><a href="#" aria-controls="notafiscal" role="tab">Nota Fiscal</a></li>
+                <li role="presentation"><a href="@Url.Action("ContasReceber","NotasFiscais", new { id = Model.Faturamento.ID })" aria-controls="contasareceber" role="tab">Contas a Receber</a></li>
+            </ul>
+                
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="hidden" name="ID" value="@Model.Faturamento.ID" id="txtIdNotaFiscal" />
+
+                    <div class="form-group">
+
+                        <label for="txtOSSB" class="col-sm-2 control-label">OSSB</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtOSSB" placeholder="Informe o número da OSSB" value="@Model.Faturamento.OSSBID" name="OSSBID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Dados do Cliente</label>
+                        <div class="col-sm-10">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <input type="hidden" id="hiddenIDCliente" name="ClienteID" value="@Model.Faturamento.ClienteID" />
+
+                                    <div class="form-group">
+                                        <label for="txtClienteNome" class="col-sm-2 control-label">Nome</label>
+                                        <div class="col-sm-10">
+                                            <label class="form-control-static">@Model.Faturamento.Cliente.NOME</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtClienteCNPJ" class="col-sm-2 control-label">CNPJ</label>
+                                        <div class="col-sm-10">
+                                            <label class="form-control-static">@Model.Faturamento.Cliente.NUM_DOC</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtClienteCidade" class="col-sm-2 control-label">Cidade</label>
+                                        <div class="col-sm-10">
+                                            <input type="hidden" id="CodIbgeMunicTomador" name="CodIbgeMunicTomador" value="@Model.CodigoIbgeCidadeTomador" />
+                                            <label class="form-control-static">@Model.Faturamento.Cliente.CIDADE</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="txtClienteFormaTrib" class="col-sm-2 control-label">Enquadramento</label>
+                                        <div class="col-sm-10">
+                                            <label class="form-control-static">@ATIMO.Models.PESSOA.getDescricaoTipoPessoaTrib(Model.Faturamento.Cliente.TIPO_PESSOA_TRIBUTACAO)</label>
+                                            <br />
+                                            <span>Essa informação é usada para o cálculo das retenções. Se estiver incorreta, vá no cadastro do cliente para corrigir</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-footer" style="text-align:right;">
+                                    @if (Model.MensagemValidacaoCliente != null)
+                {
+                    foreach (var l_message in Model.MensagemValidacaoCliente)
+                    {
+                                            <div style="color:red">@l_message</div>
+                                }
+                }
+
+                                    <a href="#" class="btn btn-default btn-sm">Atualizar dados</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                    <div class="form-group">
+                        <label for="EmpresaEmissaoID" class="col-sm-2 control-label">Empresa Emissora</label>
+                        <div class="col-sm-10">
+                            <select id="cboEmpresaEmissora" name="EmpresaEmissaoID" class="form-control">
+                                @if (Model.EmpresasEmissorasDisponiveis != null)
+                {
+                    foreach (var empresa in Model.EmpresasEmissorasDisponiveis)
+                    {
+                                        <option value="@empresa.ID" @( (empresa.ID == Model.Faturamento.EmpresaEmissao.ID) ? "selected='selected'" : "" )>@(empresa.Nome)</option>
+                            }
+                }
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="form-group">
+                        <label for="txtValorMaoDeObra" class="col-sm-2 control-label">Código do Serviço (PMSP)</label>
+                        <div class="col-sm-10">
+                            <select id="cboServicoPMSP" name="ServicoPMSPID" class="form-control">
+                                @if (Model.ServicosPMSP != null)
+                {
+                    foreach (var servico in Model.ServicosPMSP)
+                    {
+                                        <option value="@servico.Codigo" @( (servico.Codigo == Model.Faturamento.ServicoPMSPID) ? "selected='selected'" : "" )>@(servico.Codigo + " - " + servico.Descricao )</option>
+                            }
+                }
+                            </select>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label for="txtValorMaoDeObra" class="col-sm-2 control-label">Valor de Mão de Obra </label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtValorMaoDeObra" placeholder="" value="@Model.Faturamento.ValorMaoDeObra.ToString("#####0.00")" name="ValorMaoDeObra">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtValorOutrosServicos" class="col-sm-2 control-label">Valor dos outros serviços</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="txtValorOutrosServicos" placeholder="" value="@Model.Faturamento.ValorServico.ToString("#####0.00")" name="ValorServico">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Valor Total (validação)</label>
+                        <div class="col-sm-10">
+                            <label class="form-control-static" id="spanValorTotalValidacao">@Model.Faturamento.ValorBruto.ToString("#####0.00")</label>
+                        </div>
+
+                    </div>
+                    <hr />
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Impostos Retidos na Fonte</label>
+                        <div class="col-sm-10" id="divContainerTabelaRetencoes">
+
+                            @if (Model.RetencoesViewModel != null)
+                {
+                    @Html.Partial("_TabelaImpostosRetidos", Model.RetencoesViewModel);
+                }
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Descrição</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="Descricao" id="txtDescricao" style="height:200px;">@Model.Faturamento.Descricao</textarea>
+                            <div style="padding-top:10px; text-align:right;">
+                                <button type="button" class="btn btn-default" id="btnSelecionarDescricaoFaturamentoModelo">Selecionar descrição modelo</button> <!-- data-toggle="modal" data-target="#divModalDescricaoFaturamento" -->
+                                <button type="button" class="btn btn-success" id="btnSalvarNovaDescricaoFaturamento" style="display:none;">Salvar como novo modelo</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Pesquisa de Descrição (Início) -->
+                    <div class="modal fade" tabindex="-1" role="dialog" id="divModalDescricaoFaturamento">
+                        <div class="modal-dialog modal-lg" role="document" style="width:900px;">
+                            @Html.Partial("~/Views/NotasFiscais/_DescricaoFaturamento.cshtml")
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    <!-- Modal Pesquisa de Descrição (Fim   ) -->
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Opção de Emissão</label>
+
+                        <div class="col-sm-10">
+                            @if (Model.Faturamento.NumeroNF == 0 || Model.Faturamento.NumeroNF == null)
+                {
+                                <div style="float:left;">
+                                    <select class="form-control" id="cboOpcaoEmissao" name="OpcaoEmissao">
+                                        <option value="2">Agendar Para</option>
+                                        <option value="1">Emitir Agora</option>
+                                    </select>
+                                </div>
+                                <div style="float:left; width:150px;" class="input-group date" data-provide="datepicker" id="datepickerDataEmissao">
+                                    <input type="text" class="form-control" value="@( (Model.Faturamento.DataEmissao.HasValue) ? Model.Faturamento.DataEmissao.Value.ToString("dd/MM/yyyy") : "")" name="DataEmissao" id="txtDataEmissao">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-th"></span>
+                                    </div>
+                                </div>
+                    }
+                    else
+                    {
+                                <span class="form-control-static">@((Model.Faturamento.DataEmissao.HasValue) ? Model.Faturamento.DataEmissao.Value.ToString("dd/MM/yyyy") : "")</span>
+                                <input type="hidden" name="DataEmissao" value="@Model.Faturamento.DataEmissao.Value.ToString("dd/MM/yyyy")" />
+                    }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="text-align:right; ">
+                    <hr />
+
+                    @if (Model.Faturamento.NumeroNF == 0 || Model.Faturamento.NumeroNF == null)
+        {
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-check-square-o"></i> Salvar e continuar
+                        </button>
+            }
+
+                    <a class="btn btn-danger" href="~/NotasFiscais">
+                        <i class="fa fa-rotate-left"></i>
+                        Voltar
+                    </a>
+                </div>
+            </div>
+                
+
+            
+</fieldset>
+    </div>
+}
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptFile("~/Scripts/utils.js");
+    Html.AddScriptFile("~/Scripts/bootstrap-datepicker.min.js");
+    Html.AddScriptFile("~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js");
+    Html.AddScriptFile("~/Scripts/moment.js");
+    Html.AddScriptFile("~/Scripts/moment-with-locales.js");
+
+
+
+
+    Html.AddScriptBlock(
+/// <reference path="Scripts/_references.js" />
+        @<script type="text/javascript">
+
+            //Controls
+            var txtValorMaoDeObra = $("#txtValorMaoDeObra");
+            var txtValorOutrosServicos = $("#txtValorOutrosServicos");
+            var spanValorTotalValidacao = $("#spanValorTotalValidacao");
+            var cboEmpresaEmissora = $("#cboEmpresaEmissora");
+            var cboCodigoServico = $("#cboServicoPMSP");
+            var hiddenIDCliente = $("#hiddenIDCliente");
+            var datepickerDataEmissao = $("#datepickerDataEmissao");
+            var cmdCalcularRetencoes = $("#cmdCalcularRetencoes");
+            var cboOpcaoEmissao = $("#cboOpcaoEmissao");
+            var txtDescricao = $("#txtDescricao");
+            var btnSalvarNovaDescricaoFaturamento = $("#btnSalvarNovaDescricaoFaturamento");
+            var btnSelecionarDescricaoFaturamentoModelo = $("#btnSelecionarDescricaoFaturamentoModelo");
+            var txtIdNotaFiscal = $("#txtIdNotaFiscal");
+
+            //Membros
+            var l_ValorMaoDeObraHasChanged = false;
+            var l_ValorOutrosServicosHasChanged = false;
+            var m_URL_CheckImpostosRetidos = '@Url.Action("GetImpostosRetidos", "NotasFiscais")';
+            var m_URL_CheckServicosEmpresa = '@Url.Action("GetServicosEmpresa", "NotasFiscais")';
+
+                function ValorNumFormatado(valor)
+                {
+                    return (valor * 1).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: false });
+                }
+
+                function getValorFormatadoAsNum(valor) {
+                    var lstrRet = parseFloat(valor.replace('.', '').replace(',', '.'));
+                    if (isNaN(lstrRet))
+                        lstrRet = 0;
+                    return lstrRet;
+                }
+
+                //Functions
+                var SetValorTotal = function () {
+                    var l_valMaoObra = getValorFormatadoAsNum(txtValorMaoDeObra.val());
+                    var l_valOutros = getValorFormatadoAsNum(txtValorOutrosServicos.val());
+
+                    var l_valTotal = Math.round( (l_valMaoObra + l_valOutros) * 1e12) / 1e12;
+
+                    var l_valTotalFormatted = ValorNumFormatado(l_valTotal);
+
+                    spanValorTotalValidacao.html(l_valTotalFormatted);
+                }
+
+                var CheckServicosEmpresa = function () {
+                    var l_CodigoEmpresaEmissora = cboEmpresaEmissora.find(":selected").val();
+                    $('#cboServicoPMSP').children('option').remove();
+                    $.ajax({
+                        type: 'GET',
+                        url: m_URL_CheckServicosEmpresa,
+                        data: {
+                            IDEmpresaEmissora: l_CodigoEmpresaEmissora
+                        },
+                        success: function (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                var item = data[i];
+                                $("#cboServicoPMSP").append('<option value="' + item.Codigo + '">' + item.Codigo + ' - ' + item.Descricao + '</option>');
+                            }
+                            CheckImpostosRetidos();
+
+                        },
+                        error: function (data) {
+                            alert('Erro ao consultar os serviçoes desta empresa \n' + 'Erro:' + data.status + ' - ' + data.statusText + '\n' + data.responseText);
+                        }
+                    })
+                }
+
+                var CalculaTotalRetencoes = function(call_item_changed)
+                {
+                    var total_imposto = 0;
+                    var prefixo_input = (call_item_changed ? '#chkRetencao_' : '#lblRetencaoValor_');
+
+                    for (var i = 0; i < 10; i++) {
+                        var lobjSender = $(prefixo_input + i);
+                        if (lobjSender.length == 1)
+                        {
+                            if (call_item_changed) {
+                                total_imposto += ItemRetencaoChanged(lobjSender[0], false);
+                            }
+                            else {
+                                total_imposto += getValorFormatadoAsNum(lobjSender.text());
+                            }
+                        }
+                    }
+
+                    var valor_liquido = getValorFormatadoAsNum($("#spanValorTotalValidacao").text()) - total_imposto;
+                    $("#spanValorTotalImpostos").text(ValorNumFormatado(total_imposto));
+                    $("#spanValorLiquidoNota").text(ValorNumFormatado(valor_liquido));
+
+                }
+
+                var ItemRetencaoChanged = function (sender, calcula_total)
+                {
+                    $(sender).val(($(sender).is(':checked')) ? "S" : "N");
+                    return CalculaRetencaoItem(sender, $(sender).is(':checked'), calcula_total);
+                }
+
+                var CalculaRetencaoItem = function (sender, enabled, calcula_total)
+                {
+                    var tipo_imposto = sender.id.substring(sender.id.indexOf('_') + 1);
+                    var lstrVarNomePercent = '#txtRetencaoPercent_' + tipo_imposto;
+                    var lstrVarNomeBC = '#txtRetencaoBC_' + tipo_imposto;
+                    var lstrVarLblValor = '#lblRetencaoValor_' + tipo_imposto;
+                    var ldecVarRet = 0;
+                    if (enabled)
+                    {
+                        var ldecPercent = getValorFormatadoAsNum($(lstrVarNomePercent).val());
+                        var ldecBC = getValorFormatadoAsNum($(lstrVarNomeBC).val());
+                        ldecVarRet = ldecBC * ldecPercent / 100;
+                        ldecBC = ValorNumFormatado(ldecBC);
+                        ldecPercent = ValorNumFormatado(ldecPercent);
+                        $(lstrVarNomePercent).val(ldecPercent);
+                        $(lstrVarNomeBC).val(ldecBC);
+                    }
+
+                    
+                    $(lstrVarNomePercent).prop('disabled', !enabled);
+                    $(lstrVarNomeBC).prop('disabled', !enabled);
+
+                    var lstrRetString = ValorNumFormatado(ldecVarRet);
+                    $(lstrVarLblValor).text(lstrRetString);
+
+                    if (calcula_total)
+                    {
+                        CalculaTotalRetencoes(false);
+                    }
+
+                    return ldecVarRet;
+                }
+
+                var CheckImpostosRetidos = function () {
+                    var l_CodigoEmpresaEmissora = cboEmpresaEmissora.find(":selected").val();
+                    var l_CodigoServico = cboCodigoServico.find(":selected").val();
+                    var l_ValMaoDeObra = getValorFormatadoAsNum(txtValorMaoDeObra.val());
+                    var l_ValOutros = getValorFormatadoAsNum(txtValorOutrosServicos.val());
+                    var l_IDCliente = hiddenIDCliente.val();
+                    var l_IDFaturamento = txtIdNotaFiscal.val();
+                
+                    $.ajax({
+                        type: 'GET',
+                        url: m_URL_CheckImpostosRetidos,
+                        data: {
+                            IDEmpresaEmissora: l_CodigoEmpresaEmissora,
+                            IDCliente: l_IDCliente,
+                            ValorMaoDeObra: l_ValMaoDeObra,
+                            ValorOutrosServicos: l_ValOutros,
+                            CodigoServico: l_CodigoServico,
+                            IDFaturamento: l_IDFaturamento
+                        },
+                        beforeSend: function () {
+                            $("#divContainerTabelaRetencoes").html("Calculando...");
+                        },
+                        success: function (data) {
+                            $("#divContainerTabelaRetencoes").html(data);
+                            CalculaTotalRetencoes(true);
+                        },
+                        error: function (data) {
+                            $("#divContainerTabelaRetencoes").html("Erro ao consultar impostos retidos." + "<br>" + data.status + " - " + data.statusText);
+
+                            var l_ErrorDetails = $("<div id='divCheckImpostosRetidosErrorDetail'></div>").html(data.responseText);
+                            var l_ErrorDetailsLink = $("<a href='javascript:void(0);' style='display:block;'>Ver Detalhes</a>").click(function () { $('#divCheckImpostosRetidosErrorDetail').toggle(); });
+
+
+                            $("#divContainerTabelaRetencoes").append(l_ErrorDetailsLink);
+                            $("#divContainerTabelaRetencoes").append(l_ErrorDetails);
+
+                            alert('Erro ao consultar os impostos retidos. \n' + 'Erro:' + data.status + ' - ' + data.statusText + '\n' + data.responseText);
+                        }
+                    })
+                }
+
+                //Bind Events
+                btnSelecionarDescricaoFaturamentoModelo.click(function () {
+                    m_ModalFaturamentoDescricao.OpenList($("#txtDescricao")); //OpenList está dentro da PartialView _DescricaoFaturamento
+                });
+                btnSalvarNovaDescricaoFaturamento.click(function () {
+                    m_ModalFaturamentoDescricao.OpenCrud(0, $("#txtDescricao").val(), null, null, false); //OpenCRUD está dentro da PartialView _DescricaoFaturamento
+                })
+
+                txtValorMaoDeObra.keyup(function () {
+                    SetValorTotal();
+                    l_ValorMaoDeObraHasChanged = true;
+                });
+                txtValorMaoDeObra.blur(function () {
+                    if (l_ValorMaoDeObraHasChanged) {
+                        CheckImpostosRetidos();
+                        l_ValorMaoDeObraHasChanged = false;
+                        txtValorMaoDeObra.val(ValorNumFormatado(getValorFormatadoAsNum(txtValorMaoDeObra.val())));
+                    }
+                });
+                txtValorOutrosServicos.keyup(function () {
+                    SetValorTotal();
+                    l_ValorOutrosServicosHasChanged = true;
+                });
+                txtValorOutrosServicos.blur(function () {
+                    if (l_ValorOutrosServicosHasChanged) {
+                        CheckImpostosRetidos();
+                        l_ValorOutrosServicosHasChanged = false;
+                        txtValorOutrosServicos.val(ValorNumFormatado(getValorFormatadoAsNum(txtValorOutrosServicos.val())));
+                    }
+                });
+                cboEmpresaEmissora.change(function () {
+                    CheckServicosEmpresa();
+                });
+                datepickerDataEmissao.datepicker({
+                    format: 'dd/mm/yyyy',
+                    startDate: '-5d'
+                });
+                cboOpcaoEmissao.change(function () {
+                    if ($(this).find("option:selected").val() == 1)
+                        datepickerDataEmissao.hide();
+                    else
+                        datepickerDataEmissao.show();
+
+                });
+                txtDescricao.keyup(function () {
+                    if (txtDescricao.val() != "" && !btnSalvarNovaDescricaoFaturamento.is(":visible")) {
+                        btnSalvarNovaDescricaoFaturamento.show();
+                    }
+                    else {
+                        if(txtDescricao.val() == "")
+                            btnSalvarNovaDescricaoFaturamento.hide();
+                    }
+                });
+                
+                $(document).ready(function () {
+                    CalculaTotalRetencoes(true);
+                });
+
+        </script>
+    );
+}

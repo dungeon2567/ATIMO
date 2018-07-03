@@ -1,0 +1,108 @@
+﻿@model ATIMO.Models.PAGAMENTO_TERCEIRO
+
+@{
+    ViewBag.Title = "ÁTIMO - Adiantamentos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-th-large"></i>
+                    <h3>PAGAMENTOS TERCEIRO - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm("Create", "PagamentoTerceiro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.OSSB_SERVICO)
+                        @Html.HiddenFor(model => model.TERCEIRO)
+
+                        <fieldset>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>VALOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input name="VALOR_STRING" class="form-control input-lg" maxlength="10" alt="decimal" id="valor" value="@Model.VALOR.ToString("N2")" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>DATA DE PAGAMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input id="data_pagamento" name="DATA_PAGAMENTO" class="form-control input-lg datepicker" maxlength="10" alt="date" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>ANEXO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input type='file' class="form-control input-lg" name='Files' />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/PagamentoTerceiro/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

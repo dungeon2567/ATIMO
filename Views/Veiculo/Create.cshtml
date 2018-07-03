@@ -1,0 +1,468 @@
+﻿@model ATIMO.ViewModel.VeiculoViewModel
+
+@{
+    ViewBag.Title = "ÁTIMO - Veiculos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-legal"></i>
+                    <h3>VEICULOS - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <fieldset>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Veiculo/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+
+                                <hr />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>MARCA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("MARCA", null, "SELECIONE UMA MARCA", new { required = "", id = "marca" })
+                                    @Html.ValidationMessageFor(model => model.Marca, "Selecione uma marca!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>MODELO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("MODELO", null, "SELECIONE UM MODELO", new { required = "", id = "modelo" })
+                                    @Html.ValidationMessageFor(model => model.Modelo, "Selecione um modelo!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>ANO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.Ano, new { @class = "form-control input-lg uppercase requirido", maxlength = "4", id = "ano", required = "", placeholder = "ANO" })
+                                    @Html.ValidationMessageFor(model => model.Ano, "Informe um ano!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CHASSI</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.Chassi, new { @class = "form-control input-lg uppercase requirido", maxlength = "50", id = "chassi", placeholder = "CHASSI" })
+                                    @Html.ValidationMessageFor(model => model.Chassi)
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>PLACA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.Placa, new { @class = "form-control input-lg uppercase requirido", maxlength = "8", id = "placa", required = "", placeholder = "PLACA" })
+                                    @Html.ValidationMessageFor(model => model.Placa, "Informe uma placa!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>COMBUSTIVEL</label>
+                                </div>
+
+                                <select class="editor-field" id="combustivel" required="">
+                                    @if ((Model != null) && (Model.Combustivel == "A"))
+                                    {
+                                        <option value="A" selected="selected">ALCOOL</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ALCOOL</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.Combustivel == "D"))
+                                    {
+                                        <option value="D" selected="selected">DIESEL</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="D">DIESEL</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.Combustivel == "F"))
+                                    {
+                                        <option value="F" selected="selected">FLEX</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="F">FLEX</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.Combustivel == "G"))
+                                    {
+                                        <option value="G" selected="selected">GASOLINA</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="G">GASOLINA</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SEGURO (MÊS)</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.Seguro, new { @class = "form-control input-lg uppercase requirido", maxlength = "18", id = "seguro", required = "", placeholder = "SEGURO", alt = "decimal" })
+                                    @Html.ValidationMessageFor(model => model.Seguro, "Informe um valor de seguro!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>IPVA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.Ipva, new { @class = "form-control input-lg uppercase requirido", maxlength = "18", id = "ipva", required = "", placeholder = "IPVA", alt = "decimal" })
+                                    @Html.ValidationMessageFor(model => model.Ipva, "Informe um valor de ipva!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>PATRIMONIO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.Numero, new { @class = "form-control input-lg uppercase requirido", maxlength = "100", id = "numero", placeholder = "NUMERO", required = "" })
+                                    @Html.ValidationMessageFor(model => model.Numero, "Informe um número de patrimonio!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select class="editor-field" id="situacao" required="">
+                                    @if ((Model != null) && (Model.Situacao == "A"))
+                                    {
+                                        <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ATIVO</option>
+                                    }
+
+
+                                    @if ((Model != null) && (Model.Situacao == "I"))
+                                    {
+                                        <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>DT. AQUISIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DataAquisicao, new { @class = "form-control input-lg uppercase requirido", maxlength = "10", id = "dataAquisicao", required = "", placeholder = "AQUISIÇÃO", alt = "date" })
+                                    @Html.ValidationMessageFor(model => model.DataAquisicao, "Informe uma data de aquisição!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>VALOR DE COMPRA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.ValorCompra, new { @class = "form-control input-lg uppercase requirido", maxlength = "18", id = "valorCompra", required = "", placeholder = "VALOR", alt = "decimal" })
+                                    @Html.ValidationMessageFor(model => model.ValorCompra, "Informe um valor de compra!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>DEPRECIA?</label>
+                                </div>
+
+                                <select class="editor-field" name="FlgDeprecia" id="flgDeprecia" required="">
+                                    @if ((Model != null) && (Model.FlgDeprecia == "N"))
+                                    {
+                                        <option value="N" selected="selected">NÃO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="N">NÃO</option>
+                                    }
+
+
+                                    @if ((Model != null) && (Model.FlgDeprecia == "S"))
+                                    {
+                                        <option value="S" selected="selected">SIM</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="S">SIM</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>TIPO DEPRECIAÇÃO</label>
+                                </div>
+
+                                @if (Model != null && Model.FlgDeprecia == "S")
+                                {
+                                    <select class="editor-field" name="TipoDepreciacao" id="TipoDepreciacao" required="">
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "A"))
+                                        {
+                                            <option value="A" selected="selected">ANUAL</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="A">ANUAL</option>
+                                        }
+
+
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "B"))
+                                        {
+                                            <option value="B" selected="selected">BIMESTRAL</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="B">BIMESTRAL</option>
+                                        }
+
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "M"))
+                                        {
+                                            <option value="M" selected="selected">MENSAL</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="M">MENSAL</option>
+                                        }
+
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "S"))
+                                        {
+                                            <option value="S" selected="selected">SEMESTRAL</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="S">SEMESTRAL</option>
+                                        }
+
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "N"))
+                                        {
+                                            <option value="N" selected="selected">NENHUMA</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="N">NENHUMA</option>
+                                        }
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select class="editor-field" name="TipoDepreciacao" id="TipoDepreciacao" required="" disabled="">
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "A"))
+                                        {
+                                            <option value="A" selected="selected">ANUAL</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="A">ANUAL</option>
+                                        }
+
+
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "B"))
+                                        {
+                                            <option value="B" selected="selected">BIMESTRAL</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="B">BIMESTRAL</option>
+                                        }
+
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "M"))
+                                        {
+                                            <option value="M" selected="selected">MENSAL</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="M">MENSAL</option>
+                                        }
+
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "S"))
+                                        {
+                                            <option value="S" selected="selected">SEMESTRAL</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="S">SEMESTRAL</option>
+                                        }
+
+                                        @if ((Model != null) && (Model.TipoDepreciacao == "N"))
+                                        {
+                                            <option value="N" selected="selected">NENHUMA</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="N">NENHUMA</option>
+                                        }
+                                    </select>
+                                }
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>DEPRECIAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @if (Model != null && Model.FlgDeprecia == "S")
+                                    {
+                                        @Html.TextBoxFor(model => model.Depreciacao, new { @class = "form-control input-lg uppercase requirido", maxlength = "18", id = "depreciacao", required = "", placeholder = "DEPRECIAÇÃO", alt = "decimal" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBoxFor(model => model.Depreciacao, new { @class = "form-control input-lg uppercase requirido", maxlength = "18", id = "depreciacao", required = "", placeholder = "DEPRECIAÇÃO", alt = "decimal", disabled = "" })
+                                    }
+
+                                    @Html.ValidationMessageFor(model => model.Depreciacao, "Informe um valor de depreciação!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.Observacao)
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Veiculo/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#placa").setMask("aaa-9999");
+
+        $("#flgDeprecia").change(function () {
+            if ($("#flgDeprecia").val() === "N") {
+                $("#depreciacao").attr("readOnly", "");
+                $("#TipoDepreciacao").val("N");
+                $("#TipoDepreciacao").attr("disabled", "");
+                $("#depreciacao").val("0,00");
+            } else if ($("#flgDeprecia").val() === "S") {
+                $("#depreciacao").removeAttr("readOnly", "");
+                $("#depreciacao").removeAttr("disabled", "");
+                $("#TipoDepreciacao").val("A");
+                $("#TipoDepreciacao").removeAttr("disabled", "");
+                $("#TipoDepreciacao option[value='N']").hide();
+                $("#depreciacao").val("");
+            }
+        });
+
+        function salvar() {
+            var veiculo = new Object();
+            veiculo.Marca = $("#marca").val();
+            veiculo.Modelo = $("#modelo").val();
+            veiculo.Ano = $("#ano").val();
+            veiculo.Chassi = $("#chassi").val();
+            veiculo.Placa = $("#placa").val();
+            veiculo.Combustivel = $("#combustivel").val();
+            veiculo.Seguro = $("#seguro").val();
+            veiculo.Ipva = $("#ipva").val();
+            veiculo.Observacao = $("#observacao").val();
+            veiculo.Situacao = $("#situacao").val();
+            veiculo.Numero = $("#numero").val();
+            veiculo.FlgDeprecia = $("#flgDeprecia").val();
+            veiculo.DataAquisicao = $("#dataAquisicao").val();
+            veiculo.ValorCompra = $("#valorCompra").val();
+            veiculo.TipoDepreciacao = $("#TipoDepreciacao").val();
+            veiculo.Depreciacao = $("#depreciacao").val();
+
+            $.ajax({
+                url: "/Veiculo/ConfirmarCreate/",
+                data: JSON.stringify(veiculo),
+                type: "POST",
+                contentType: "application/json;",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status === 200) {
+                        alert(data.msg);
+                        window.location.href = "/Veiculo/Index/";
+                    }
+
+                    if (data.status === 100) {
+                        alert(data.ex);
+                    }
+                }
+            });
+        }
+    </script>
+}

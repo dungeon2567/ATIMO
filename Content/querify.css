@@ -1,0 +1,32 @@
+﻿.querify-container > * {
+       margin: 3px;
+}
+
+.query-item {
+    color: #555555;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    float: left;
+    padding: 6px;
+}
+
+ .query-item .close-button {
+     color: #999;
+     cursor: pointer;
+     padding: 1px;
+}
+
+.query-item .close-button:hover {
+    background: rgba(0,0,0,0.1);
+ }
+
+.query-item .bold-span {
+    font-weight: bold;
+    margin-left: 6px;
+}
+
+    .query-item .light-span {
+        font-weight: normal;
+        margin-left: 6px;
+    }

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<ATIMO.Models.FERIADO>
+
+@{
+    ViewBag.Title = "ÁTIMO - Feriados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-calendar"></i>
+                    <h3>FERIADOS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-success" href="~/Feriado/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/AreaDoFuncionario/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Cadastros
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        DATA
+                                    </th>
+
+                                    <th>
+                                        DESCRICAO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DATA)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DESCRICAO)
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/Feriado/Edit/@item.ID" title="Editar">
+                                                <i class="fa fa-edit"></i>
+                                                @*Editar*@
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr />
+
+                        <a class="btn btn-success" href="~/Feriado/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/AreaDoFuncionario/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Cadastros
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

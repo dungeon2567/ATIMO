@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "ÁTIMO - Operacional";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-bookmark"></i>
+                    <h3>OSSB</h3>
+                </div>
+        
+
+                <div class="widget-content">
+                    <div class="shortcuts">
+                        <a href="~/VisitaInicial/Index" class="shortcut">
+                            <i class="shortcut-icon fa fa-list-alt"></i>
+                            <span class="shortcut-label">INDÍCE</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

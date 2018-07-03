@@ -1,0 +1,362 @@
+﻿@model ATIMO.Models.CONTRATO_LOJA
+
+@{
+    ViewBag.Title = "Átimo - Contrato/Loja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuCadastro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-balance-scale"></i>
+                    <h3>CONTRATO/LOJA - EDITAR</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.CONTRATO)
+                        @Html.HiddenFor(model => model.LOJA1.ID, new { id = "id_loja" })
+                        @Html.HiddenFor(model => model.LOJA1.SITUACAO, new { id = "situacao_loja" })
+                        @Html.HiddenFor(model => model.LOJA1.FATURAR_EM, new { id = "faturar_em_loja" })
+                        @Html.HiddenFor(model => model.LOJA1.CLIENTE, new { id = "cliente_loja" })
+
+
+
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">LOJA</div>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="form-group col-md-5">
+                                                <div>
+                                                    <label>CNPJ</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.NUM_DOC, new { @class = "form-control input-lg", maxlength = "18", placeholder = "CNPJ", id = "num_doc_loja", required = "", alt = "cnpj" })
+                                                </div>
+                                            </div>
+
+
+                                            <div class="form-group col-md-5">
+                                                <div>
+                                                    <label>DESCRIÇÃO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.DESCRICAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "DESCRIÇÃO", id = "descricao_loja", required = "" })
+
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-5">
+                                                <div>
+                                                    <label>APELIDO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.APELIDO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "APELIDO", id = "apelido_loja", required = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <div>
+                                                    <label>CEP</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.CEP, new { @class = "form-control input-lg uppercase", maxlength = "9", placeholder = "CEP", id = "cep_loja", required = "", alt = "cep" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-10">
+                                                <div>
+                                                    <label>ENDEREÇO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.ENDERECO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "ENDEREÇO", id = "endereco_loja", required = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <div>
+                                                    <label>COMPLEMENTO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextAreaFor(model => model.LOJA1.COMPLEMENTO, new { @class = "form-control input-lg uppercase", placeholder = "COMPLEMENTO", id = "complemento_loja", rows = "5" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-5">
+                                                <div>
+                                                    <label>BAIRRO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.BAIRRO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "BAIRRO", id = "bairro_loja", required = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <div>
+                                                    <label>CIDADE</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.CIDADE, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "CIDADE", id = "cidade_loja", required = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-1">
+                                                <div>
+                                                    <label>UF</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.UF, new { @class = "form-control input-lg uppercase", maxlength = "2", placeholder = "UF", id = "uf_loja", required = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <div>
+                                                    <label>ZONA</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.ZONA, new { @class = "form-control input-lg uppercase", maxlength = "150", placeholder = "ZONA", id = "zona_loja" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <div>
+                                                    <label>TELEFONE 1</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.TELEFONE1, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "TELEFONE 1", id = "telefone1_loja", alt = "phone" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <div>
+                                                    <label>TELEFONE 2</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.TELEFONE2, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "TELEFONE 2", id = "telefone2_loja", alt = "phone" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <div>
+                                                    <label>CELULAR</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.TELEFONE3, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "CELULAR", id = "telefone3_loja", alt = "phone_9digito" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <div>
+                                                    <label>CONTATO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.CONTATO, new { @class = "form-control input-lg uppercase", maxlength = "150", placeholder = "CONTATO", id = "contato_loja", required = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <div>
+                                                    <label>EMAIL</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.LOJA1.EMAIL, new { @class = "form-control input-lg", type = "email", maxlength = "255", placeholder = "EMAIL", id = "email_loja", required = "" })
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <div>
+                                                    <label>OBSERVAÇÃO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextAreaFor(model => model.LOJA1.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao_loja", rows = "5" })
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">CONTRATO</div>
+                                    <div class="panel-body">
+                                        <fieldset>
+                                            <div class="form-group col-md-3">
+                                                <div>
+                                                    <label>VALOR CONTRATO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.VALOR_CONTRATO_STRING, new { @class = "form-control input-lg", maxlength = "10", id = "valorContrato", required = "", step = "any", @type = "number" })
+                                                    @Html.ValidationMessageFor(model => model.VALOR_CONTRATO, "Informe um valor!")
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-3">
+                                                <div>
+                                                    <label>VALOR TERCEIRO</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.VALOR_TERCEIRO_STRING, new { @class = "form-control input-lg", maxlength = "10", id = "valorTerceiro", required = "", step = "any", @type = "number" })
+                                                    @Html.ValidationMessageFor(model => model.VALOR_TERCEIRO, "Informe um valor!")
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <div>
+                                                    <label>VALOR EXTRA</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.VALOR_EXTRA_STRING, new { @class = "form-control input-lg", maxlength = "10", id = "valorExtra", required = "", step = "any", @type = "number" })
+                                                    @Html.ValidationMessageFor(model => model.VALOR_EXTRA, "Informe um valor!")
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <div>
+                                                    <label>SITUAÇÃO</label>
+                                                </div>
+
+                                                <select class="editor-field" name="situacao" required="">
+                                                    @if (Model.SITUACAO == "A")
+                                                    {
+                                                        <option value="A" selected="selected">ATIVO</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="A">ATIVO</option>
+                                                    }
+
+
+                                                    @if (Model.SITUACAO == "I")
+                                                    {
+                                                        <option value="I" selected="selected">INATIVO</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="I">INATIVO</option>
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-2">
+                                                <div>
+                                                    <label>QTD CORTESIA</label>
+                                                </div>
+
+                                                <div class="editor-field">
+                                                    @Html.TextBoxFor(model => model.QTD_CORTESIA, new { @class = "form-control input-lg", maxlength = "10", id = "qtdCortesia", required = "", step = "1", @type = "number" })
+                                                    @Html.ValidationMessageFor(model => model.QTD_CORTESIA, "Informe um valor!")
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-12">
+                                                <div>
+                                                    <label>RECORRENCIA</label>
+                                                </div>
+
+                                                <div id="rec" />
+                                            </div>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                @Html.ActionLink("Voltar", "Index", new { id = Model.CONTRATO })
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script src="../../Scripts/recurrencify.js"></script>
+<script src="../../Scripts/bootstrap-datepicker.js"></script>
+<script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+<link href="../../Content/querify.css" rel="stylesheet" />
+
+<link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+<link href="../../Content/recurrencify.css" rel="stylesheet" />
+
+<script>
+        $(document).ready(function () {
+            $("#rec").recurrencify();
+
+            $("#zona_loja").autocomplete({
+                source: "@Url.Action("GetZona", "Loja")", minLength: 2
+            });
+
+            $("#num_doc_loja").blur(function (e) {
+                $.ajax({
+                    url: "/ContratoLoja/GetLoja/",
+                    data: { cliente: @Model.CONTRATO1.CLIENTE, cnpj: $(this).val() },
+                    type: "GET",
+                    contentType: "application/json;",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#id_loja").val(data.ID);
+
+                        if (data.ID > 0) {
+                            $("#cliente").val(data.CLIENTE);
+                            $("#situacao_loja").val(data.SITUACAO);
+                            $("#faturar_em_loja").val(data.FATURAR_EM);
+                            $("#descricao_loja").val(data.DESCRICAO);
+                            $("#apelido_loja").val(data.APELIDO);
+                            $("#cep_loja").val(data.CEP);
+                            $("#endereco_loja").val(data.ENDERECO);
+                            $("#complemento_loja").val(data.COMPLEMENTO);
+                            $("#bairro_loja").val(data.BAIRRO);
+                            $("#cidade_loja").val(data.CIDADE);
+                            $("#uf_loja").val(data.UF);
+                            $("#zona_loja").val(data.ZONA);
+                            $("#telefone1_loja").val(data.TELEFONE1);
+                            $("#telefone2_loja").val(data.TELEFONE2);
+                            $("#celular_loja").val(data.CELULAR);
+                            $("#contato_loja").val(data.CONTATO);
+                            $("#email_loja").val(data.EMAIL);
+                            $("#observacao_loja").val(data.OBSERVACAO);
+                        }
+                    }
+                });
+            });
+        });
+</script>
+}

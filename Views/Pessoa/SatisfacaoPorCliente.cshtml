@@ -1,0 +1,145 @@
+﻿@model Dictionary<Int32, Int32>
+
+@using ATIMO;
+
+
+@{
+    ViewBag.Title = "Átimo - Satisfação por Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-alt"></i>
+                    <h3>SATISFAÇÃO POR CLIENTE</h3>
+                </div>
+            </div>
+
+            <div class="widget-content">
+                <div class="form-group col-md-12">
+                    <div>
+                        <label>MÊS / ANO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <input id="mes_ano" class="form-control input-lg monthpicker" maxlength="7" value="@ViewBag.MES_ANO" onchange="pesquisar();" />
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <div id="satisfacao"></div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        function pesquisar() {
+            var params = {
+                    cliente: @ViewBag.CLIENTE
+                };
+
+
+                if ($("#mes_ano").val() != "") {
+                    params.mes_ano = $("#mes_ano").val();
+                }
+
+                location.href = "/Pessoa/SatisfacaoPorCliente/?" + jQuery.param(params, true);
+        }
+
+        $(function () {
+            var media = @(Model.Values.DefaultIfEmpty().Sum() == 0 ? 0 : ((Model.Select(kv => kv.Key * kv.Value).Sum() - 1) / Model.Values.DefaultIfEmpty().Sum()) + 1);
+
+
+            $(".monthpicker").datepicker({
+                todayBtn: "linked",
+                language: "pt-BR",
+                autoclose: true,
+                toggleActive: true,
+                format: "mm/yyyy",
+                startView: "months",
+                minViewMode: "months"
+            });
+
+
+            var nameByNumber = {
+                '0': 'SEM VALOR',
+                '1': 'RUIM',
+                '2': 'REGULAR',
+                '3': 'BOM',
+                '4': 'ÓTIMO'
+            };
+
+            var colorByNumber = {
+                '0': '#999999',
+                '1': '#d9534f',
+                '2': '#faa632',
+                '3': '#428bca',
+                '4': '#5cb85c'
+            };
+
+
+            $('#satisfacao').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'SATISFAÇÃO'
+                },
+                subtitle: {
+                    text: 'MÉDIA: <span style="font-weight: bold;color:' + colorByNumber[media] + '">' + nameByNumber[media] + "</span>"
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 50,
+                        depth: 45,
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'quantidade',
+
+                    data: [
+                        @foreach (var kv in Model)
+                        {
+                            <text>
+                            {
+                                name: nameByNumber['@kv.Key'],
+                                y: @kv.Value,
+                                color: colorByNumber['@kv.Key']
+                            },
+                            </text>
+                        }
+                    ]
+                }],
+
+            });
+        });
+    </script>
+}

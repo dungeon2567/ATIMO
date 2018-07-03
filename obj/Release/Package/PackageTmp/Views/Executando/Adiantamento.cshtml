@@ -1,0 +1,804 @@
+﻿@model ATIMO.Models.OSSB
+
+@{
+    ViewBag.Title = "Átimo - Adiantamento";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-sort-alpha-asc"></i>
+                    <h3>OSSB - ADIANTAMENTO</h3>
+                </div>
+
+                <div class="widget-content">
+                    <fieldset>
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>PROJETO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                <input value="@Model.PROJETO1.DESCRICAO" class="form-control input-lg" disabled="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>CLIENTE</label>
+                            </div>
+
+                            <div class="editor-field">
+                                <input value="@Model.PESSOA.RAZAO" class="form-control input-lg" disabled="" />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>CONTRATO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @if (Model.CONTRATO != null)
+            {
+                    <input value="@Model.CONTRATO1.DESCRICAO" class="form-control input-lg" disabled="" />
+}
+else
+{
+                    <input class="form-control input-lg" disabled="" />
+}
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>LOJA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @if (Model.LOJA != null)
+            {
+                    <input value="@Model.LOJA1.APELIDO" class="form-control input-lg" disabled="" />
+}
+else
+{
+                    <input class="form-control input-lg" disabled="" />
+}
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>RESPONSÁVEL</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @if (Model.RESPONSAVEL != null)
+            {
+                    <input value="@Model.RESPONSAVEL1.RAZAO" class="form-control input-lg" disabled="" />
+}
+else
+{
+                    <input class="form-control input-lg" disabled="" />
+}
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <div>
+                                <label>PREVISÃO DE INÍCIO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.PREVISAO_INICIO, new { @class = "form-control input-lg", maxlength = "10", id = "previsao_inicio", alt = "date", disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.PREVISAO_INICIO)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <div>
+                                <label>PREVISÃO DE FIM</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.PREVISAO_FIM, new { @class = "form-control input-lg", maxlength = "10", id = "previsao_fim", alt = "date", disabled = "" })
+                                @Html.ValidationMessageFor(model => model.PREVISAO_FIM)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-2">
+                            <div>
+                                <label>INÍCIO DA EXECUÇÃO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.EXECUCAO_INICIO, new { @class = "form-control input-lg", maxlength = "10", id = "execucao_inicio", alt = "date", disabled = "" })
+                                @Html.ValidationMessageFor(model => model.EXECUCAO_INICIO)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <div>
+                                <label>FIM DA EXECUÇÃO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.EXECUCAO_FIM, new { @class = "form-control input-lg", maxlength = "10", id = "execucao_fim", alt = "date", disabled = "" })
+                                @Html.ValidationMessageFor(model => model.EXECUCAO_FIM)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>OCORRENCIA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextAreaFor(model => model.OCORRENCIA, new { @class = "form-control input-lg uppercase", placeholder = "OCORRENCIA", id = "ocorrencia", rows = "5", disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.OCORRENCIA, "Informe uma ocorrencia!")
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-1">
+                            <div>
+                                <label>PORTE</label>
+                            </div>
+
+                            <select class="editor-field" name="porte" disabled required="">
+                                @if (Model.PORTE == "P")
+            {
+                    <option value="P" selected="selected">P</option>
+}
+else
+{
+                    <option value="P">P</option>
+}
+
+
+                                @if (Model.PORTE == "M")
+            {
+                    <option value="M" selected="selected">M</option>
+}
+else
+{
+                    <option value="M">M</option>
+}
+
+                                @if (Model.PORTE == "G")
+            {
+                    <option value="G" selected="selected">G</option>
+}
+else
+{
+                    <option value="G">G</option>
+}
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>AMBIENTE</label>
+                            </div>
+
+                            <select class="editor-field" name="ambiente" disabled required="">
+                                @if (Model.AMBIENTE == "A")
+            {
+                    <option value="A" selected="selected">AMBOS</option>
+}
+else
+{
+                    <option value="A">AMBOS</option>
+}
+
+
+                                @if (Model.PORTE == "E")
+            {
+                    <option value="E" selected="selected">EXTERNO</option>
+}
+else
+{
+                    <option value="E">EXTERNO</option>
+}
+
+                                @if (Model.PORTE == "I")
+            {
+                    <option value="I" selected="selected">INTERNO</option>
+}
+else
+{
+                    <option value="I">INTERNO</option>
+}
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>TIPO</label>
+                            </div>
+
+                            <select class="editor-field" name="tipo" disabled required="">
+                                @if (Model.TIPO == "C")
+            {
+                    <option value="C" selected="selected">CORRETIVA</option>
+}
+else
+{
+                    <option value="C">CORRETIVA</option>
+}
+
+
+                                @if (Model.TIPO == "O")
+            {
+                    <option value="O" selected="selected">ACOMPANHAMENTO</option>
+}
+else
+{
+                    <option value="O">ACOMPANHAMENTO</option>
+}
+
+                                @if (Model.TIPO == "E")
+            {
+                    <option value="E" selected="selected">EMERGENCIAL</option>
+}
+else
+{
+                    <option value="E">EMERGENCIAL</option>
+}
+
+                                @if (Model.TIPO == "X")
+            {
+                    <option value="X" selected="selected">EXTRA CONTRATUAL</option>
+}
+else
+{
+                    <option value="X">EXTRA CONTRATUAL</option>
+}
+
+                                @if (Model.TIPO == "G")
+            {
+                    <option value="G" selected="selected">GARANTIA</option>
+}
+else
+{
+                    <option value="G">GARANTIA</option>
+}
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>OBSERVAÇÃO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5", disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.OBSERVACAO)
+                            </div>
+                        </div>
+
+                        @if (Model.OSSB_COMUNICACAO.Any())
+    {
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="3" style="text-align:center">
+                                    HISTÓRICO
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="text-align:center">
+                                    DATA
+                                </th>
+
+                                <th rowspan="2" style="text-align:center">
+                                    TEXTO
+                                </th>
+
+                                <th rowspan="2" style="text-align:center">
+                                    PESSOA
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var cmn in Model.OSSB_COMUNICACAO)
+        {
+                    <tr>
+                        <th>
+                            <span>@cmn.DATA.ToString("dd/MM/yyyy")</span>
+                        </th>
+
+                        <th>
+                            <span>@cmn.TEXTO</span>
+                        </th>
+
+                        <th>
+                            <span>@cmn.PESSOA1.RAZAO</span>
+                        </th>
+                    </tr>
+}
+                        </tbody>
+
+                    </table>
+}
+
+
+
+
+                        @if (Model.OSSB_SERVICO.Any())
+    {
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="9" style="text-align:center">
+                                    SERVIÇOS
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="text-align:center">
+                                    DESCRIÇÃO
+                                </th>
+
+                                <th style="text-align:center">
+                                    SUBDIVISÃO
+                                </th>
+
+                                <th style="text-align:center">
+                                    QUANTIDADE
+                                </th>
+
+                                <th colspan="2" style="text-align:center">
+                                    VALOR MÃO DE OBRA
+                                </th>
+
+                                <th colspan="2" style="text-align:center">
+                                    VALOR MATERIAL
+                                </th>
+
+                                <th style="text-align:center">
+                                    TOTAL
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="3">
+
+                                </th>
+                                <th>
+                                    UNIT
+                                </th>
+                                <th>
+                                    TOTAL
+                                </th>
+                                <th>
+                                    UNIT
+                                </th>
+                                <th>
+                                    TOTAL
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var servico in Model.OSSB_SERVICO)
+        {
+                    <tr>
+                        <th>
+                            <span>@servico.DESCRICAO</span>
+                        </th>
+
+                        <th>
+                            <span>@servico.SUBDIVISAO</span>
+                        </th>
+
+                        <th>
+                            <span>@servico.QUANTIDADE.ToString("N2")</span>
+                        </th>
+
+                        <th>
+                            <span>@servico.VALOR_MO_BDI.ToString("C")</span>
+                        </th>
+
+                        <th>
+                            <span>@((servico.VALOR_MO_BDI * servico.QUANTIDADE).ToString("C"))</span>
+                        </th>
+
+                        <th>
+                            <span>@((servico.VALOR_MA_BDI).ToString("C"))</span>
+                        </th>
+
+                        <th>
+                            <span>@((servico.VALOR_MA_BDI * servico.QUANTIDADE).ToString("C"))</span>
+                        </th>
+
+                        <th>
+                            <span>@(((servico.VALOR_MA_BDI + servico.VALOR_MO) * servico.QUANTIDADE).ToString("C"))</span>
+                        </th>
+                    </tr>
+}
+
+                            <tr>
+                                <th colspan="3">
+                                    <span>TOTAL</span>
+                                </th>
+
+
+                                <th>
+                                    <span>@(Model.OSSB_SERVICO.Select(os => os.VALOR_MO_BDI).Sum().ToString("C"))</span>
+                                </th>
+
+                                <th>
+                                    <span>@(Model.OSSB_SERVICO.Select(os => os.VALOR_MO_BDI * os.QUANTIDADE).Sum().ToString("C"))</span>
+                                </th>
+
+                                <th>
+                                    <span>@(Model.OSSB_SERVICO.Select(os => os.VALOR_MA_BDI).Sum().ToString("C"))</span>
+                                </th>
+
+                                <th>
+                                    <span>@(Model.OSSB_SERVICO.Select(os => os.VALOR_MA_BDI * os.QUANTIDADE).Sum().ToString("C"))</span>
+                                </th>
+
+                                <th>
+                                    <span>@(Model.OSSB_SERVICO.Select(os => (os.VALOR_MA_BDI + os.VALOR_MO_BDI) * os.QUANTIDADE).Sum().ToString("C"))</span>
+                                </th>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+
+if (Model.OSSB_SERVICO.SelectMany(oss => oss.OSSB_SERVICO_TERCEIRO).Any())
+{
+                    <table class="table  table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="4" style="text-align:center">
+                                    TERCEIROS
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    RAZÃO
+                                </th>
+
+                                <th>
+                                    SERVIÇO
+                                </th>
+
+                                <th>
+                                    VALOR
+                                </th>
+
+                                <th>
+                                    VALOR ADIANTADO
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var servico in Model.OSSB_SERVICO)
+        {
+            foreach (var terceiro in servico.OSSB_SERVICO_TERCEIRO)
+            {
+                    <tr>
+                        <td>
+                            <span>@terceiro.TERCEIRO1.RAZAO</span>
+                        </td>
+
+                        <td>
+                            <span>@servico.DESCRICAO</span>
+                        </td>
+
+                        <td>
+                            <span>@terceiro.VALOR.ToString("C")</span>
+                        </td>
+                        <td>
+                            <span>@terceiro.PAGAMENTO1.Sum(adt => adt.VALOR).ToString("C")</span>
+                        </td>
+                    </tr>
+}
+}
+
+                            <tr>
+                                <th colspan="2">
+                                    TOTAL
+                                </th>
+                                <th>
+                                    <span>@Model.OSSB_SERVICO.SelectMany(os => os.OSSB_SERVICO_TERCEIRO).Select(ost => ost.VALOR).Sum().ToString("C")</span>
+                                </th>
+                                <th>
+                                    <span>
+                                        @Model.OSSB_SERVICO.SelectMany(os => os.OSSB_SERVICO_TERCEIRO.SelectMany(ost => ost.PAGAMENTO1)).Sum(adt => adt.VALOR).ToString("C")
+                                    </span>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+}
+}
+
+                        @if (Model.CONTAS_RECEBER.Any())
+    {
+                    <table class="table  table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="2" style="text-align:center">
+                                    ADIANTAMENTOS
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    DATA DE VENCIMENTO
+                                </th>
+
+                                <th>
+                                    VALOR BRUTO
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var conta_receber in Model.CONTAS_RECEBER)
+        {
+                    <tr>
+                        <td>
+                            <span>@conta_receber.DATA_VENCIMENTO.ToString("dd/MM/yyyy")</span>
+                        </td>
+
+                        <td>
+                            <span>@conta_receber.VALOR_BRUTO.ToString("C")</span>
+                        </td>
+                    </tr>
+}
+
+
+                            <tr>
+                                <th>
+                                    TOTAL
+                                </th>
+                                <th>
+                                    <span>
+                                        @Model.CONTAS_RECEBER.Select(m => m.VALOR_BRUTO).DefaultIfEmpty().Sum().ToString("C")
+                                    </span>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+}
+
+                        @if (Model.OSSB_MATERIAL.Any())
+    {
+                    <table class="table  table-bordered">
+                        <thead>
+                            <tr>
+                                <th colspan="7" style="text-align:center">
+                                    MATERIAIS
+                                </th>
+                            </tr>
+                            <tr>
+                                <th>
+                                    DESCRIÇÃO
+                                </th>
+
+                                <th>
+                                    UNIDADE
+                                </th>
+
+                                <th>
+                                    FORNECEDOR
+                                </th>
+
+                                <th>
+                                    QUANTIDADE
+                                </th>
+
+                                <th>
+                                    DATA
+                                </th>
+
+                                <th>
+                                    VALOR UNIT
+                                </th>
+
+                                <th>
+                                    VALOR TOTAL
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var material in Model.OSSB_MATERIAL)
+        {
+                    <tr>
+                        <td>
+                            <span>@material.DESCRICAO</span>
+                        </td>
+
+
+                        <td>
+                            <span>@material.UNIDADE1.SIGLA</span>
+                        </td>
+
+                        <td>
+                            @if (material.FORNECEDOR != null)
+        {
+                    <span>@material.PESSOA.RAZAO</span>
+}
+                        </td>
+
+                        <td>
+                            <span>@material.QUANTIDADE.ToString("N2")</span>
+                        </td>
+                        <td>
+                            @if (material.VALOR != null)
+        {
+                    <span>
+                        @material.VALOR.Value.ToString("C")
+                    </span>
+}
+                        </td>
+                        <td>
+                            <span>
+                                @material.DATA.ToString("dd/MM/yyyy")
+                            </span>
+                        </td>
+                        <td>
+                            @if (material.VALOR != null)
+        {
+                    <span>@((material.VALOR.Value * material.QUANTIDADE).ToString("C"))</span>
+}
+                        </td>
+                    </tr>
+}
+
+                            <tr>
+                                <th colspan="6">
+                                    TOTAL
+                                </th>
+                                <th>
+                                    <span>
+                                        @Model.OSSB_MATERIAL.Select(m => m.VALOR.GetValueOrDefault() * m.QUANTIDADE).DefaultIfEmpty().Sum().ToString("C")
+                                    </span>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+}
+
+                        <br />
+
+
+                        @using (Html.BeginForm("CriarAdiantamento", "Executando", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+                    <input value="@Model.ID" type="hidden" name="OSSB" />
+
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>VALOR BRUTO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input name="VALOR_BRUTO_STRING"
+                                   required="required"
+                                   value="@((Model.OSSB_SERVICO.Select(os => (os.VALOR_MO_BDI + os.VALOR_MA_BDI) * os.QUANTIDADE).Sum() - Model.CONTAS_RECEBER.Select(cr => cr.VALOR_BRUTO).DefaultIfEmpty().Sum()).ToString("N2"))"
+                                   class="form-control input-lg" alt="decimal" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>VALOR LIQUIDO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input name="VALOR_LIQUIDO_STRING" value="0,00" required="required" class="form-control input-lg" alt="decimal" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>DATA DE EMISSÃO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input name="DATA_EMISSAO" value="@DateTime.Today.ToString("dd/MM/yyyy")" class="form-control input-lg datepicker" alt="date" maxlength="10" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>DATA DE VENCIMENTO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input name="DATA_VENCIMENTO" value="@DateTime.Today.ToString("dd/MM/yyyy")" class="form-control input-lg datepicker" alt="date" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>DATA DE RECEBIMENTO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input name="DATA_RECEBIMENTO" value="" class="form-control input-lg datepicker" alt="date" maxlength="10" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>NOTA FISCAL</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input name="NOTA_FISCAL" value="" class="form-control input-lg uppercase" maxlength="80" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>CONTA BANCÁRIA</label>
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.DropDownList("CONTA_BANCARIA", null, "SELECIONE UMA CONTA BANCÁRIA", new { required = "", id = "conta_bancaria", name = "CONTA_BANCARIA" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>OBSERVAÇÃO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <textarea name="OBSERVACAO" rows="5" class="form-control input-lg uppercase"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <input type="submit" value="Criar adiantamento" class="btn btn-primary" />
+                    </div>
+}
+                    </fieldset>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

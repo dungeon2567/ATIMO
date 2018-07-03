@@ -1,0 +1,82 @@
+﻿@model Nfse.PMSP.RN.NFSePmspSender
+@{
+    ViewBag.Title = "TesteWs";
+}
+
+<h2>Links para as telas de teste</h2>
+
+
+@using (Html.BeginForm())
+{
+    
+    <label>Nome</label>
+    <input size="60" type="text" value="@Model.Empresa.Nome" name="Empresa.Nome" />
+    <br />
+    <label>CNPJ</label>
+    <input size="60" type="text" value="@Model.Empresa.CNPJ" name="Empresa.CNPJ" />
+    <br />
+    <label>Inscrição Municipal (CCM)</label>
+    <input size="60" type="text" value="@Model.Empresa.CcmPmsp" name="Empresa.CcmPmsp" />
+    <br />
+    <label>Emite NF?</label>
+    <label>@Model.EmiteNF</label>
+    <br />
+    <label>Serial</label>
+    <input size="60" type="text" value="@Model.Empresa.SerialCertificado" name="Empresa.SerialCertificado" />
+
+    <br />
+    <label>Operacao</label>
+    <select name="Operacao" >
+        <option value="6">Consulta CNPJ</option>
+        <option value="5">Teste de Envio</option>
+        <option value="4">Consulta Enviadas</option>
+        <option value="3">Consulta Recebidas</option>
+        <option value="1">Envio de Lote</option>
+        <option value="2">Cancelamento NF</option>
+    </select>
+
+    <hr />
+
+    <button type="submit">Pegar Dados Web Service</button>
+    <hr />
+
+<h2>Dados do Envio</h2>
+    <label>Sucesso</label>
+    <label>@Model.Sucesso</label>
+    <br />
+
+    <label>Erros</label>
+    <ul>
+        @foreach (string erro in Model.Erros)
+        {
+            <li style="color:red">@erro</li>
+        }
+    </ul>
+    <br />
+
+    <label>Arquivos</label>
+    <ul>
+        @foreach (string arquivo in Model.Arquivos)
+        {
+            <li><a href="@arquivo" target="_blank">@arquivo</a></li>
+        }
+    </ul>
+    <hr />
+
+<h2>Dados do WebService</h2>
+
+<label>Notas do Retorno</label>
+    <table border="1">
+        <tr><td>Numero NF</td><td>Valor Bruto</td><td>Data Emissao</td><td>Descricao NF</td></tr>
+        @foreach (ATIMO.Models.Faturamento.Faturamento f in Model.FaturamentosRetorno)
+        {
+            <tr><td>@f.NumeroNF</td><td>@f.ValorBruto</td><td>@f.DataEmissao</td><td>@f.DescricaoNF</td></tr>
+        }
+    </table>
+    <hr />
+
+    <br /><br /><br />
+
+}
+   
+ 

@@ -1,0 +1,224 @@
+﻿@model ATIMO.ViewModel.RecorrenciaViewModel
+
+@{
+    ViewBag.Title = "Átimo - Recorrência";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-balance-scale"></i>
+                    <h3>RECORRÊNCIA - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.LOJA)
+                        @Html.HiddenFor(model => model.CLIENTE)
+
+                        <fieldset>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>PROJETO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new { required = "", id = "projeto" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CONTRATO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("CONTRATO", null, "SELECIONE UM CONTRATO", new { required = "", id = "contrato" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>VALOR MENSAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALOR, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR", id = "valor", required = "", alt = "decimal" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>DE</label>
+                                </div>
+
+                                <div class="input-group clockpicker">
+                                    <input type="text" class="form-control input-lg" name="DE" value="00:00">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>ATÉ</label>
+                                </div>
+
+                                <div class="input-group clockpicker">
+                                    <input type="text" class="form-control input-lg" name="ATE" value="00:00">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>UNIDADE DO SERVIÇO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("UNIDADE", null, "SELECIONE UMA UNIDADE", new { required = "", id = "unidade" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <table id="dateTable" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>DATA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <button type="button" class="btn btn-default" onclick="novaRecorrencia();">NOVO</button>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" onclick="beforeSubmit();" class="btn btn-primary" /> |
+                                <a href="~/Loja/Index/@Model.CLIENTE" class="btn btn-danger">Voltar</a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="nova-recorrencia" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">NOVA RECORRENCIA</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recorrencia">RECORRENCIA</label>
+                        <div id="recorrencia"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">CANCELAR</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script src="../../Scripts/rrule.js"></script>
+
+    <script src="../../Scripts/recurrencify.js?version=6.9"></script>
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="../../Scripts/bootstrap-clockpicker.min.js"></script>
+
+    <link href="../../Content/querify.css" rel="stylesheet" />
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="../../Content/recurrencify.css" rel="stylesheet" />
+    <link href="../../Content/bootstrap-clockpicker.min.css" rel="stylesheet" />
+
+    <script>
+        function novaRecorrencia() {
+            $("#recorrencia").recurrencify(function (dates) {
+                var $tableBody = $("#dateTable tbody");
+
+                var weekdays = [
+                    "domingo",
+                    "segunda-feira",
+                    "terça-feira",
+                    "quarta-feira",
+                    "quinta-feira",
+                    "sexta-feira",
+                    "sábado",
+                ];
+
+                dates.forEach(function (date, index) {
+                    var $item = $("<tr></tr>");
+
+                    var $dateInput = $("<input type='text' class='form-control input-lg' name='RECORRENCIA'>");
+
+                    var $date = $("<th></th>");
+
+                    $dateInput.appendTo($date);
+
+                    $dateInput.datepicker({
+                        maxViewMode: 0,
+                        todayBtn: "linked",
+                        language: "pt-BR",
+                        autoclose: true,
+                        toggleActive: true
+                    });
+
+                    $dateInput.datepicker('setDate', date);
+
+                    $date.appendTo($item);
+
+                    $item.appendTo($tableBody);
+                });
+
+
+                $("#nova-recorrencia").modal('hide');
+            });
+
+            $("#nova-recorrencia").modal();
+        }
+
+        function createJSON() {
+
+        }
+
+        $('.clockpicker').clockpicker({
+            donetext: "OK",
+        });
+
+    </script>
+}

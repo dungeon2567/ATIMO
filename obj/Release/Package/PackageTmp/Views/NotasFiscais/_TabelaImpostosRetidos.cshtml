@@ -1,0 +1,268 @@
+﻿@model ATIMO.Models.Faturamento.FaturamentoRetencoesTableViewModel
+
+<style type="text/css">
+    #tableRetencoes .changed { border-color:#ff0000; }
+</style>
+<table class="table table-striped table-hover" id="tableRetencoes">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Imposto</th>
+            <th style="text-align:right;">Alíquota</th>
+            <th style="text-align:right;">Base de Cálculo</th>
+            <th style="text-align:right;">Valor do Imposto</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.FaturamentoRetencoes.Count == 0)
+        {
+            <tr><td></td><td colspan="4">@Model.MensagemRetencoes</td></tr>
+        }
+        
+        @for (int i = 0; i < Model.FaturamentoRetencoes.Count; i++)
+        {
+            if (@Model.FaturamentoRetencoes[i].TipoImposto != null)
+            { 
+                <tr data-codigoimposto="@Model.FaturamentoRetencoes[i].TipoImpostoID">
+                    <td><input type="checkbox" name="Retencoes[@i].RetemImposto" id="chkRetencao_@Model.FaturamentoRetencoes[i].TipoImpostoID"  onchange="ItemRetencaoChanged(this, true)" class="chkFlagConsideraImposto" value="@Model.FaturamentoRetencoes[i].RetemImposto"  @((Model.FaturamentoRetencoes[i].RetemImposto == "S" ) ? "checked=checked" : "") /></td>
+                    <td>
+                        @Model.FaturamentoRetencoes[i].TipoImposto.Nome
+                        <input type="hidden" name="Retencoes[@i].TipoImpostoID" value="@Model.FaturamentoRetencoes[i].TipoImpostoID" />
+                    </td>
+                    <td style="text-align:right;">
+                        <input type="text" id="txtRetencaoPercent_@Model.FaturamentoRetencoes[i].TipoImpostoID" name="Retencoes[@i].PercentUsado" onblur="CalculaRetencaoItem(this, true, true)" class="form-control txtValorAliquota"  value="@Model.FaturamentoRetencoes[i].PercentUsado.ToString("###,##0.00")"  data-originalvalue="@Model.FaturamentoRetencoes[i].PercentUsado.ToString("###,##0.00")" />
+                        <input type="hidden" name="Retencoes[@i].PercentUsado" value="@Model.FaturamentoRetencoes[i].PercentUsado.ToString("###,##0.00")" />
+                    </td>
+                    <td style="text-align:right;">
+                        <input type="text" id="txtRetencaoBC_@Model.FaturamentoRetencoes[i].TipoImpostoID" name="Retencoes[@i].BaseCalculo" onblur="CalculaRetencaoItem(this, true, true)" class="form-control txtValorBaseCalculo" value="@Model.FaturamentoRetencoes[i].BaseCalculo.ToString("###,##0.00")"  data-originalvalue="@Model.FaturamentoRetencoes[i].BaseCalculo.ToString("###,##0.00")"  />
+                        <input type="hidden" name="Retencoes[@i].BaseCalculo" value="@Model.FaturamentoRetencoes[i].PercentUsado.ToString("###,##0.00")" />
+                    </td>
+                    <td style="text-align:right;">
+                        <span class="spanValorImposto" id="lblRetencaoValor_@Model.FaturamentoRetencoes[i].TipoImpostoID" >@Model.FaturamentoRetencoes[i].ValorRetencao.ToString("###,##0.00")</span>
+                        <input type="hidden" name="Retencoes[@i].ValorRetencao"  value="@Model.FaturamentoRetencoes[i].ValorRetencao.ToString("###,##0.00")" class="hiddenValorImposto" />
+                        <input type="hidden" name="Retencoes[@i].FaturamentoID" value="@Model.FaturamentoRetencoes[i].FaturamentoID" />
+                        <input type="hidden" name="Retencoes[@i].ID" value="@Model.FaturamentoRetencoes[i].ID" />
+                    </td>
+                </tr>
+            }
+        }
+        
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td>Total do Imposto</td>
+            <td></td>
+            <td></td>
+            <td style="text-align:right;">
+                <span id="spanValorTotalImpostos">@Model.TotalRetencoes.ToString("###,##0.00")</span>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>Valor Líquido a Receber</td>
+            <td></td>
+            <td></td>
+            <td style="text-align:right;">
+                <span id="spanValorLiquidoNota">@Model.ValorLiquido.ToString("###,##0.00")</span>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<input type="hidden" id="hiddenValorTotalNota" value="@(Model.ValorLiquido + Model.TotalRetencoes)" />
+
+@using (Html.BeginScriptContext())
+{
+    
+
+    Html.AddScriptBlock(
+        @<script>
+            var chkListFlagConsideraImposto = $("#tableRetencoes .chkFlagConsideraImposto");
+            var spanValorTotalImpostos = $("#tableRetencoes #spanValorTotalImpostos");
+            var spanValorLiquidoNota = $("#tableRetencoes #spanValorLiquidoNota");
+            var hiddenValorTotalNota = $("#hiddenValorTotalNota");
+            var txtListValorAliquota = $("#tableRetencoes .txtValorAliquota");
+            var txtListValorBaseCalculo = $("#tableRetencoes .txtValorBaseCalculo");
+            
+            chkListFlagConsideraImposto.change(function () {
+                var l_This = $(this);
+                var l_Row = l_This.parents("tr");
+                var l_CodigoImposto = l_Row.data("codigoimposto");
+
+                var l_SpanValorImposto = l_Row.find(".spanValorImposto");
+                var l_HiddenValorImposto = l_Row.find(".hiddenValorImposto");
+                var l_ValorAliquota = stringToNumber(l_Row.find(".txtValorAliquota").val());
+                var l_ValorBaseCalculo = stringToNumber(l_Row.find(".txtValorBaseCalculo").val());
+                
+                //toggleDisableInputElements(l_Row, "input[type='checkbox'], input[type='hidden']");
+
+                if (l_This.is(":checked")) {
+                    l_SpanValorImposto.html( numberToString(calculaImposto(l_ValorBaseCalculo, l_ValorAliquota),2));
+                    l_HiddenValorImposto.val( numberToString(calculaImposto(l_ValorBaseCalculo, l_ValorAliquota),2));
+                    l_This.attr("checked", "checked"); 
+                }
+                else {
+                    l_SpanValorImposto.html("0,00");
+                    l_HiddenValorImposto.val("0,00");
+                    l_This.removeAttr("checked");
+                }
+
+                calculaTotalImpostos();
+
+                //ajustaIndex();
+            });
+
+            txtListValorAliquota.keyup(function () {
+                if ($(this).val() != $(this).attr("data-originalvalue"))
+                    $(this).addClass("changed");
+                else
+                    $(this).removeClass("changed");
+
+                $(this).next("input[type='hidden']").val($(this).val());
+            });
+
+            txtListValorBaseCalculo.keyup(function () {
+                if ($(this).val() != $(this).attr("data-originalvalue"))
+                    $(this).addClass("changed");
+                else
+                    $(this).removeClass("changed");
+
+                $(this).next("input[type='hidden']").val($(this).val());
+            });
+
+            txtListValorAliquota.blur(function () {
+                var l_Aliquota = stringToNumber($(this).val());
+                var l_Base = stringToNumber($(this).closest("tr").find(".txtValorBaseCalculo").val());
+                var l_spanValorImposto = $(this).closest("tr").find(".spanValorImposto");
+                var l_hiddenValorImposto = $(this).closest("tr").find(".hiddenValorImposto");
+
+                var l_ValorImposto = numberToString(calculaImposto(l_Base, l_Aliquota),2);
+
+                l_spanValorImposto.html(l_ValorImposto);
+                l_hiddenValorImposto.val(l_ValorImposto);
+
+                calculaTotalImpostos();
+            });
+
+            txtListValorBaseCalculo.blur(function () {
+                var l_Aliquota = stringToNumber($(this).closest("tr").find(".txtValorAliquota").val()); 
+                var l_Base = stringToNumber($(this).val());
+                var l_spanValorImposto = $(this).closest("tr").find(".spanValorImposto");
+                var l_hiddenValorImposto = $(this).closest("tr").find(".hiddenValorImposto");
+
+                var l_ValorImposto = numberToString(calculaImposto(l_Base, l_Aliquota), 2);
+
+                l_spanValorImposto.html(l_ValorImposto);
+                l_hiddenValorImposto.val(l_ValorImposto);
+
+                calculaTotalImpostos();
+            });
+
+            var calculaTotalImpostos = function ()
+            {
+                var listSpanValorImposto = $(".spanValorImposto");
+                
+
+                var l_TotalImpostos = 0;
+
+                listSpanValorImposto.each(function () {
+                    l_TotalImpostos += stringToNumber($(this).html());
+                });
+
+                spanValorTotalImpostos.html(numberToString(l_TotalImpostos,2));
+
+                var l_TotalNota = stringToNumber(hiddenValorTotalNota.val());
+
+                //spanValorLiquidoNota.html( (l_TotalNota - l_TotalImpostos).toFixed(2).replace('.',','));
+                spanValorLiquidoNota.html(numberToString((l_TotalNota - l_TotalImpostos), 2));
+            }
+            
+            var calculaImposto = function (p_Value, p_Aliquot) {
+                var l_ValorImposto = parseFloat((p_Value * (p_Aliquot / 100)).toFixed(2));
+                return l_ValorImposto;
+            };
+            
+            var ajustaIndex = function () {
+                var l_index = 1;
+                var l_IsChecked = true;
+                $("#tableRetencoes tr").each(function () {
+                    var l_ThisRow = $(this);
+                    
+                    if (l_ThisRow.find(".chkFlagConsideraImposto").is(":checked"))
+                        l_IsChecked = true;
+                    else
+                        l_IsChecked = false;
+
+                    if (l_IsChecked) {
+                        console.log("Checkado. Refazer Index");
+                        l_ThisRow.find("input[name^='Retencoes']").each(function () {
+                            var l_ThisElement = $(this);
+                            var l_ThisElementName = l_ThisElement.attr("name");
+                            console.log("Name:" + l_ThisElementName);
+                            if (l_ThisElementName == "") {
+                                console.log("  Name em branco.Recupera Name do data-old-name");
+                                l_ThisElementName = l_ThisElement.attr("data-old-name");
+                                console.log("  Name Recuperado:" + l_ThisElementName);
+                            }
+                            var l_ThisElementNewName = l_ThisElementName.replace(/\[(.+?)\]/g, "[" + l_index + "]");
+                            console.log("Novo Name:" + l_ThisElementNewName);
+                            l_ThisElement.attr("name", l_ThisElementNewName);
+                        });
+
+                        l_index++;
+                    }
+                    else {
+                        console.log("Não checkado. Remover atributo Name");
+                        l_ThisRow.find("input[name^='Retencoes']").each(function () {
+                            var l_ThisElement = $(this);
+                            var l_ThisElementName = l_ThisElement.attr("name");
+                            console.log("Pega Name e salva em data-old-name");
+                            l_ThisElement.attr("data-old-name", l_ThisElementName);
+                            l_ThisElement.attr("name", "");
+                        });
+                    }
+                });
+            };
+
+            //Utils
+            var numberToString = function (p_Value, p_Digits) {
+                var l_String = "";
+                if (p_Digits != undefined && p_Digits != null && p_Digits > 0)
+                    l_String = p_Value.toLocaleString('pt-BR', { minimumFractionDigits: p_Digits });
+                else
+                    l_String = p_Value.toLocaleString('pt-BR');
+
+                return l_String;
+            };
+
+            var stringToNumber = function (p_Value) {
+                var l_Number = 0;
+                
+                if (p_Value.indexOf(".") > -1 || p_Value.indexOf(",") > -1)
+                    l_Number = parseFloat(p_Value.replace('.','').replace(',', '.'));
+                else
+                    l_Number = parseInt(p_Value, 10);
+
+                return l_Number;
+            };
+            /*
+            var toggleDisableInputElements = function (p_Container, p_Exception) {
+                var l_Container = $(document);
+
+                if (p_Container != null && p_Container != undefined)
+                    l_Container = p_Container;
+
+                var l_elements = l_Container.find("input", "select", "textarea").not(p_Exception);
+
+                l_elements.each(function () {
+
+                    if ($(this).is(":disabled"))
+                        $(this).removeAttr("disabled");
+                    else
+                        $(this).attr("disabled", "disabled");
+                })
+            };
+            */
+        </script>);
+}

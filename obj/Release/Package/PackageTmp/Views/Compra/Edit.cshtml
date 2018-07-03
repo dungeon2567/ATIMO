@@ -1,0 +1,352 @@
+﻿@model ATIMO.Models.COMPRA
+
+@{
+    ViewBag.Title = "ÁTIMO - Despesas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>CONTAS A PAGAR - EDITAR</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID)
+
+                        <fieldset>
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>OSSB</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.OSSB, new { @class = "form-control input-lg", maxlength = "10", id = "ossb" })
+                                    @Html.ValidationMessageFor(model => model.OSSB, "Informe uma ossb!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>FORNECEDOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("FORNECEDOR", null, "SELECIONE UM FORNECEDOR", new { required = "", id = "fornecedor" })
+                                    @Html.ValidationMessageFor(model => model.FORNECEDOR, "SELECIONE UM FORNECEDOR!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>PROJETO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new { required = "", id = "projeto" })
+                                    @Html.ValidationMessageFor(model => model.PROJETO, "SELECIONE UM PROJETO!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>DESPESA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("DESPESA", null, "SELECIONE UMA DESPESA", new { required = "", id = "despesa" })
+                                    @Html.ValidationMessageFor(model => model.DESPESA, "SELECIONE UMA DESPESA!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>DATA DE EMISSÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DATA_EMISSAO, new { @class = "form-control input-lg", maxlength = "10", id = "data_emissao", required = "", alt = "date" })
+                                    @Html.ValidationMessageFor(model => model.DATA_EMISSAO, "Informe uma data de emissão!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>DATA DE VENCIMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DATA_VENCIMENTO, new { @class = "form-control input-lg", maxlength = "10", id = "data_vencimento", required = "", alt = "date", disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.DATA_VENCIMENTO, "Informe uma data de vencimento!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>VALOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALOR_STRING, new { @class = "form-control input-lg", maxlength = "100", id = "valor", required = "", alt = "decimal", disabled = "disabled" })
+                                    @Html.ValidationMessageFor(model => model.VALOR_STRING, "Informe um valor!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>NOTA FISCAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NOTA_FISCAL, new { @class = "form-control input-lg", maxlength = "200", id = "nota_fiscal" })
+                                    @Html.ValidationMessageFor(model => model.NOTA_FISCAL, "Informe uma nota fiscal!")
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.OBSERVACAO, "Insira uma informação para a observação!")
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-striped table-bordered" id="items">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                DESCRIÇÃO
+                                            </th>
+
+                                            <th>
+                                                UNIDADE
+                                            </th>
+
+                                            <th>
+                                                QUANTIDADE
+                                            </th>
+
+                                            <th>
+                                                VALOR
+                                            </th>
+
+                                            <th>
+                                                TOTAL
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Compra/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+            <div class="remodal" data-remodal-id="modal" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+                <link rel="stylesheet" href="../../Scripts/remodal.css">
+                <link rel="stylesheet" href="../../Scripts/remodal-default-theme.css">
+
+                <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+
+                <input type="hidden" id="itemId" />
+
+                <div class="form-group col-md-12">
+                    <div>
+                        <label>DESCRIÇÃO</label>
+                    </div>
+
+                    <input type="text" class="form-control input-lg" id="itemDescricao" />
+                </div>
+
+                <div class="form-group col-md-12">
+                    <div>
+                        <label>UNIDADE</label>
+                    </div>
+
+                    <select id="itemUnidade">
+
+                        @foreach (var item in ViewBag.UNIDADES)
+                        {
+                            <option value="@item.ID">@item.SIGLA</option>
+                        }
+
+                    </select>
+
+                </div>
+
+                <div class="form-group col-md-12">
+                    <div>
+                        <label>QUANTIDADE</label>
+                    </div>
+
+                    <input type="text" alt="decimal" class="form-control input-lg" id="itemQuantidade" />
+                </div>
+
+                <div class="form-group col-md-12">
+                    <div>
+                        <label>VALOR</label>
+                    </div>
+
+                    <input type="text" alt="decimal" class="form-control input-lg" id="itemValor" />
+                </div>
+
+                <br>
+                <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+                <button data-remodal-action="confirm" class="remodal-confirm" onclick="salvarItem()">OK</button>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script src="../../Scripts/accounting.min.js"></script>
+    <script src="../../Scripts/remodal.js"></script>
+
+<script src="~/Scripts/utils.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+<script src="~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+<script src="~/Scripts/moment.js"></script>
+<script src="~/Scripts/moment-with-locales.js"></script>
+<link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+
+    <script>
+        $(document).on('ready', function () {
+            @foreach(var item in Model.ITEMS)
+            {
+                <text>
+            $("#itemDescricao").val('@item.DESCRICAO');
+            $("#itemUnidade").val(@item.UNIDADE);
+            $("#itemQuantidade").val('@item.QUANTIDADE');
+            $("#itemValor").val('@item.VALOR');
+            salvarItem();
+            </text>
+            }
+        });
+
+        $("#data_emissao").datepicker({
+            format: 'dd/mm/yyyy',
+            language: 'pt-BR'
+        });
+
+        $("#data_vencimento").datepicker({
+            format: 'dd/mm/yyyy',
+            language: 'pt-BR'
+        });
+
+        function novo() {
+            $("#itemId")
+                .val('');
+
+            $("#itemDescricao")
+                .val('');
+
+            $('#itemQuantidade')
+                .val('1,00');
+
+            $('#itemValor')
+                .val('0,00');
+
+            window.location.href = '#modal';
+        }
+
+        function editarItem(id) {
+            var table = document.getElementById("items")
+                .getElementsByTagName('tbody')[0];
+
+            $("#itemId")
+                .val(id);
+
+            $("#itemDescricao")
+                .val(table.rows[id].cells[0].children[0].value);
+
+            $('#itemUnidade')
+                .val(table.rows[id].cells[1].children[0].value);
+
+            $('#itemQuantidade')
+                .val(table.rows[id].cells[2].children[0].value);
+
+            $('#itemValor')
+                .val(table.rows[id].cells[3].children[0].value);
+
+            window.location.href = '#modal';
+        }
+
+        function salvarItem() {
+            var table = document.getElementById("items")
+                .getElementsByTagName('tbody')[0];
+
+            var row = null;
+
+            var number = 0;
+
+            if ($("#itemId").val() == '') {
+                row = table.insertRow(-1);
+
+                row.insertCell(-1);
+                row.insertCell(-1);
+                row.insertCell(-1);
+                row.insertCell(-1);
+                row.insertCell(-1);
+
+                number = table.rows.length;
+            }
+            else {
+                number = Number($("#itemId").val());
+
+                row = table.rows[number];
+            }
+
+            row.cells[0]
+                .innerHTML = "<input type='hidden' name='ITEMS[" + (number - 1) + "].DESCRICAO' value='" + $("#itemDescricao").val() + "'>" + "<span>" + $('#itemDescricao').val() + "</span>";
+
+            row.cells[1]
+                .innerHTML = "<input type='hidden' name='ITEMS[" + (number - 1) + "].UNIDADE' value='" + $("#itemUnidade").val() + "'>" + "<span>" + $('#itemUnidade :selected').text() + "</span>";
+
+            row.cells[2]
+                .innerHTML = "<input type='hidden' name='ITEMS[" + (number - 1) + "].QUANTIDADE' value='" + $("#itemQuantidade").val() + "'>" + "<span>" + accounting.formatNumber(accounting.unformat($("#itemQuantidade").val(), ","), 2, ".", ",") + "</span>";
+
+            row.cells[3]
+                .innerHTML = "<input type='hidden' name='ITEMS[" + (number - 1) + "].VALOR' value='" + $("#itemValor").val() + "'>" + "<span>" + accounting.formatNumber(accounting.unformat($("#itemValor").val(), ","), 2, ".", ",") + "</span>";
+
+            row.cells[4]
+                .innerHTML = accounting.formatNumber(accounting.unformat($("#itemValor").val(), ",") * accounting.unformat($("#itemQuantidade").val(), ","), 2, ".", ",");
+        }
+    </script>
+}

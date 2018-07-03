@@ -1,0 +1,106 @@
+﻿@model ATIMO.Models.RATEIO
+
+@{
+    ViewBag.Title = "Átimo - Rateio de Veículos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-ol"></i>
+                    <h3>RATEIO DE VEÍCULOS - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.ID)
+                        @Html.HiddenFor(model => model.VEICULO)
+                        @Html.HiddenFor(model => model.PROJETO)
+
+                        <fieldset>
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/RateioVeiculo/Index/@Model.VEICULO">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+
+                                <hr />
+                            </div>
+
+                            <div class="form-group col-md-10">
+                                <div>
+                                    <label>UNIDADE DE NEGÓCIO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("PROJETO", null, "SELECIONE UMA UNIDADE DE NEGÓCIO", new { required = "", disabled = "" })
+                                    @Html.ValidationMessageFor(model => model.PROJETO, "Selecione uma unidade de negócio!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select class="editor-field" name="situacao" required="">
+                                    @if ((Model != null) && (Model.SITUACAO == "A"))
+                                    {
+                                        <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ATIVO</option>
+                                    }
+
+
+                                    @if ((Model != null) && (Model.SITUACAO == "I"))
+                                    {
+                                        <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/RateioVeiculo/Index/@Model.VEICULO">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("RodapeFixo")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

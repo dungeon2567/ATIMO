@@ -1,0 +1,291 @@
+﻿@model ATIMO.Models.OSSB
+
+@{
+    ViewBag.Title = "Átimo - Orçar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-alt"></i>
+                    <h3>ORÇAR - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.ID)
+                        @Html.HiddenFor(model => model.DATA_CADASTRO)
+                        @Html.HiddenFor(model => model.TIPO)
+                        @Html.HiddenFor(model => model.AMBIENTE)
+                        @Html.HiddenFor(model => model.PORTE)
+                        @Html.HiddenFor(model => model.CLIENTE)
+                        @Html.HiddenFor(model => model.CONTRATO)
+                        @Html.HiddenFor(model => model.LOJA)
+                        @Html.HiddenFor(model => model.PROJETO)
+                        @Html.HiddenFor(model => model.SITUACAO)
+
+                        <fieldset>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>ORÇAMENTISTA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("ORCAMENTISTA", null, "SELECIONE UM ORÇAMENTISTA", new { required = "", id = "orcamentista", name = "ORCAMENTISTA" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>PROJETO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input value="@Model.PROJETO1.DESCRICAO" class="form-control input-lg" disabled="" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CLIENTE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input value="@Model.PESSOA.RAZAO" class="form-control input-lg" disabled="" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CONTRATO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @if (Model.CONTRATO != null)
+                                    {
+
+                                        <input value="@Model.CONTRATO1.DESCRICAO" class="form-control  input-lg" disabled="" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control  input-lg" disabled="" />
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>LOJA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @if (Model.LOJA != null)
+                                    {
+
+                                        <input value="@Model.LOJA1.APELIDO" class="form-control  input-lg" disabled="" />
+                                    }
+                                    else
+                                    {
+                                        <input class="form-control  input-lg" disabled="" />
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OCORRENCIA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OCORRENCIA, new { @class = "form-control input-lg uppercase", placeholder = "OCORRENCIA", id = "ocorrencia", rows = "5", required = "" })       
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-1">
+                                <div>
+                                    <label>PORTE</label>
+                                </div>
+
+                                <select class="editor-field" name="porte" required="">
+                                    @if (Model.PORTE == "P")
+                                    {
+                                        <option value="P" selected="selected">P</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="P">P</option>
+                                    }
+
+
+                                    @if (Model.PORTE == "M")
+                                    {
+                                        <option value="M" selected="selected">M</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="M">M</option>
+                                    }
+
+                                    @if (Model.PORTE == "G")
+                                    {
+                                        <option value="G" selected="selected">G</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="G">G</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>AMBIENTE</label>
+                                </div>
+
+                                <select class="editor-field" name="ambiente" required="">
+                                    @if (Model.AMBIENTE == "A")
+                                    {
+                                        <option value="A" selected="selected">AMBOS</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">AMBOS</option>
+                                    }
+
+
+                                    @if (Model.PORTE == "E")
+                                    {
+                                        <option value="E" selected="selected">EXTERNO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="E">EXTERNO</option>
+                                    }
+
+                                    @if (Model.PORTE == "I")
+                                    {
+                                        <option value="I" selected="selected">INTERNO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INTERNO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>TIPO</label>
+                                </div>
+
+                                <select class="editor-field" name="tipo" required="">
+                                    @if (Model.TIPO == "C")
+                                    {
+                                        <option value="C" selected="selected">CORRETIVA</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="C">CORRETIVA</option>
+                                    }
+
+
+                                    @if (Model.TIPO == "O")
+                                    {
+                                        <option value="O" selected="selected">ACOMPANHAMENTO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="O">ACOMPANHAMENTO</option>
+                                    }
+
+                                    @if (Model.TIPO == "E")
+                                    {
+                                        <option value="E" selected="selected">EMERGENCIAL</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="E">EMERGENCIAL</option>
+                                    }
+
+                                    @if (Model.TIPO == "X")
+                                    {
+                                        <option value="X" selected="selected">EXTRA CONTRATUAL</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="X">EXTRA CONTRATUAL</option>
+                                    }
+
+                                    @if (Model.TIPO == "G")
+                                    {
+                                        <option value="G" selected="selected">GARANTIA</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="G">GARANTIA</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.OBSERVACAO)
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                | <input type="button" value="Voltar" class="btn btn-danger" onclick="location.href = document.referrer;" />
+                            </div>
+
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $("#agendadodia").datepicker({
+            dateFormat: 'dd/mm/yy',
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            nextText: 'Próximo',
+            prevText: 'Anterior'
+        });
+
+        $("#visitadodia").datepicker({
+            dateFormat: 'dd/mm/yy',
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            nextText: 'Próximo',
+            prevText: 'Anterior'
+        });
+    </script>
+}

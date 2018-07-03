@@ -1,0 +1,30 @@
+﻿@using ATIMO.Helpers.ModelsUtils
+@{
+    ViewBag.Title = "Nova - Nota Fiscal Eletrônica de Serviço";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+
+@Html.LayoutMessage()
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>@ViewBag.Title</h3>
+                </div>
+
+                <div class="widget-content">
+
+                    @Html.Partial("_CreateOrEdit")
+
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

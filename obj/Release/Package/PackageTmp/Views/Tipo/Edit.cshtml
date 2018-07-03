@@ -1,0 +1,166 @@
+﻿@model ATIMO.Models.TIPO
+
+@{
+    ViewBag.Title = "ÁTIMO - Tipos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-code-fork"></i>
+                    <h3>TIPOS - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID, new {id = "id"})
+
+                        <fieldset>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Tipo/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+
+                                <hr />
+                            </div>
+
+                            <div class="form-group col-md-7">
+                                <div>
+                                    <label>DESCRIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "DESCRIÇÃO", id = "descricao", required = "" })
+                                    @Html.ValidationMessageFor(model => model.DESCRICAO, "Informe uma descrição!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>TIPO</label>
+                                </div>
+
+                                <select class="editor-field" id="tipo1" required="">
+                                    @if ((Model != null) && (Model.TIPO1 == "E"))
+                                    {
+                                        <option value="E" selected="selected">EQUIPAMENTO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="E">EQUIPAMENTO</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.TIPO1 == "F"))
+                                    {
+                                        <option value="F" selected="selected">FERRAMENTA</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="F">FERRAMENTA</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.TIPO1 == "M"))
+                                    {
+                                        <option value="M" selected="selected">MATERIAL</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="M">MATERIAL</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select class="editor-field" id="situacao" required="">
+                                    @if ((Model != null) && (Model.SITUACAO == "A"))
+                                    {
+                                        <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ATIVO</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.SITUACAO == "I"))
+                                    {
+                                        <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Tipo/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("RodapeFixo")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        function salvar() {
+            var tipo = new Object();
+            tipo.ID = $("#id").val();
+            tipo.TIPO1 = $("#tipo1").val();
+            tipo.DESCRICAO = $("#descricao").val();
+            tipo.SITUACAO = $("#situacao").val();
+
+            $.ajax({
+                url: "/Tipo/ConfirmarEdit/",
+                data: JSON.stringify(tipo),
+                type: "POST",
+                contentType: "application/json;",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status === 200) {
+                        alert(data.msg);
+                        window.location.href = "/Tipo/Index/";
+                    }
+
+                    if (data.status === 100) {
+                        alert(data.ex);
+                    }
+                }
+            });
+        }
+    </script>
+}

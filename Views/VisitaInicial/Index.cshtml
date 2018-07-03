@@ -1,0 +1,1247 @@
+﻿@model IEnumerable<ATIMO.Models.OSSB>
+
+@using ATIMO;
+
+@{
+    ViewBag.Title = "Átimo - Operacional";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+@helper CreatePagination(Int32 page, Int32 pageCount)
+    {
+        Int32 min = Math.Max(1, Math.Min(page - 6, pageCount - 11));
+
+        Int32 max = Math.Min(pageCount, min + 11);
+
+        if (min != max)
+        {
+
+            <ul class="pagination">
+                @if (page == 1)
+                {
+                    <li class="page-item disabled"><a href="#" class="page-link"><<</a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a href="#" onclick="pesquisar(@(page - 1))" class="page-link"><<</a></li>
+                }
+
+                @for (Int32 it = min; it <= max; ++it)
+                {
+                    <li class="page-item @((Int32)(ViewBag.PAGE) == it ? " active" : "" )"><a href="#" class="page-link" onclick="pesquisar(@it)">@it</a></li>
+                }
+
+                @if (page >= pageCount)
+                {
+                    <li class="page-item disabled"><a href="#" class="page-link">>></a></li>
+                }
+                else
+                {
+                    <li class="page-item"><a href="#" onclick="pesquisar(@(page + 1))" class="page-link">>></a></li>
+                }
+            </ul>
+        }
+
+}
+<div class="main" ng-app="App" ng-controller="AppController">
+    <div class="container-fluid" style="max-width: 100%; display: block; margin: 20px;">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-content">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        NÚMERO
+                                    </th>
+
+                                    <th>
+                                        PROJETO
+                                    </th>
+
+                                    <th>
+                                        CLIENTE
+                                    </th>
+
+                                    <th>
+                                        LOJA
+                                    </th>
+
+                                    <th>
+                                        OCORRÊNCIA
+                                    </th>
+
+                                    <th>
+                                        TIPO
+                                    </th>
+
+                                    <th>
+                                        STATUS
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr onclick="$('.row_@item.ID').toggle(); $('#ossb_@item.ID').attr('rowspan', $('#ossb_@item.ID').attr('rowspan') == '2' ? '1' : '2');" style="cursor: pointer;">
+                                        <td id="ossb_@item.ID" style="text-align: center;">
+                                            @item.ID
+                                        </td>
+
+                                        <td>
+                                            @item.PROJETO1.DESCRICAO
+                                        </td>
+
+                                        <td>
+                                            <a href="" onclick="window.open('/Pessoa/Edit/@item.PESSOA.ID', '_blank')">@item.PESSOA.NOME_COMPLETO</a>
+
+                                        </td>
+
+                                        <td>
+                                            @if (item.LOJA != null)
+                                            {
+                                                <a href="" onclick="window.open('/Loja/Edit/@item.LOJA1.ID', '_blank')">@item.LOJA1.APELIDO</a>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @item.OCORRENCIA
+                                        </td>
+
+                                        <td>
+                                            <span>@item.TEXTO_TIPO @(item.CONTRATO != null ? "(" + item.CONTRATO1.DESCRICAO + ")" : "")</span>
+                                        </td>
+
+                                        <td>
+                                            @switch (item.SITUACAO)
+                                            {
+                                                case "I":
+
+                                                    <span class="label label-default">VISITA INICIAL</span>
+                                                    break;
+                                                case "O":
+                                                    <span class="label label-default">ORÇAR</span>
+
+                                                    break;
+                                                case "R":
+
+                                                    <span class="label label-default">ORÇAMENTO</span>
+
+                                                    break;
+                                                case "E":
+
+                                                    <span class="label label-default">EXECUTANDO</span>
+
+                                                    break;
+                                                case "C":
+
+                                                    <span class="label label-warning">CANCELADA</span>
+
+                                                    break;
+                                                case "P":
+
+                                                    <span class="label label-default">PARCELAMENTO</span>
+
+                                                    break;
+                                                case "F":
+
+                                                    <span class="label label-default">FINALIZADA</span>
+
+                                                    break;
+                                                case "K":
+
+                                                    <span class="label label-default">COBRANÇA</span>
+
+                                                    break;
+                                                case "T":
+
+                                                    <span class="label label-default">FATURAMENTO</span>
+
+                                                    break;
+                                            }
+
+                                        </td>
+                                        <td>
+                                            @if (item.SITUACAO == "P")
+                                            {
+                                                <div>
+                                                    <a class="btn btn-info" style="width: 150px;" href="~/Parcelamento/Display/@item.ID">
+                                                        <i class="fa fa-search-minus"></i>
+                                                        Visualizar O.S
+                                                    </a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div>
+                                                    <a class="btn btn-info" style="width: 150px;" href="~/VisitaInicial/Edit/@item.ID">
+                                                        <i class="fa fa-edit"></i>
+                                                        Editar
+                                                    </a>
+                                                </div>
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr hidden class="row_@item.ID">
+                                        <td colspan="4">
+                                            @if (item.OK != null)
+                                            {
+
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>Observação: </strong> @item.OK
+                                                </div>
+
+                                            }
+                                            @if (item.OSSB_CHECK_LIST.Any())
+                                            {
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th colspan="3" style="text-align:center">
+                                                                CHECKLIST
+                                                            </th>
+                                                        </tr>
+                                                        <tr>
+
+                                                            <th>
+                                                                AGENDADO
+                                                            </th>
+
+                                                            <th>
+                                                                EXECUTADO
+                                                            </th>
+
+                                                            <th>
+                                                                AÇÕES
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var checkListItem in item.OSSB_CHECK_LIST)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    <div data-checklist="@checkListItem.ID" onclick="startEditAgendado(this);">@checkListItem.AGENDADO.ToString("dd/MM/yyyy HH:mm")</div>
+                                                                </td>
+                                                                <td>
+                                                                    <div data-checklist="@checkListItem.ID" onclick="startEditExecutado(this);">@(checkListItem.VISITADO == null ? "SEM VALOR" : checkListItem.VISITADO.Value.ToString("dd/MM/yyyy HH:mm"))</div>
+                                                                <td>
+                                                                    @if (item.SITUACAO == "E")
+                                                                    {
+                                                                        using (Html.BeginForm("EnviarArquivoChecklist", "VisitaInicial", new { id = checkListItem.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                                        {
+                                                                            <label class="btn btn-default btn-file">
+                                                                                Anexar Arquivo <input type="file" accept="application/pdf" name="file" style="display: none;" onchange="this.form.submit();">
+                                                                            </label>
+                                                                        }
+                                                                    }
+
+
+                                                                    @if (checkListItem.ANEXO != null)
+                                                                    {
+                                                                        using (Html.BeginForm("BaixarArquivoChecklist", "VisitaInicial", new { ossb = checkListItem.OSSB, id = checkListItem.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                                                        {
+                                                                            <input type="submit" class="btn btn-info" value="Download" />
+                                                                        }
+                                                                    }
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        </td>
+
+                                        <td colspan="2">
+                                            @if (item.OSSB_TECNICO.Any())
+                                            {
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="text-align:center">
+                                                                EQUIPE
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var pessoa in item.OSSB_TECNICO)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @pessoa.TECNICO1.RAZAO
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            }
+                                        </td>
+
+                                        <td>
+
+                                            @if (item.SITUACAO == "P")
+                                            {
+
+                                                if (item.PESSOA.NUM_DOC != "" && (item.LOJA == null || item.LOJA1.NUM_DOC != ""))
+                                                {
+                                                    <a class="btn btn-info" style="width: 150px;" onclick="$('#ossb-id').val(@item.ID); $('#ossb-status').val('@item.PROXIMA_SITUACAO'); $('#alterar-status').modal('show');">
+                                                        <i class="fa fa-comments-o"></i>
+                                                        Alterar Status
+                                                    </a>
+                                                }
+                                            }
+                                            else
+                                            if (item.SITUACAO != "T")
+                                            {
+
+
+                                                if (item.SITUACAO != "I")
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-success" style="width: 150px;" onclick="window.open('../../OssbServico/Index/@item.ID', '_blank');">
+                                                            <i class="fa fa-wrench"></i>
+                                                            Serviços
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                                if (item.SITUACAO != "I")
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-warning" style="width: 150px;" onclick="window.open('../../OssbMaterial/Index/@item.ID', '_blank');">
+                                                            <i class="fa fa-wrench"></i>
+                                                            Materiais
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                                if (item.SITUACAO == "I")
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-danger" style="width: 150px;" ng-click="agendarVisitaBegin(@item.ID);">
+                                                            <i class="fa fa-clipboard"></i>
+                                                            Agendar Visita
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                                <div>
+                                                    <a class="btn btn-default" style="width: 150px;" ng-click="pipelineBegin(@item.ID);">
+                                                        <i class="fa fa-database"></i>
+                                                        Pipeline
+                                                    </a>
+                                                </div>
+
+                                                if (item.SITUACAO != "I")
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-primary" style="width: 150px;" onclick="window.open('/OssbTerceiro/Index/@item.ID', '_blank');">
+                                                            <i class="fa fa-male"></i>
+                                                            Terceiros
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                                if (item.SITUACAO == "E" && !item.OSSB_CHECK_LIST.Any())
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-danger" style="width: 150px;" ng-click="agendarExecucaoBegin(@item.ID);">
+                                                            <i class="fa fa-clipboard"></i>
+                                                            Agendar Execução
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                                if (item.SITUACAO != "I")
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-success" style="width: 150px;" ng-click="openTecnicosModal(@item.ID);">
+                                                            <i class="fa fa-male"></i>
+                                                            Equipe
+                                                        </a>
+                                                    </div>
+                                                }
+
+                                                <div>
+                                                    <a class="btn btn-warning" style="width: 150px;" href="~/OssbImagem/Index/@item.ID">
+                                                        <i class="fa fa-edit"></i>
+                                                        Imagens
+                                                    </a>
+                                                </div>
+
+                                                <div>
+                                                    <a class="btn btn-success" style="width: 150px;" ng-click="beginComunicacao(@item.ID);">
+                                                        <i class="fa fa-comments-o"></i>
+                                                        Comunicação
+                                                    </a>
+                                                </div>
+
+                                                if (item.OK == null)
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-info" style="width: 150px;" onclick="$('#ossb-id').val(@item.ID); $('#ossb-status').val('@item.PROXIMA_SITUACAO'); $('#alterar-status').modal('show');">
+                                                            <i class="fa fa-comments-o"></i>
+                                                            Alterar Status
+                                                        </a>
+                                                    </div>
+                                                }
+
+
+                                                if (item.SITUACAO == "E" && item.OSSB_CHECK_LIST.Any() && !item.OSSB_CHECK_LIST.Any(ocl => ocl.VISITADO == null))
+                                                {
+                                                    if (item.CLIENTE_SATISFACAO != null)
+                                                    {
+                                                        <div>
+                                                            <a class="btn btn-default" style="width: 150px;" href="/ClienteSatisfacao/Edit/@item.ID">
+                                                                <i class="fa fa-signal"></i>
+                                                                Satisfação
+                                                            </a>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div>
+                                                            <a class="btn btn-danger" style="width: 150px;" href="/ClienteSatisfacao/Edit/@item.ID">
+                                                                <i class="fa fa-signal"></i>
+                                                                Satisfação
+                                                            </a>
+                                                        </div>
+                                                    }
+                                                }
+
+                                                if (item.SITUACAO == "E")
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-info" style="width: 150px;" href="~/Executando/Adiantamento/@item.ID">
+                                                            <i class="fa fa-search-minus"></i>
+                                                            Adiantamento
+                                                        </a>
+                                                    </div>
+                                                }
+
+
+                                                if (item.SITUACAO != "C")
+                                                {
+                                                    <div>
+                                                        <a class="btn btn-danger" style="width: 150px;" onclick="$('#ossb-id').val(@item.ID); $('#cancelar-ossb-modal').modal('show');">
+                                                            <i class="fa fa-remove"></i>
+                                                            Cancelar
+                                                        </a>
+                                                    </div>
+
+                                                }
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        @CreatePagination((Int32)(ViewBag.PAGE), (Int32)(ViewBag.PAGE_COUNT))
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="alterar-status" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Alterar Status</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input type="hidden" id="ossb-id">
+                        <div class="form-group">
+                            <label for="historico">HISTORICO</label>
+                            <textarea class="form-control" rows="7" id="historico"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ossb-status">STATUS</label>
+                            <select class="form-control" id="ossb-status" name="STATUS">
+                                <option value="I">
+                                    VISITA INICIAL
+                                </option>
+
+                                <option value="O">
+                                    ORÇAR
+                                </option>
+
+                                <option value="R">
+                                    ORÇAMENTO
+                                </option>
+
+                                <option value="E">
+                                    EXECUTANDO
+                                </option>
+
+                                <option value="P">
+                                    PARCELAMENTO
+                                </option>
+
+                                <option value="K">
+                                    COBRANÇA
+                                </option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="alterarStatus();">OK</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" id="ossb-id">
+
+    <div id="cancelar-ossb-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Cancelar</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="cancelarHistorico">HISTORICO</label>
+                            <textarea class="form-control" rows="7" id="cancelarHistorico"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="cancelarOssb();">OK</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="marcar-como-resolvido-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+
+                        <div class="form-group">
+                            <label for="marcar-resolvido-data">DATA</label>
+                            <input id="marcar-resolvido-data" ng-model="data" class="form-control input-lg datepicker" maxlength="10" alt="date" />
+                        </div>
+                        <div class="form-group">
+                            <label for="marcar-resolvido-hora">HORA</label>
+                            <div id="marcar-resolvido-hora" class="input-group clockpicker">
+                                <input type="text" ng-model="hora" class="form-control input-lg" value="00:00">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="marcarComoResolvido();">OK</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="agendar-visita-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+
+                        <div class="form-group">
+                            <label for="agendar-visita-data">DATA</label>
+                            <input id="agendar-visita-data" ng-model="data" class="form-control input-lg datepicker" maxlength="10" alt="date" />
+                        </div>
+                        <div class="form-group">
+                            <label for="agendar-visita-hora">HORA</label>
+                            <div id="agendar-visita-hora" class="input-group clockpicker">
+                                <input type="text" ng-model="hora" class="form-control input-lg" value="00:00">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="agendar-visita-equipe">EQUIPE</label>
+
+                            <select multiple="multiple" style="width: 100%" id="agendar-visita-equipe" class="form-control input-lg" "></select>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="agendarVisita();">OK</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="agendar-execucao-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+
+                        <div class="form-group">
+                            <label for="agendar-execucao-data">DATA</label>
+                            <input id="agendar-execucao-data" ng-model="data" class="form-control input-lg datepicker" maxlength="10" alt="date" />
+                        </div>
+                        <div class="form-group">
+                            <label for="agendar-execucao-hora">HORA</label>
+                            <div id="agendar-execucao-hora" class="input-group clockpicker">
+                                <input type="text" ng-model="hora" class="form-control input-lg" value="00:00">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-time"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" ng-click="agendarExecucao();">OK</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="pipeline-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label>DATA DO ENVIO PROPOSTA</label>
+                            <input id="pipeline_data_proposta" ng-model="pipeline.data_proposta" class="datetimepicker form-control input-lg" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>DATA DE FOLLOW UP</label>
+                            <input id="pipeline_data_followup" ng-model="pipeline.data_followup" class="datetimepicker form-control input-lg" />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="tecnicos-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input ng-model="complete_string" class="form-control input-lg" placeholder="RAZÃO DO TÉCNICO" ng-keyup="pesquisaTecnico(complete_string);" />
+                            <div class="list-group" style="position: absolute; margin-top: 6px; width:100%" ng-show="completing">
+                                <a href="#" class="list-group-item" ng-click="adicionarTecnico(item)" ng-repeat="item in complete_source | orderBy:'razao'">
+                                    {{item.razao}}
+                                </a>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            RAZÃO
+                                        </th>
+                                        <th>
+                                            AÇÕES
+                                        </th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="item in items | orderBy:'razao'">
+                                        <th>
+                                            <span>{{item.razao}}</span>
+                                        </th>
+                                        <th>
+                                            <a class="btn btn-danger" ng-click="removerTecnico(item);">
+                                                <i class="fa fa-remove"></i>
+                                                Remover
+                                            </a>
+                                        </th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal" onclick="location.reload();">Concluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="comunicacao-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog" style="width: 900px;">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input class="uppercase form-control input-lg" ng-model="comunicacao_texto" ng-keypress="adicionarComunicacao($event);" />
+                        </div>
+                        <div class="form-group">
+                            <div style="overflow-y: auto; max-height: 300px;">
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                DATA
+                                            </th>
+
+                                            <th>
+                                                TEXTO
+                                            </th>
+
+                                            <th>
+                                                PESSOA
+                                            </th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in comunicacao">
+                                            <th>
+                                                {{item.data}}
+                                            </th>
+                                            <th>
+                                                <span ng-hide="item.editing" ng-click="beginEditComunicacao(item);">{{item.texto}}</span>
+                                                <div ng-show="item.editing">
+                                                    <input ng-model="item.texto" />
+                                                    <button class="btn btn-primary" ng-click="editarComunicacao(item);">Salvar</button>
+                                                    <button class="btn btn-danger" ng-click="item.texto=item.rollback; item.editing=false;">Cancelar</button>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                {{item.pessoa}}
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Concluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+
+    <script src="../../Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datetimepicker.pt-BR.js"></script>
+    <script src="../../Scripts/bootstrap-clockpicker.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="../../Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link href="../../Content/bootstrap-clockpicker.min.css" rel="stylesheet" />
+
+    <script src="~/Scripts/angular.min.js"></script>
+
+    <script src="../../Scripts/select2/js/select2.min.js"></script>
+    <link href="../../Scripts/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="../../Scripts/select2/css/select2-bootstrap.min.css" rel="stylesheet" />
+
+
+    <style>
+        .clockpicker-popover {
+            z-index: 9999 !important;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+            table > thead > tr > th, table > tbody > tr > th, table > tfoot > tr > th, table > thead > tr > td, table > tbody > tr > td, table > tfoot > tr > td {
+                border: 2px solid #ddd;
+            }
+    </style>
+
+    <script>
+
+        var app = angular.module("App", []);
+
+        app.controller("AppController", function ($scope, $http) {
+            $scope.hora = "";
+            $scope.data = "";
+
+            $scope.data_inicial = "";
+            $scope.data_final = "";
+
+            $scope.ossb = 0;
+
+            $scope.completing = false;
+
+            $scope.complete_string = "";
+
+            $scope.complete_source = [];
+
+            $scope.items = [];
+
+            $scope.pipeline = {
+                data_proposta: '',
+                data_followup: ''
+            }
+
+            $scope.comunicacao_texto = "";
+
+            $scope.comunicacao = [
+
+            ];
+
+            $scope.comunicacao_editavel = ""
+
+
+            $scope.adicionarTecnico = function (tecnico) {
+                $scope.completing = false;
+                $scope.complete_string = "";
+
+                $http({
+                    url: "/VisitaInicial/AdicionarTecnico/?ossb=" + $scope.ossb + "&tecnico=" + tecnico.id,
+                    method: "GET",
+                }).then(function (response) {
+                    if (response.data.status == 0) {
+                        $scope.items.push(tecnico);
+                    }
+                });
+            }
+
+            $scope.beginComunicacao = function (ossb) {
+                $scope.ossb = ossb;
+
+
+                $http({
+                    url: "/VisitaInicial/GetComunicacao/?ossb=" + $scope.ossb,
+                    method: "GET",
+                }).then(function (response) {
+                    $scope.comunicacao = response.data;
+
+                    $("#comunicacao-modal").modal('show');
+                });
+            }
+
+
+            $scope.removerTecnico = function (tecnico) {
+                $http({
+                    url: "/VisitaInicial/RemoverTecnico/?ossb=" + $scope.ossb + "&tecnico=" + tecnico.id,
+                    method: "GET",
+                }).then(function (response) {
+                    if (response.data.status == 0) {
+                        $scope.items.splice($scope.items.indexOf(tecnico), 1);
+                    }
+                });
+            }
+
+            $scope.pesquisaTecnico = function (query) {
+                if (query == "") {
+                    completing = false;
+                }
+                else {
+                    $http({
+                        url: "/VisitaInicial/GetTecnicosAutoComplete/?ossb=" + $scope.ossb + "&query=" + encodeURIComponent(query),
+                        method: "GET",
+                    }).then(function (response) {
+                        if (response.data.status == 0) {
+                            $scope.completing = response.data.tecnicos.length > 0;
+
+                            $scope.complete_source = response.data.tecnicos;
+                        }
+                    });
+                }
+            }
+
+            $scope.editarComunicacao = function (comunicacao) {
+                var params = {
+                    id: comunicacao.id,
+                    texto: comunicacao.texto
+                };
+
+                $http({
+                    url: "/VisitaInicial/EditarComunicacao/?" + jQuery.param(params, true),
+                    method: "GET",
+                }).then(function (response) {
+                    comunicacao.editing = false;
+                });
+            }
+
+            $scope.openTecnicosModal = function (ossb) {
+                $scope.ossb = ossb;
+
+                $http({
+                    url: "/VisitaInicial/GetTecnicos/?ossb=" + ossb,
+                    method: "GET",
+                }).then(function (response) {
+                    if (response.data.status == 0) {
+                        $scope.items = response.data.tecnicos;
+
+                        $("#tecnicos-modal").modal('show');
+                    }
+                });
+            };
+
+            $scope.agendarVisitaBegin = function (ossb) {
+                $scope.ossb = ossb;
+
+                $("#agendar-visita-modal").modal('show');
+            }
+
+            $scope.agendarVisita = function () {
+                $("#agendar-visita-modal").modal('hide');
+
+                var params = {
+                    ossb: $scope.ossb,
+                    data: $scope.data + " " + $scope.hora,
+                    equipe: $("#agendar-visita-equipe").val(),
+                };
+
+                $http({
+                    url: "/VisitaInicial/AgendarVisita/?" + jQuery.param(params, true),
+                    method: "GET",
+                }).then(function (response) {
+                        location.reload();
+                });
+            };
+
+            $scope.agendarExecucaoBegin = function (ossb) {
+                $scope.ossb = ossb;
+
+                $("#agendar-execucao-modal").modal('show');
+            }
+
+            $scope.marcarComoResolvidoBegin = function (ossb, id) {
+                $scope.ossb = ossb;
+                $scope.id = id;
+
+                $("#marcar-como-resolvido-modal").modal('show');
+            }
+
+            $scope.pipelineBegin = function (ossb) {
+                $scope.ossb = ossb;
+
+                $http({
+                    url: "/VisitaInicial/GetPipeline/?ossb=" + ossb,
+                    method: "GET",
+                }).then(function (response) {
+                        $scope.pipeline = response.data;
+
+                        $("#pipeline-modal").modal('show');
+                });
+
+            }
+
+            $scope.adicionarComunicacao = function ($event) {
+
+
+
+                if ($event.keyCode == 13 && $scope.comunicacao_texto != "") {
+
+                    var params = {
+                        ossb: $scope.ossb,
+                        texto: $scope.comunicacao_texto
+                    }
+
+                    $scope.comunicacao_texto = "";
+
+
+                    $http({
+                        url: "/VisitaInicial/AdicionarComunicacao/?" + jQuery.param(params, true),
+                        method: "GET",
+                    }).then(function (response) {
+                        $scope.comunicacao.unshift(response.data);
+                    });
+                }
+            };
+
+            $scope.beginEditComunicacao = function (comunicacao) {
+                if (comunicacao.editavel) {
+                    comunicacao.rollback = comunicacao.texto;
+                    comunicacao.editing = true;
+
+                }
+            }
+
+            $scope.marcarComoResolvido = function () {
+                $("#marcar-como-resolvido-modal").modal('hide');
+
+                var params = {
+                    ossb: $scope.ossb,
+                    id: $scope.id,
+                    data: $scope.data + " " + $scope.hora,
+                }
+
+                $http({
+                    url: "/VisitaInicial/MarcarComoResolvido/?" + jQuery.param(params, true),
+                    method: "GET",
+                }).then(function (response) {
+                        location.reload();
+                });
+            };
+
+
+            $scope.agendarExecucao = function () {
+                $("#agendar-execucao-modal").modal('hide');
+
+                $http({
+                    url: "/VisitaInicial/AgendarExecucao/?ossb=" + $scope.ossb + "&data=" + encodeURIComponent($scope.data),
+                    method: "GET",
+                }).then(function (response) {
+                        location.reload();
+                });
+            };
+
+            $('#pipeline_data_proposta').on('change hide', function () {
+
+                $.getJSON("/VisitaInicial/EditarDataProposta", { ossb: $scope.ossb, data: $('#pipeline_data_proposta').val() }, function (data) {
+
+                });
+            })
+
+
+            $('#pipeline_data_followup').on('change hide', function () {
+
+                $.getJSON("/VisitaInicial/EditarDataFollowup", { ossb: $scope.ossb, data: $('#pipeline_data_followup').val() }, function (data) {
+
+                });
+            })
+        });
+
+        $('.clockpicker').clockpicker({
+            donetext: "OK",
+            autoclose: true,
+        });
+
+        $('.datetimepicker').datetimepicker({
+            language: "pt-BR",
+            format: 'dd/mm/yyyy hh:ii',
+            autoclose: true,
+            forceParse: true,
+            todayBtn: true,
+            autoclose: true,
+            clearBtn: true,
+        });
+
+
+
+
+        function startEditAgendado(self) {
+            var text = $(self).text();
+
+           var checklist = $(self).data('checklist');
+
+            if (text == "SEM VALOR")
+                text = ""
+
+
+            var $editor = $('<input class="form-control input-lg" value="' + text + '">')
+                .insertAfter($(self));
+
+
+            $(self).remove();
+
+
+            $editor.datetimepicker({
+                language: "pt-BR",
+                format: 'dd/mm/yyyy hh:ii',
+                autoclose: true,
+                forceParse: true,
+                todayBtn: true,
+
+            });
+
+
+            $editor.focus();
+
+            $editor.on('change hide', function () {
+                var text = $editor.val();
+
+                $.getJSON("/VisitaInicial/EditarDataAgendado", { id: parseInt(checklist), data: text }, function (data) {
+                    $('<div data-checklist="' + checklist + '" onclick="startEditAgendado(this)">' + text + "</div>")
+                        .insertAfter($editor);
+
+                    $editor.remove();
+                });
+
+            })
+
+        }
+
+        function startEditExecutado(self) {
+            var text = $(self).text();
+
+
+            if (text == "SEM VALOR")
+                text = ""
+
+
+            var checklist = $(self).data('checklist');
+
+            var $editor = $('<input class="form-control input-lg" value="' + text + '">')
+                .insertAfter($(self));
+
+
+            $(self).remove();
+
+
+            $editor.datetimepicker({
+                language: "pt-BR",
+                format: 'dd/mm/yyyy hh:ii',
+                autoclose: true,
+                clearBtn: true,
+                todayBtn: true,
+                forceParse: true,
+
+            });
+
+
+            $editor.focus();
+
+            $editor.on('change hide', function () {
+                var text = $editor.val();
+
+
+                $.getJSON("/VisitaInicial/EditarDataExecutado", { id: parseInt(checklist), data: text }, function (data) {
+                    if (text == "")
+                        text = "SEM VALOR";
+
+                    $('<div data-checklist="' + checklist + '" onclick="startEditExecutado(this)">' + text + "</div>")
+                        .insertAfter($editor);
+
+                    $editor.remove();
+                });
+
+
+
+            })
+
+        }
+
+
+        $('.datepicker').datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+
+
+        $("#agendar-visita-equipe").select2({
+            ajax: {
+                url: function (params) {
+                    var par = {
+
+                    };
+
+                    if (params.term) {
+                        par.query = params.term;
+                    }
+
+                    return "/VisitaInicial/GetPessoas/?" + jQuery.param(par, true);
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.pessoas,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    }
+                },
+            },
+            minimumInputLength: 1,
+
+            placeholder: {
+                id: 0,
+                text: ""
+            },
+
+            delay: 250,
+
+            theme: "bootstrap"
+        });
+
+        function pesquisar(page) {
+            var params = @Html.Raw(Json.Encode(ViewBag.QueryParams));
+
+            params.page = page;
+
+            location.href = "/VisitaInicial/Index/?" + jQuery.param(params, true);
+        }
+
+        function cancelarOssb() {
+            $.getJSON("/VisitaInicial/AlterarStatus", { id: parseInt($("#ossb-id").val()), status: 'C', historico: $("#cancelarHistorico").val() }, function (data) {
+                    if (data.status == 1) {
+                        alert(data.mensagem);
+                    }
+                    else
+                        location.reload();
+            });
+        }
+
+        function alterarComunicacao(comunicacao) {
+
+        }
+
+        function alterarStatus() {
+            $.getJSON("/VisitaInicial/AlterarStatus", { id: parseInt($("#ossb-id").val()), status: $("#ossb-status").val(), historico: $("#historico").val() }, function (data) {
+
+                    if (data.status == 1) {
+                        alert(data.mensagem);
+                    }
+                    else
+                        location.reload();
+            });
+        }
+
+        function gerarOrcamento(ossb) {
+            $.getJSON("/VisitaInicial/GetPDF", { id: ossb }, function (data) {
+                location.href = "../" + data.url;
+            });
+        }
+    </script>
+}

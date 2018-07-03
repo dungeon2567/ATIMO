@@ -1,0 +1,217 @@
+﻿@model ATIMO.Models.PAGAMENTO
+
+@{
+    ViewBag.Title = "ÁTIMO - PAGAMENTO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>PAGAMENTOS - EDIÇÃO</h3>
+                </div>
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+
+
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID);
+
+
+
+                    <fieldset>
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>OSSB</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.OSSB, new { @class = "form-control input-lg", maxlength = "10", id = "ossb" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>DESCRIÇÃO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg", maxlength = "200", id = "descricao" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>BENEFICIÁRIO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("PESSOA", null, "SELECIONE UMA PESSOA", new { required = "", id = "pessoa", name = "PESSOA" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>PROJETO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("PROJETO", null, "", new { id = "projeto", required = "required" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <div>
+                                <label>DESPESA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("DESPESA", null, "SELECIONE UMA DESPESA", new { required = "", id = "despesa" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>NÍVEL DE CRITICIDADE</label>
+                            </div>
+
+                            <div class="editor-field">
+                                <select id="status" name="CRITICIDADE">
+                                    @for (Int32 it = 1; it <= 4; ++it)
+                {
+                    <option value="@it" @(Model.CRITICIDADE == it ? "selected" : "")>@it</option>
+}
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>DATA DE VENCIMENTO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.DATA_VENCIMENTO, new { @class = "form-control input-lg datepicker", maxlength = "10", id = "data_vencimento", required = "", alt = "date" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>DATA DE PAGAMENTO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.DATA_PAGAMENTO, new { @class = "form-control input-lg datepicker", maxlength = "10", id = "data_pagamento", alt = "date" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>VALOR</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.VALOR_STRING, new { @class = "form-control input-lg", maxlength = "100", id = "valor", required = "", alt = "decimal" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>PROTESTO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                <select id="protesto" name="PROTESTO" required="">
+                                    <option value="true" @(Model.PROTESTO == true ? "selected" : "")>SIM</option>
+                                    <option value="false" @(Model.PROTESTO == false ? "selected" : "")>NÃO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>PROVISIONADO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                <select id="provisionado" name="PROVISIONADO" required="">
+                                    <option value="true" @(Model.PROVISIONADO == true ? "selected" : "")>SIM</option>
+                                    <option value="false" @(Model.PROVISIONADO == false ? "selected" : "")>NÃO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>FORMA DE PAGAMENTO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                <select id="forma_pagamento" name="FORMA_PAGAMENTO" required="">
+                                    <option value="0" @(Model.FORMA_PAGAMENTO == 0 ? "selected" : "")>DOC</option>
+                                    <option value="1" @(Model.FORMA_PAGAMENTO == 1 ? "selected" : "")>BOLETO</option>
+                                    <option value="2" @(Model.FORMA_PAGAMENTO == 2 ? "selected" : "")>DINHEIRO</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>CONTA BANCÁRIA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("CONTA_BANCARIA", null, "SELECIONE UMA CONTA BANCÁRIA", new { required = "", id = "conta_bancaria", name = "CONTA_BANCARIA" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <hr />
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-check-square-o"></i> Salvar
+                            </button>
+
+                            |
+                            <a class="btn btn-danger" href="~/Pagamento/Index">
+                                <i class="fa fa-rotate-left"></i>
+                                Voltar
+                            </a>
+                        </div>
+                    </fieldset>
+                    }
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

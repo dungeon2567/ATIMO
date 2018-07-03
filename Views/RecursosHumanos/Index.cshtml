@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ATIMO.Models.PESSOA>
+
+@using ATIMO;
+
+@{
+    ViewBag.Title = "Átimo - RH";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>PESSOAS</h3>
+                </div>
+                <div class="widget-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        FOTO
+                                    </th>
+
+                                    <th>
+                                        CPF
+                                    </th>
+
+                                    <th>
+                                        NOME
+                                    </th>
+
+                                    <th>
+                                        ESPECIALIDADES
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (item.IMAGEM != null)
+                                            {
+                                                <a href="/RecursosHumanos/VisualizarFoto/?id=@item.ID">
+                                                    <img src="/RecursosHumanos/VisualizarFoto/?id=@item.ID&width=100&height=100" alt="Lights" style="transition: transform .2s ease-in-out; max-width: 100px; max-height: 100px;">
+                                                </a>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NUM_DOC)
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.NOME)
+                                        </td>
+
+                                        <td>
+                                            @(String.Join(", ", item.ESPECIALIDADES.Select(ep => ep.DESCRICAO)))
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/RecursosHumanos/Edit/@item.ID">
+                                                <i class="fa fa-edit"></i>
+                                                Editar
+                                            </a>
+
+                                            <a class="btn btn-warning" href="~/FuncionarioDocumento/Index/@item.ID">
+                                                <i class="fa fa-file-pdf-o"></i>
+                                                Documentos
+                                            </a>
+
+                                            <a class="btn btn-default" href="~/FuncionarioCartaoPonto/Search/?funcionario=@item.ID">
+                                                <i class="fa fa-clock-o"></i>
+                                                Cartão de Ponto
+                                            </a>
+
+                                            @using (Html.BeginForm("AnexarFoto", "RecursosHumanos", new { id = item.ID }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                            {
+                                                <label class="btn btn-default btn-file">
+                                                    @(item.IMAGEM == null ? "Anexar" : "Reanexar") Foto <input type="file" name="file" style="display: none;" onchange="this.form.submit();">
+                                                </label>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script>
+
+    </script>
+}

@@ -1,0 +1,191 @@
+﻿@model IEnumerable<ATIMO.Models.OSSB_MATERIAL>
+
+@{
+    ViewBag.Title = "Átimo - OSSB Material";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-paperclip"></i>
+                    <h3>OSSB/SERVIÇOS/MATERIAIS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <p>
+                        @Html.ActionLink("Incluir Novo", "Create", new { id = @ViewBag.OSSB })
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        DESCRIÇÃO
+                                    </th>
+
+                                    <th>
+                                        UNIDADE
+                                    </th>
+
+                                    <th>
+                                        FORNECEDOR
+                                    </th>
+
+                                    <th>
+                                        QUANTIDADE
+                                    </th>
+
+                                    <th>
+                                        DATA
+                                    </th>
+
+
+                                    <th colspan="2">
+                                        VALOR
+                                    </th>
+
+                                    <th>
+                                        AÇOES
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="5">
+
+                                    </th>
+
+                                    <th>
+                                        UNIT
+                                    </th>
+
+                                    <th>
+                                        TOTAL
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span>@item.DESCRICAO</span>
+                                        </td>
+
+                                        <th>
+                                            <span>@item.UNIDADE1.SIGLA</span>
+                                        </th>
+                                        <td>
+                                            @if (item.FORNECEDOR != null)
+                                            {
+                                                <span>@item.PESSOA.RAZAO</span>
+                                            }
+
+                                        </td>
+                                        <td>
+                                            <span>@item.QUANTIDADE.ToString("N2")</span>
+                                        </td>
+                                        <td>
+                                            <span>@item.DATA.ToString("dd/MM/yyyy")</span>
+                                        </td>
+
+                                        <td>
+                                            @if (item.VALOR != null)
+                                            {
+                                                <span>@item.VALOR.Value.ToString("C")</span>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            @if (item.VALOR != null)
+                                            {
+                                                <span>@((item.VALOR.Value * item.QUANTIDADE).ToString("C"))</span>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/OssbMaterial/Edit/@item.ID">
+                                                <i class="fa fa-edit"></i>
+                                                Editar
+                                            </a>
+
+                                            @if (item.DATA_COMPRADO == null)
+                                            {
+                                            <a class="btn btn-danger" onclick="openDeleteModal('/OssbMaterial/Deletar/?id=@item.ID')">
+                                                <i class="fa fa-remove"></i>
+                                                Deletar
+                                            </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+
+                                <tr>
+                                    <td colspan="6">
+                                        <span>TOTAL</span>
+                                    </td>
+
+                                    <td>
+                                        <span>@Model.Select(osm => osm.VALOR.GetValueOrDefault() * osm.QUANTIDADE).Sum().ToString("C")</span>
+                                    </td>
+
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirmar Exclusão</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Essa ação não pode ser desfeita.</p>
+                <p>Você realmente deseja continuar?</p>
+                <p class="debug-url"></p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <a class="btn btn-danger btn-ok">Deletar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        function openDeleteModal(url) {
+            $('.btn-ok').attr('href', url);
+
+            $('.debug-url').html('Delete URL: <strong>' + $('.btn-ok').attr('href') + '</strong>');
+
+            $('#confirm-delete').modal('show');
+        }
+    </script>
+}

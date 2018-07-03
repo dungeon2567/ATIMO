@@ -1,0 +1,30 @@
+﻿@using ATIMO;
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <div class="nav-collapse">
+                <a class="brand" href="~/">@Session.Usuario().NOME</a>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="@Url.Action("Logout", "Home")">
+                            <i class="fa fa-cog"></i> LOGOUT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="subnavbar">
+    <div class="subnavbar-inner">
+        <div class="container">
+            <ul class="mainnav">
+                <li class="active"><a href="~/AreaDoCliente/Dashboard"><i class="fa fa-dashboard"></i><span>DASHBOARD</span> </a> </li>
+                <li><a href="~/AreaDoCliente/OrdensDeServico"><i class="fa fa fa-bar-chart"></i><span>ORDENS DE SERVIÇO</span> </a> </li>
+            </ul>
+        </div>
+    </div>
+</div>

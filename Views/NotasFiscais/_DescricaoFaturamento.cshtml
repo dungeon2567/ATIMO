@@ -1,0 +1,307 @@
+﻿<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Descrições Padrões para NF</h4>
+    </div>
+    <div class="modal-body" style="height:450px; overflow-y:auto; overflow-x:hidden;">
+
+        <!-- Lista de Descrições (Início) -->
+        <div id="divModalListaDescricaoFaturamento">
+            <div class="row" style="margin-bottom:10px;">
+                <div class="col-md-12">
+                    <label for="txtModal_PesquisaDescricao">Pesquisar</label>
+                    <input type="text" id="txtModal_PesquisaDescricao" class="form-control" placeholder="Pesquisar" />
+                </div>
+            </div>
+            <div id="divModal_TableDescricoesFaturamento">
+                <table class="table table-condensed table-hover table-striped" id="tableModal_ListaDescricoesFaturamento">
+                    <thead>
+                        <tr>
+                            <th class="col-md-5">Sugestão de uso</th>
+                            <th class="col-md-5">Descrição</th>
+                            <th class="col-md-2"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr data-rowtemplate="true" class="hidden">
+                            <td>{{QuandoUtilizar}}</td>
+                            <td>{{DescricaoResumida}}</td>
+                            <td style="text-align:right;">
+                                <button type="button" class="btn btn-success btn-xs btn-selecionar-descricao-faturamento" title="Selecionar essa descrição"><i class="fa fa-plus-circle"></i></button>
+                                <button type="button" class="btn btn-primary btn-xs btn-editar-descricao-faturamento" title="Editar"><i class="fa fa-edit"></i></button>
+                                <button type="button" class="btn btn-danger btn-xs btn-excluir-descricao-faturamento" title="Excluir"><i class="fa fa-trash"></i></button>
+
+                                <input type="hidden" class="hidden-id-descricao-faturamento" value="{{Id}}" />
+                                <input type="hidden" class="hidden-descricao-faturamento" value="{{Descricao}}" />
+                                <input type="hidden" class="hidden-modo-uso-descricao-faturamento" value="{{QuandoUtilizar}}" />
+                                <input type="hidden" class="hidden-titulo-descricao-faturamento" value="{{Titulo}}" />
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <!-- Lista de Descrições (Início) -->
+        <!-- Cadastro/Edição Descrições (Início)-->
+        <div id="divModalCRUDDescricaoFaturamento" style="display:none;">
+            <input type="hidden" id="hiddenModal_Id_DescricaoFaturamento" />
+            <div class="row">
+                <div class="form-group">
+                    <label for="txtModal_Titulo_DescricaoFaturamento" class="col-sm-2 control-label">Título:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtModal_Titulo_DescricaoFaturamento" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtModal_DescricaoFaturamento" class="col-sm-2 control-label">Descrição:</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="txtModal_DescricaoFaturamento" name="Descricao" style="height:200px;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="txtModal_ModoDeUso_DescricaoFaturamento" class="col-sm-2 control-label">Sugestão de uso:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="txtModal_ModoDeUso_DescricaoFaturamento" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Cadastro/Edição Descrições (Fim   )-->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-info" id="btnModal_VoltarLista_DescricaoFaturamento">Voltar para lista</button>
+        <button type="button" class="btn btn-success" id="btnModal_SalvarDescricaoFaturamento" style="display:none;">Salvar</button>
+        <button type="button" class="btn btn-danger" id="btnModal_ExcluirDescricaoFaturamento" style="display:none;">Confirmar Exclusão</button>
+    </div>
+</div><!-- /.modal-content -->
+
+
+@using (Html.BeginScriptContext())
+{
+    Html.AddScriptFile("~/Scripts/utils.js");
+    Html.AddScriptFile("~/Scripts/latinise/latinise.js");
+    Html.AddScriptBlock(
+/// <reference path="Scripts/_references.js" />
+        @<script type="text/javascript">
+
+            //Descrições Modelo para NF - Início
+            var FaturamentoDescricalModalClass = function () {
+                var m_This = this;
+                var m_DescriptionTextBox = null;
+                var m_GetFaturamentoDescricoesURL = '@Url.Action("GetFaturamentoDescricoes", "NotasFiscais")';
+                var m_SaveFaturamentoDescricaoURL = '@Url.Action("SaveFaturamentoDescricao", "NotasFiscais")';
+                var m_DeleteFaturamentoDescricaoURL = '@Url.Action("DeleteFaturamentoDescricao", "NotasFiscais")';
+
+                var m_hidden_Id_DescricaoFaturamento = $("#hiddenModal_Id_DescricaoFaturamento");
+                var m_text_Titulo_DescricaoFaturaento = $("#txtModal_Titulo_DescricaoFaturamento");
+                var m_text_DescricaoFaturamento = $("#txtModal_DescricaoFaturamento");
+                var m_text_ModoUso_DescricaoFaturamento = $("#txtModal_ModoDeUso_DescricaoFaturamento");
+
+                $("#btnModal_SalvarDescricaoFaturamento").click(function () {
+                    var l_Id = m_hidden_Id_DescricaoFaturamento.val();
+                    var l_Titulo = m_text_Titulo_DescricaoFaturaento.val();
+                    var l_Descricao = m_text_DescricaoFaturamento.val();
+                    var l_SugestaoUso = m_text_ModoUso_DescricaoFaturamento.val();
+                    _Save(l_Id, l_Descricao, l_Titulo, l_SugestaoUso);
+                });
+                $("#btnModal_VoltarLista_DescricaoFaturamento").click(function () {
+                    m_This.OpenList(null);
+                });
+                $("#btnModal_ExcluirDescricaoFaturamento").click(function () {
+                    _Delete(m_hidden_Id_DescricaoFaturamento.val());
+                });
+
+                var _BindEvents = function () {
+                    $(".btn-selecionar-descricao-faturamento").click(function () {
+                        if (!m_DescriptionTextBox != null) {
+                            m_DescriptionTextBox.val($(this).parents("td").first().find(".hidden-descricao-faturamento").val());
+                            m_This.CloseModal();
+                        }
+                    });
+                    $(".btn-editar-descricao-faturamento").click(function () {
+                        var l_Container = $(this).parents("td").first();
+
+                        m_This.OpenCrud(l_Container.find(".hidden-id-descricao-faturamento").val(),
+                                        l_Container.find(".hidden-descricao-faturamento").val(),
+                                        l_Container.find(".hidden-titulo-descricao-faturamento").val(),
+                                        l_Container.find(".hidden-modo-uso-descricao-faturamento").val(),
+                                        false
+                                        );
+                    });
+                    $(".btn-excluir-descricao-faturamento").click(function () {
+                        var l_Container = $(this).parents("td").first();
+
+                        m_This.OpenCrud(l_Container.find(".hidden-id-descricao-faturamento").val(),
+                                        l_Container.find(".hidden-descricao-faturamento").val(),
+                                        l_Container.find(".hidden-titulo-descricao-faturamento").val(),
+                                        l_Container.find(".hidden-modo-uso-descricao-faturamento").val(),
+                                        true
+                                        );
+                    });
+                };
+
+                var _ShowModal = function () {
+                    $("#divModalDescricaoFaturamento").modal("show");
+                };
+
+                var _Save = function (p_Id, p_Description, p_Title, p_Usage) {
+                    $.ajax({
+                        url: m_SaveFaturamentoDescricaoURL,
+                        type: 'POST',
+                        data: {
+                            ID: p_Id,
+                            TituloDescricao: p_Title,
+                            Descricao: p_Description,
+                            QuandoUtilizar: p_Usage
+                        },
+                        success: function (data) {
+                            if (data) {
+                                alert("Descrição modelo salva com sucesso!");
+                                m_This.OpenList(null);
+                            }
+                        },
+                        error: function (data) {
+                            alert("Ocorreu um erro ao salvar a descrição modelo." + "\n" + data.status);
+                        }
+                    });
+                }
+
+                var _Delete = function (p_Id) {
+                    $.ajax({
+                        url: m_DeleteFaturamentoDescricaoURL,
+                        type: 'POST',
+                        data: {
+                            p_Id: p_Id
+                        },
+                        success: function (data) {
+                            if (data) {
+                                alert("Descrição excluída com sucesso!");
+                                m_This.OpenList(null);
+                            }
+                        },
+                        error: function (data) {
+                            alert("Ocorreu um erro ao excluir a descrição." + "\n" + data.status);
+                        }
+                    });
+                }
+
+                this.OpenList = function (p_DescriptionTextBox) {
+                    _ShowModal();
+
+                    $("#divModalListaDescricaoFaturamento").show();
+                    $("#divModalCRUDDescricaoFaturamento").hide();
+                    $("#btnModal_SalvarDescricaoFaturamento").hide();
+                    $("#btnModal_VoltarLista_DescricaoFaturamento").hide();
+                    $("#btnModal_ExcluirDescricaoFaturamento").hide();
+
+                    $.ajax({
+                        url: m_GetFaturamentoDescricoesURL,
+                        type: "GET",
+                        beforeSend: function () {
+                            $("#tableModal_ListaDescricoesFaturamento").find("tbody").html("Carregando..");
+                        },
+                        success: function (data) {
+                            var l_Table = $("#tableModal_ListaDescricoesFaturamento");
+                            var l_RowTemplate = l_Table.find("tr[data-rowtemplate='true']");
+                            var l_TableBody = l_Table.find("tbody");
+                            var l_CleanRowTemplate = l_RowTemplate.clone();
+
+                            l_CleanRowTemplate.removeAttr("data-rowtemplate").removeClass("hidden");
+                            l_TableBody.html("");
+
+                            $.each(data, function (index, item) {
+                                var l_RowClone = l_CleanRowTemplate.clone();
+                                l_RowClone.html(l_RowClone.html().replaceAll("{{QuandoUtilizar}}", item.QuandoUtilizar));
+                                l_RowClone.html(l_RowClone.html().replaceAll("{{DescricaoResumida}}", item.DescricaoResumida));
+                                l_RowClone.html(l_RowClone.html().replaceAll("{{Id}}", item.Id));
+                                l_RowClone.html(l_RowClone.html().replaceAll("{{Descricao}}", item.Descricao));
+                                l_RowClone.html(l_RowClone.html().replaceAll("{{Titulo}}", item.Titulo));
+                                l_TableBody.append(l_RowClone);
+                            });
+
+                            _BindEvents();
+                        },
+                        error: function (data) {
+                            alert('Ocorreu um erro ao buscar a lista de modelos de descrição das notas fiscais');
+                        }
+                    })
+
+                    if (p_DescriptionTextBox != null && p_DescriptionTextBox != undefined)
+                        m_DescriptionTextBox = p_DescriptionTextBox;
+                };
+
+                this.OpenCrud = function (p_Id, p_Description, p_Title, p_Usage, p_OpenForDelete) {
+                    _ShowModal();
+
+                    m_hidden_Id_DescricaoFaturamento.val(p_Id);
+                    m_text_Titulo_DescricaoFaturaento.val(p_Title);
+                    m_text_DescricaoFaturamento.val(p_Description);
+                    m_text_ModoUso_DescricaoFaturamento.val(p_Usage);
+
+                    if (p_OpenForDelete) {
+                        m_text_Titulo_DescricaoFaturaento.attr("disabled", "disabled");
+                        m_text_DescricaoFaturamento.attr("disabled", "disabled");
+                        m_text_DescricaoFaturamento.attr("disabled", "disabled");
+                        m_text_ModoUso_DescricaoFaturamento.attr("disabled", "disabled");
+
+                        $("#btnModal_SalvarDescricaoFaturamento").hide();
+                        $("#btnModal_ExcluirDescricaoFaturamento").show();
+                    }
+                    else {
+                        m_text_Titulo_DescricaoFaturaento.removeAttr("disabled");
+                        m_text_DescricaoFaturamento.removeAttr("disabled");
+                        m_text_DescricaoFaturamento.removeAttr("disabled");
+                        m_text_ModoUso_DescricaoFaturamento.removeAttr("disabled");
+
+                        $("#btnModal_SalvarDescricaoFaturamento").show();
+                        $("#btnModal_ExcluirDescricaoFaturamento").hide();
+                    }
+                    $("#btnModal_VoltarLista_DescricaoFaturamento").show();
+
+                    $("#divModalListaDescricaoFaturamento").hide();
+                    $("#divModalCRUDDescricaoFaturamento").show();
+                };
+
+                this.CloseModal = function () {
+                    $("#divModalDescricaoFaturamento").modal("hide");
+                };
+                
+                var _EnableSearch = function () {
+                    var l_tableBody = $("#tableModal_ListaDescricoesFaturamento").find("tbody");
+                    // handle search fields key up event
+                    $('#txtModal_PesquisaDescricao').keyup(function (e) {
+                        var text = $(this).val(); // grab search term
+
+                        if (text.length > 1) {
+                            l_tableBody.find('tr').hide(); // hide data rows, leave header row showing
+
+                            // iterate through all grid rows
+                            l_tableBody.find('tr').each(function (i) {
+                                // check to see if search term matches Name column
+                                if ($(this).find('.hidden-id-descricao-faturamento').val().latinise().toUpperCase().match(text.latinise().toUpperCase()) ||
+                                    $(this).find('.hidden-modo-uso-descricao-faturamento').val().latinise().toUpperCase().match(text.latinise().toUpperCase()) ||
+                                    $(this).find('.hidden-titulo-descricao-faturamento').val().latinise().toUpperCase().match(text.latinise().toUpperCase()) ||
+                                    $(this).find('.hidden-descricao-faturamento').val().latinise().toUpperCase().match(text.latinise().toUpperCase())
+                                    )
+                                    $(this).show(); // show matching row
+                            });
+                        }
+                        else
+                            l_tableBody.find('tr').show(); // if no matching name is found, show all rows
+                    });
+                }
+
+                _BindEvents();
+                _EnableSearch();
+            };
+
+            
+            var m_ModalFaturamentoDescricao = new FaturamentoDescricalModalClass(); //FaturamentoDescricalModalClass está dentro da PartialView _DescricaoFaturamento
+            
+            //Descrições Modelo para NF - Fim
+
+        </script>
+    );
+}

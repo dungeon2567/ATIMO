@@ -1,0 +1,349 @@
+﻿@model IEnumerable<ATIMO.Models.OSSB_MATERIAL>
+
+@{
+    ViewBag.Title = "Átimo - OSSB Material";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container-fluid" style="max-width: 100%; display: block; margin: 20px;">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-paperclip"></i>
+                    <h3>MATERIAIS</h3>
+                </div>
+                <div class="widget-content">
+                    <div class="form-group col-md-8">
+                        <div>
+                            <label>DATA</label>
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">DE</span>
+                            <input id="de" class="form-control input-lg datepicker" maxlength="10" alt="date" value="@(ViewBag.DE == null? "" : ViewBag.DE)" />
+                            <span class="input-group-addon" id="basic-addon1">ATÉ</span>
+                            <input id="ate" class="form-control input-lg datepicker" maxlength="10" alt="date" value="@(ViewBag.ATE == null? "" : ViewBag.ATE)" />
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div>
+                            <label>STATUS</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <select id="status">
+                                <option value="0" @(ViewBag.STATUS == 0 ? "selected" : "")> </option>
+                                <option value="1" @(ViewBag.STATUS == 1 ? "selected" : "")> ORÇADO</option>
+                                <option value="2" @(ViewBag.STATUS == 2 ? "selected" : "")> COMPRADO</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>DESCRIÇÃO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input value="@ViewBag.DESCRICAO" class="form-control input-lg uppercase typeahead" autocomplete="off" maxlength="200" id="descricao" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>LOCAL DE ENTREGA</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input value="@ViewBag.LOCAL_ENTREGA" class="form-control input-lg uppercase typeahead" autocomplete="off" maxlength="200" id="local_entrega" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar();">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Pesquisar
+                        </button>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <div class="table-responsive" style="overflow-x: scroll;">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="7">
+
+                                        </th>
+                                        <th colspan="3">
+                                            ORÇADO
+                                        </th>
+                                        <th colspan="3">
+                                            COMPRADO
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            AÇOES
+                                        </th>
+                                        <th>
+                                            SITUAÇÃO
+                                        </th>
+
+                                        <th>
+                                            DESCRIÇÃO
+                                        </th>
+
+                                        <th style="white-space: nowrap;">
+                                            LOCAL DE ENTREGA
+                                        </th>
+
+                                        <th>
+                                            UNID
+                                        </th>
+
+                                        <th>
+                                            FORNECEDOR
+                                        </th>
+
+                                        <th>
+                                            QTD
+                                        </th>
+
+                                        <th>
+                                            DATA
+                                        </th>
+
+                                        <th colspan="2">
+                                            VALOR
+                                        </th>
+
+                                        <th>
+                                            DATA
+                                        </th>
+
+                                        <th colspan="2">
+                                            VALOR
+                                        </th>
+                                        <th>
+                                            OBSERVAÇÃO
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="8">
+
+                                        </th>
+
+                                        <th>
+                                            UNIT
+                                        </th>
+
+                                        <th>
+                                            TOTAL
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                        <th>
+                                            UNIT
+                                        </th>
+
+                                        <th>
+                                            TOTAL
+                                        </th>
+                                        <th>
+
+                                        </th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @if (item.DATA_COMPRADO == null)
+                                                {
+                                                    <a class="btn btn-info" onclick="$('#comprar-id').val('@item.ID'); $('#comprar-modal').modal('show');">
+                                                        Comprar
+                                                    </a>
+                                                }
+                                            </td>
+                                            <td>
+                                                <span style="white-space: nowrap;">@item.OSSB - @item.OSSB1.TEXTO_SITUACAO</span>
+                                            </td>
+                                            <td>
+                                                <span style="white-space: nowrap;">@item.DESCRICAO</span>
+                                            </td>
+                                            <td>
+                                                <span style="white-space: nowrap;">@item.LOCAL_ENTREGA</span>
+                                            </td>
+
+                                            <th>
+                                                <span>@item.UNIDADE1.SIGLA</span>
+                                            </th>
+                                            <td>
+                                                @if (item.FORNECEDOR != null)
+                                                {
+                                                    <span style="white-space: nowrap;">@item.PESSOA.RAZAO</span>
+                                                }
+
+                                            </td>
+                                            <td>
+                                                <span>@item.QUANTIDADE.ToString("N2")</span>
+                                            </td>
+                                            <td>
+                                                <span>@item.DATA.ToString("dd/MM/yyyy")</span>
+                                            </td>
+
+                                            <td>
+                                                @if (item.VALOR != null)
+                                                {
+                                                    <span style="white-space: nowrap;">@item.VALOR.Value.ToString("C")</span>
+                                                }
+                                            </td>
+
+                                            <td>
+                                                @if (item.VALOR != null)
+                                                {
+                                                    <span style="white-space: nowrap;">@((item.VALOR.Value * item.QUANTIDADE).ToString("C"))</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.DATA_COMPRADO != null)
+                                                {
+                                                    <span>@item.DATA_COMPRADO.Value.ToString("dd/MM/yyyy")</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.VALOR_COMPRADO != null)
+                                                {
+                                                    <span style="white-space: nowrap;">@item.VALOR_COMPRADO.Value.ToString("C")</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (item.VALOR_COMPRADO != null)
+                                                {
+                                                    <span style="white-space: nowrap;">@((item.VALOR_COMPRADO.Value * item.QUANTIDADE).ToString("C"))</span>
+                                                }
+                                            </td>
+                                            <td>
+                                                @item.OBSERVACAO
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="comprar-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="comprar-id" />
+                    <div class="form-group">
+                        <label for="comprar-data">DATA</label>
+                        <input id="comprar-data" class="form-control input-lg datepicker" maxlength="10" alt="date" />
+                    </div>
+                    <div class="form-group">
+                        <label for="comprar-valor">VALOR UNITÁRIO</label>
+                        <input type="text" alt="decimal" id="comprar-valor" max-length="18" class="form-control input-lg uppercase" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="comprar();">OK</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script src="../../Scripts/bootstrap-typeahead.min.js"></script>
+
+    <script>
+
+        $('#comprar-modal').on('shown.bs.modal', function (e) {
+            $('comprar-data').val('');
+            $("comprar-valor").val('0,00');
+        })
+
+        $('#descricao').typeahead({
+            ajax: '/OssbMaterial/Autocomplete'
+        });
+
+        $('#local_entrega').typeahead({
+            ajax: '/OssbMaterial/AutocompleteLocalEntrega'
+        });
+
+        function pesquisar() {
+            var params = {
+
+            };
+
+
+            if ($("#status").val() != "") {
+                params.status = $("#status").val();
+            }
+
+            if ($("#de").val() != "") {
+                params.de = $("#de").val();
+            }
+
+            if ($("#ate").val() != "") {
+                params.ate = $("#ate").val();
+            }
+
+            if ($("#descricao").val() != "") {
+                params.descricao = $("#descricao").val();
+            }
+
+
+            if ($("#local_entrega").val() != "") {
+                params.local_entrega = $("#local_entrega").val();
+            }
+
+            location.href = "/OssbMaterial/Compras/?" + jQuery.param(params, true);
+        }
+
+        function comprar() {
+            $.getJSON("/OssbMaterial/Comprar", { id: $("#comprar-id").val(), valor: $("#comprar-valor").val(), data: $("#comprar-data").val() }, function (data) {
+                location.reload();
+            });
+        }
+
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

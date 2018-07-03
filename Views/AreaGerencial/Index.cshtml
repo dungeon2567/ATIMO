@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "ÁTIMO - Area Gerencial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ATIMO;
+
+
+@Html.Partial("MenuGerencial")
+
+
+<div class="main">
+    <div class="container">
+
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>RELATÓRIOS</h3>
+            </div>
+
+            <div class="widget-content">
+                <div class="shortcuts">
+                    <a href="~/RelatorioMensal/Search" class="shortcut">
+                        <i class="shortcut-icon fa fa-file-o"></i>
+                        <span class="shortcut-label">RELATÓRIO MENSAL</span>
+                    </a>
+
+                    <a href="~/FluxoCaixa/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-area-chart"></i>
+                        <span class="shortcut-label">FLUXO DE CAIXA</span>
+                    </a>
+
+                    <a href="~/FluxoProvisionado/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-area-chart"></i>
+                        <span class="shortcut-label">FLUXO PROVISIONÁDO</span>
+                    </a>
+
+                    <a href="~/DashboardFinanceiro/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-dashboard"></i>
+                        <span class="shortcut-label">DASHBOARD</span>
+                    </a>
+
+                    <a href="~/RelatorioGastosGanhos/Search" class="shortcut">
+                        <i class="shortcut-icon fa fa-bar-chart-o"></i>
+                        <span class="shortcut-label">GASTOS X GANHOS</span>
+                    </a>
+
+                    <a href="~/RelatorioGeral/Search" class="shortcut">
+                        <i class="shortcut-icon fa fa-file-o"></i>
+                        <span class="shortcut-label">RELATÓRIO GERAL</span>
+                    </a>
+
+
+                    <a href="~/AreaGerencial/Resultados" class="shortcut">
+                        <i class="shortcut-icon fa fa-dollar"></i>
+                        <span class="shortcut-label">RESULTADOS</span>
+                    </a>
+
+                    <a href="~/RelatorioCustos/Search" class="shortcut">
+                        <i class="shortcut-icon fa fa-file-o"></i>
+                        <span class="shortcut-label">RELATÓRIO DE CUSTOS</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>AÇÕES</h3>
+            </div>
+
+            <div class="widget-content">
+                <div class="shortcuts">
+                    <a href="~/CopiarServicos/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-file-o"></i>
+                        <span class="shortcut-label">COPIAR SERVIÇOS DE UMA OS PARA OUTRA</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<ATIMO.Models.OSSB_CHECK_LIST>
+
+
+@{
+    ViewBag.Title = "Átimo - OSSB CHECKLIST";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-wrench"></i>
+                    <h3>OSSB/CHECKLIST</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        ID
+                                    </th>
+
+                                    <th>
+                                        SITUAÇÃO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <span>@item.OSSB/@item.ID</span>
+                                        </td>
+
+                                        <td>
+                                            @if (item.SITUACAO == "P")
+                                            {
+                                                <span class="label label-danger">PENDENTE</span>
+                                            }
+                                            else
+
+                                            {
+                                                <span class="label label-success">OK</span>
+                                            }
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/OssbTerceiro/Edit/@item.ID">
+                                                <i class="fa fa-print"></i>
+                                                Visualizar
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")

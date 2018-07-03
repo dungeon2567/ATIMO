@@ -1,0 +1,139 @@
+﻿@model ATIMO.Models.CLIENTE_SATISFACAO
+
+@{
+    ViewBag.Title = "ÁTIMO - CLIENTE SATISFAÇÃO";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>CLIENTE SATISFAÇÃO - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.OSSB)
+
+                        <fieldset>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>POSTURA DA EQUIPE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <select name="POSTURA_EQUIPE">
+                                        <option class="text-muted" @(Model.POSTURA_EQUIPE == 0 ? "selected" : "") value="0">SEM VALOR</option>
+                                        <option class="text-danger" @(Model.POSTURA_EQUIPE == 1 ? "selected" : "") value="1">RUIM</option>
+                                        <option class="text-warning" @(Model.POSTURA_EQUIPE == 2 ? "selected" : "") value="2">REGULAR</option>
+                                        <option class="text-primary" @(Model.POSTURA_EQUIPE == 3 ? "selected" : "") value="3">BOM</option>
+                                        <option class="text-success" @(Model.POSTURA_EQUIPE == 4 ? "selected" : "") value="4">ÓTIMO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>CUMPRIMENTO DO HORÁRIO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <select name="CUMPRIMENTO_HORARIO">
+                                        <option class="text-muted" @(Model.CUMPRIMENTO_HORARIO == 0 ? "selected" : "") value="0">SEM VALOR</option>
+                                        <option class="text-danger" @(Model.CUMPRIMENTO_HORARIO == 1 ? "selected" : "") value="1">RUIM</option>
+                                        <option class="text-warning" @(Model.CUMPRIMENTO_HORARIO == 2 ? "selected" : "") value="2">REGULAR</option>
+                                        <option class="text-primary" @(Model.CUMPRIMENTO_HORARIO == 3 ? "selected" : "") value="3">BOM</option>
+                                        <option class="text-success" @(Model.CUMPRIMENTO_HORARIO == 4 ? "selected" : "") value="4">ÓTIMO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>SATISFAÇÃO COM SERVIÇO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <select name="SATISFACAO_SERVICO">
+                                        <option class="text-muted" @(Model.SATISFACAO_SERVICO == 0 ? "selected" : "") value="0">SEM VALOR</option>
+                                        <option class="text-danger" @(Model.SATISFACAO_SERVICO == 1 ? "selected" : "") value="1">RUIM</option>
+                                        <option class="text-warning" @(Model.SATISFACAO_SERVICO == 2 ? "selected" : "") value="2">REGULAR</option>
+                                        <option class="text-primary" @(Model.SATISFACAO_SERVICO == 3 ? "selected" : "") value="3">BOM</option>
+                                        <option class="text-success" @(Model.SATISFACAO_SERVICO == 4 ? "selected" : "") value="4">ÓTIMO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>ASSINATURA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input class="form-control input-lg" maxlength="80" name="ASSINATURA" value="@Model.ASSINATURA" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>JUSTIFICATIVA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input class="form-control input-lg" maxlength="80" name="COBRANCA" value="@Model.COBRANCA" />
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="@Request.UrlReferrer.ToString()">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+
+        $(".monthpicker").datepicker({
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true,
+            format: "mm/yyyy",
+            startView: "months",
+            minViewMode: "months"
+        });
+    </script>
+}

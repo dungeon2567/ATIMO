@@ -1,0 +1,77 @@
+﻿@model ATIMO.Models.Faturamento.Faturamento
+@{
+    ViewBag.Title = "CalculoRetencoes";
+}
+
+<h2>Calculo de Retencoes</h2>
+
+@using (Html.BeginForm())
+{
+    <table>
+        <tr>
+            <td>
+                <label>Prestador Optante Simples Nacional</label>
+            </td>
+            <td>
+                <select name="EmpresaEmissao.OptanteSimplesNacional">
+                    <option value="S">Sim</option>
+                    <option value="N">Não</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Tipo Pessoa Tomador do Serviço</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(model => model.OSSB.PessoaCliente.TIPO_PESSOA_TRIBUTACAO,
+                ((List<KeyValuePair<int, string>>)ATIMO.Models.Utils.getEnumAsList(typeof(ATIMO.Models.PESSOA.enmTipoPessoaTrib))).Select(option => new SelectListItem
+                {
+                    Text = option.Value,
+                    Value = option.Key.ToString(),
+                    Selected = (Model != null) && (option.Key.ToString() == Model.OSSB.PessoaCliente.TIPO_PESSOA_TRIBUTACAO.ToString())
+                }), "Escolha uma opção...", new { @class = "form-control" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Cidade Tomador do Serviço</label>
+            </td>
+            <td>
+                <input size="50" type="text" value="@Model.OSSB.PessoaCliente.CIDADE" name="OSSB.PessoaCliente.CIDADE" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Valor Bruto</label>
+            </td>
+            <td>
+                <input size="15" type="text" value="@Model.ValorBruto" name="ValorBruto" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Valor Mao de Obra (Base Calculo INSS)</label>
+            </td>
+            <td>
+                <input size="15" type="text" value="@Model.ValorMaoDeObra" name="ValorMaoDeObra" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Calcular</button>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table>
+                    <thead><tr><td></td><td>Imposto</td><td>Aliquota</td><td>Base Calculo</td><td>Valor Retenção</td></tr></thead>
+                    @foreach (ATIMO.Models.Faturamento.FaturamentoRetencoes retencao in Model.Retencoes)
+                    {
+                        <tr><td><input type="checkbox" /></td><td>@retencao.TipoImposto.Nome</td><td>@retencao.PercentUsado</td><td>@retencao.BaseCalculo</td><td>@retencao.ValorRetencao</td></tr>
+                    }
+                </table>
+            </td>
+        </tr>
+    </table>
+}

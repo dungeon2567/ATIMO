@@ -1,0 +1,53 @@
+﻿@model ATIMO.Models.SUBTAREFA
+
+    @{
+        ViewBag.Title = "Átimo - Subtarefa";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    @Html.Partial("MenuTarefa")
+
+    <div class="main">
+        <div class="container">
+            <div class="row">
+                <div class="widget">
+                    <div class="widget-header">
+                        <i class="fa fa-comment-o"></i>
+                        <h3>SUBTAREFA - NOVO</h3>
+                    </div>
+
+                    <div class="widget-content">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            @Html.HiddenFor(m => m.TAREFA);
+
+                            <fieldset>
+                                <div class="form-group col-md-12">
+                                    <div>
+                                        <label>DESCRIÇÃO</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        @Html.TextAreaFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase", placeholder = "TEXTO", id = "texto", rows = "5", required = "" })
+                                        @Html.ValidationMessageFor(model => model.DESCRICAO, "Informe o texto!")
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <input type="submit" value="Salvar" class="btn btn-primary" />
+                                </div>
+                            </fieldset>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("RodapeFixo")
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

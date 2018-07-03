@@ -1,0 +1,1858 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <assembly>
+    <name>EWSoftware.PDI</name>
+  </assembly>
+  <members>
+    <member name="T:EWSoftware.PDI.DateTimeCollection">
+      <summary>
+            A type-safe collection of <see cref="T:System.DateTime" /> objects.  The other classes in this namespace use this
+            collection when returning a list of dates.  The collection can be used as a data source for data binding.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.DateTimeCollection.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.DateTimeCollection.#ctor(System.Collections.Generic.IEnumerable{System.DateTime})">
+      <summary>
+            Construct the collection from an enumerable list of <see cref="T:System.DateTime" /> objects
+            </summary>
+      <param name="dates">The enumerable list of dates to add</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DateTimeCollection.AddRange(System.Collections.Generic.IEnumerable{System.DateTime})">
+      <summary>
+            Add a range of <see cref="T:System.DateTime" /> objects from an enumerable list
+            </summary>
+      <param name="dates">The enumerable list of dates to add</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DateTimeCollection.RemoveRange(System.Int32,System.Int32)">
+      <summary>
+            Remove a range of items from the collection
+            </summary>
+      <param name="index">The zero-based index at which to start removing items</param>
+      <param name="count">The number of items to remove</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DateTimeCollection.Sort(System.Boolean)">
+      <summary>
+            This is used to sort the collection in ascending or descending order
+            </summary>
+      <param name="ascending">Pass true for ascending order, false for descending order</param>
+    </member>
+    <member name="T:EWSoftware.PDI.DateUtils">
+      <summary>
+            This is a sealed class that contains various helpful date utility methods used by other classes in the
+            PDI library.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.CalculateFixedDate(System.Int32,System.Int32,System.Int32)">
+      <summary>
+             This method is used to calculate the date on which a fixed day occurs (for example, July 4th).
+             However, it adjusts the date to the preceding Friday if the date falls on a Saturday or the following
+             Monday if the date falls on a Sunday.
+             </summary>
+      <param name="year">The year in which the day occurs</param>
+      <param name="month">The month in which the day occurs</param>
+      <param name="day">The day of the month on which the day occurs</param>
+      <returns>Returns a <see cref="T:System.DateTime" /> object that represents the date calculated from the
+             settings adjusted if necessary so that it does not occur on a weekend.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.CalculateFloatingDate(System.Int32,System.Int32,EWSoftware.PDI.DayOccurrence,System.DayOfWeek,System.Int32)">
+      <summary>
+             This method is used to calculate the date on which a floating day occurs (for example, the 4th
+             Thursday in November).
+             </summary>
+      <param name="year">The year in which the day occurs.</param>
+      <param name="month">The month in which the day occurs.</param>
+      <param name="occur">The occurrence of the day of the week on which the day falls.</param>
+      <param name="dowDay">The day of the week on which the day occurs.</param>
+      <param name="offset">The number of days before or after the calculated date on which the day actually
+             falls.</param>
+      <returns>Returns a <see cref="T:System.DateTime" /> object that represents the date calculated from the
+             settings.</returns>
+      <exception cref="T:System.ArgumentException">This is thrown if <c>None</c> is passed for the <c>DayOccurrence</c>
+             parameter.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.CalculateOccurrenceDate(System.Int32,System.Int32,EWSoftware.PDI.DayOccurrence,EWSoftware.PDI.DaysOfWeek,System.Int32)">
+      <summary>
+             This method is used to calculate the date on which a specific occurrence of any of a set of days
+             occurs (for example, the 4th weekday in November or the last weekend day in January).
+             </summary>
+      <param name="year">The year in which the day occurs</param>
+      <param name="month">The month in which the day occurs</param>
+      <param name="occur">The occurrence of the day of the week on which the day falls</param>
+      <param name="days">The day(s) of the week on which the day can occurs</param>
+      <param name="offset">The number of days before or after the calculated date on which the day falls</param>
+      <returns>Returns a <see cref="T:System.DateTime" /> object that represents the date calculated from the
+             settings.</returns>
+      <exception cref="T:System.ArgumentException">This is thrown if <c>None</c> is passed for the <c>DayOccurrence</c>
+             parameter.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.DateFromWeek(System.Int32,System.Int32,System.DayOfWeek,System.Int32)">
+      <summary>
+             This method returns a date calculated from a year, a week number, and the day on which weeks start
+             </summary>
+      <param name="year">The year containing the week</param>
+      <param name="week">The week of the year</param>
+      <param name="dow">The day on which a week starts</param>
+      <param name="offset">An additional offset in days to add to the week start date</param>
+      <returns>Returns the calculated date.</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">An exception is thrown if the week value is not between
+             1 and 53.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.EasterSunday(System.Int32,EWSoftware.PDI.EasterMethod)">
+      <summary>
+             This method can be used to calculate the Easter Sunday date using one of three methods defined by
+             <see cref="T:EWSoftware.PDI.EasterMethod" />.
+             </summary>
+      <param name="year">The year in which to calculate Easter</param>
+      <param name="method">The method to use for calculating Easter</param>
+      <returns>The date on which Easter falls in the specified year as calculated using the specified
+             method.</returns>
+      <exception cref="T:System.ArgumentOutOfRangeException">An exception is thrown if the year is not between 1583
+             and 4099 for the Orthodox and Gregorian methods or if the year is less than 326 for the Julian
+             method.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.FromISO8601String(System.String,System.Boolean)">
+      <summary>
+            This method is used to convert an ISO 8601 formatted date string to a DateTime value that it
+            represents.
+            </summary>
+      <param name="dateTimeText">The ISO 8601 formatted date to parse.</param>
+      <param name="toLocalTime">If true and the string is in a universal time format, the value is
+            converted to local time before being returned.  If false, it is returned as a universal time
+            value.</param>
+      <returns>The specified string converted to a local date/time</returns>
+      <exception cref="T:System.ArgumentException">This is thrown if the specified date/time string is not valid</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.FromISO8601TimeZone(System.String)">
+      <summary>
+            This method is used to convert an ISO 8601 time zone string into a <see cref="T:System.TimeSpan" />
+            object.
+            </summary>
+      <param name="timeZone">The ISO 8601 formatted time zone to parse</param>
+      <returns>The specified string converted to a time span</returns>
+      <exception cref="T:System.ArgumentException">This is thrown if the specified time zone string is not valid</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.IsFloatingFormat(System.String)">
+      <summary>
+            This method is used to see if an ISO 8601 formatted date string is in floating format (a universal
+            time indicator or time zone offset is not specified).
+            </summary>
+      <param name="dateTimeText">The ISO 8601 formatted date to parse</param>
+      <returns>Returns true if the date/time has no universal time indicator (Z) or time zone offset
+            (+/-HHMM) or if it has no time (assumes midnight local time).  Returns false if there is a universal
+            time indicator or a time zone offset.</returns>
+      <exception cref="T:System.ArgumentException">This is thrown if the specified date/time string is not valid</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.ToDayOfWeek(EWSoftware.PDI.DaysOfWeek)">
+      <summary>
+            This can be used to explicitly convert a <see cref="T:EWSoftware.PDI.DaysOfWeek" /> value to a <see cref="T:System.DayOfWeek" />
+            value.
+            </summary>
+      <param name="days">The <c>DaysOfWeek</c> value to convert</param>
+      <returns>Returns the <c>DaysOfWeek</c> value as a <c>DayOfWeek</c> value.  If the <c>DaysOfWeek</c>
+            value is a combination of days, only the first day of the week found is returned.  If it is set to
+            <c>None</c>, it returns Sunday.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.ToDaysOfWeek(System.DayOfWeek)">
+      <summary>
+            This can be used to explicitly convert a <see cref="T:System.DayOfWeek" /> value to a <see cref="T:EWSoftware.PDI.DaysOfWeek" />
+            value.
+            </summary>
+      <param name="dow">The <c>DayOfWeek</c> value to convert</param>
+      <returns>Returns the <c>DayOfWeek</c> value as a <c>DaysOfWeek</c> value</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.WeekFromDate(System.DateTime,System.DayOfWeek)">
+      <summary>
+            This can be used to determine the week of the year in which a specified date falls
+            </summary>
+      <param name="weekDate">The date to use when determining the week</param>
+      <param name="dow">The day on which a week starts</param>
+      <returns>Returns a week number between 1 and 53</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.DateUtils.WeeksInYear(System.Int32,System.DayOfWeek)">
+      <summary>
+            This is used to determine the number of weeks in a year
+            </summary>
+      <param name="year">The year in which to get the week count</param>
+      <param name="dow">The day on which a week starts</param>
+      <returns>Returns the week count (52 or 53).</returns>
+    </member>
+    <member name="T:EWSoftware.PDI.DayInstance">
+      <summary>
+            A day instance item.  The properties of this class define a day of the week instance on which a
+            recurrence date may fall.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.#ctor(EWSoftware.PDI.DayInstance)">
+      <summary>
+            Copy constructor
+            </summary>
+      <param name="di">The day instance to copy</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.#ctor(System.DayOfWeek)">
+      <summary>
+            Constructor.  This version constructs a day instance that specifies only the day of the week.  This
+            indicates that all instances of the day of the week are to be included.
+            </summary>
+      <param name="dow">The day of the week</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.#ctor(System.Int32,System.DayOfWeek)">
+      <summary>
+            Constructor.  This version constructs a day instance that specifies a specific occurrence of the day
+            of the week.
+            </summary>
+      <param name="instance">The instance of the day of the week</param>
+      <param name="dow">The day of the week</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            Deserialization constructor for use with <see cref="T:System.Runtime.Serialization.ISerializable" /></summary>
+      <param name="info">The serialization info object</param>
+      <param name="context">The streaming context object</param>
+    </member>
+    <member name="P:EWSoftware.PDI.DayInstance.DayOfWeek">
+      <summary>
+            This property is used to get or set the week day used for the instance
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.Equals(System.Object)">
+      <summary>
+            This is overridden to allow proper comparison of DayInstance objects
+            </summary>
+      <param name="obj">The object to which this instance is compared</param>
+      <returns>Returns true if the object equals this instance, false if it does not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.GetHashCode">
+      <summary>
+            Get a hash code for the day instance object
+            </summary>
+      <returns>Returns the hash code for the day instance object</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            This implements the <see cref="T:System.Runtime.Serialization.ISerializable" /> interface and adds data
+            to the serialization info.
+            </summary>
+      <param name="info">The serialization info object</param>
+      <param name="context">The streaming context</param>
+    </member>
+    <member name="P:EWSoftware.PDI.DayInstance.Instance">
+      <summary>
+            This property is used to get or set the instance value for the day
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">This is thrown if the instance value is less than -53
+            or greater than 53.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.NumericSuffix(System.Int32)">
+      <summary>
+            This is used to get the descriptive suffix for a number (i.e. "st" for 1st, "nd" for 2nd, etc).
+            </summary>
+      <param name="number">The number for which to get the suffix</param>
+      <returns>The number as a string with the appropriate suffix</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.ToDescription">
+      <summary>
+            Get a description of the day instance
+            </summary>
+      <returns>A string describing the day instance (i.e. 1st Monday from end).</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstance.ToString">
+      <summary>
+            Convert the day instance to its string description
+            </summary>
+      <returns>Returns the string version of the day instance suitable for saving to a PDI data stream
+            (i.e. MO, -1TU, 5WE).</returns>
+    </member>
+    <member name="T:EWSoftware.PDI.DayInstanceCollection">
+      <summary>
+            A type-safe collection of <see cref="T:EWSoftware.PDI.DayInstance" /> objects.  All instances in the collection are unique.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.#ctor(System.Collections.Generic.IEnumerable{EWSoftware.PDI.DayInstance})">
+      <summary>
+            Construct a collection from an enumerable list of <see cref="T:EWSoftware.PDI.DayInstance" /> objects
+            </summary>
+      <param name="days">The enumerable list of day instances to add</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.Add(System.DayOfWeek)">
+      <summary>
+            Add a <see cref="T:EWSoftware.PDI.DayInstance" /> to the collection and set it to all instances of the specified day of
+            the week.
+            </summary>
+      <param name="day">The day of the week to add</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.Add(System.Int32,System.DayOfWeek)">
+      <summary>
+            Add a <see cref="T:EWSoftware.PDI.DayInstance" /> to the collection and set it to the specified instance of the
+            specified day of the week.
+            </summary>
+      <param name="instance">The instance value</param>
+      <param name="day">The day of the week to add</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.AddRange(System.Collections.Generic.IEnumerable{EWSoftware.PDI.DayInstance})">
+      <summary>
+            Add a range of <see cref="T:EWSoftware.PDI.DayInstance" /> objects from an enumerable list
+            </summary>
+      <param name="days">The enumerable list of day instances</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.AddRange(System.Collections.Generic.IEnumerable{System.DayOfWeek})">
+      <summary>
+            Add a range of <see cref="T:System.DayOfWeek" /> values to the collection.  The instance for each entry will be
+            set to zero to represent all days rather than a specific instance.
+            </summary>
+      <param name="days">The array of days of the week to add.</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.InsertItem(System.Int32,EWSoftware.PDI.DayInstance)">
+      <summary>
+            Insert a day instance into the collection
+            </summary>
+      <param name="index">The index at which to insert the integer</param>
+      <param name="item">The day instance to insert</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.RemoveRange(System.Int32,System.Int32)">
+      <summary>
+            Remove a range of items from the collection
+            </summary>
+      <param name="index">The zero-based index at which to start removing items</param>
+      <param name="count">The number of items to remove</param>
+    </member>
+    <member name="M:EWSoftware.PDI.DayInstanceCollection.SetItem(System.Int32,EWSoftware.PDI.DayInstance)">
+      <summary>
+            Set an item in the collection
+            </summary>
+      <param name="index">The index of the item to set</param>
+      <param name="item">The day instance value to store</param>
+    </member>
+    <member name="T:EWSoftware.PDI.DayOccurrence">
+      <summary>
+            This enumerated type defines occurrences for days of the week within a month
+            </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DayOccurrence.None">
+      <summary>No day occurrence set</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DayOccurrence.First">
+      <summary>The first occurrence in the month</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DayOccurrence.Second">
+      <summary>The second occurrence in the month</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DayOccurrence.Third">
+      <summary>The third occurrence in the month</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DayOccurrence.Fourth">
+      <summary>The fourth occurrence in the month</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DayOccurrence.Last">
+      <summary>The last occurrence in the month</summary>
+    </member>
+    <member name="T:EWSoftware.PDI.DaysOfWeek">
+      <summary>
+            This enumerated type defines the days of the week on which a date instance can occur.  Unlike
+            <see cref="T:System.DayOfWeek" />, these values are bit flags so that combinations of days can be
+            specified.
+            </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.None">
+      <summary>No days</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Sunday">
+      <summary>Occurs on Sunday</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Monday">
+      <summary>Occurs on Monday</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Tuesday">
+      <summary>Occurs on Tuesday</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Wednesday">
+      <summary>Occurs on Wednesday</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Thursday">
+      <summary>Occurs on Thursday</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Friday">
+      <summary>Occurs on Friday</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Saturday">
+      <summary>Occurs on Saturday</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Weekdays">
+      <summary>Occurs on weekdays only (Monday through Friday)</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.Weekends">
+      <summary>Occurs on weekends only (Saturday and Sunday)</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.DaysOfWeek.EveryDay">
+      <summary>Occurs on every day of the week</summary>
+    </member>
+    <member name="T:EWSoftware.PDI.Duration">
+      <summary>
+            This class adds support to <see cref="T:System.TimeSpan" /> for handling ISO 8601 duration values.  Since it
+            cannot derive from it, the class contains a <c>TimeSpan</c> instance and allows modifications to it
+            through additional methods and properties.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.#ctor(System.Int32,System.Int32,System.Int32,System.TimeSpan)">
+      <summary>
+            Construct a duration from a number of years, months, weeks, and a <see cref="P:EWSoftware.PDI.Duration.TimeSpan" /></summary>
+      <param name="years">The number of years</param>
+      <param name="months">The number of months</param>
+      <param name="weeks">The number of weeks</param>
+      <param name="timeSpan">The time span used to initialize the instance</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.#ctor(System.Int32,System.Int32,System.TimeSpan)">
+      <summary>
+            Construct a duration from a number of months, weeks, and a <see cref="P:EWSoftware.PDI.Duration.TimeSpan" /></summary>
+      <param name="months">The number of months</param>
+      <param name="weeks">The number of weeks</param>
+      <param name="timeSpan">The time span used to initialize the instance</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.#ctor(System.Int32,System.TimeSpan)">
+      <summary>
+            Construct a duration from a number of weeks and a <see cref="P:EWSoftware.PDI.Duration.TimeSpan" /></summary>
+      <param name="weeks">The number of weeks</param>
+      <param name="timeSpan">The time span used to initialize the instance</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.#ctor(System.Int64)">
+      <summary>
+            Construct a duration from a number of timer ticks
+            </summary>
+      <param name="ticks">The number of timer ticks used to initialize the instance</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.#ctor(System.String)">
+      <summary>
+            Construct a duration from a string in ISO 8601 duration format
+            </summary>
+      <param name="duration">The ISO 8601 formatted duration to parse</param>
+      <exception cref="T:System.ArgumentException">This is thrown if the specified duration string is not valid</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.#ctor(System.TimeSpan)">
+      <summary>
+            Construct a duration from a <see cref="P:EWSoftware.PDI.Duration.TimeSpan" /></summary>
+      <param name="timeSpan">The time span used to initialize the instance</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.Compare(EWSoftware.PDI.Duration,EWSoftware.PDI.Duration)">
+      <summary>
+            Compares two <c>Duration</c> values and returns an integer that indicates their relationship
+            </summary>
+      <param name="d1">The first duration</param>
+      <param name="d2">The second duration</param>
+      <returns>Returns -1 if the first instance is less than the second, 0 if they are equal, or 1 if the
+            first instance is greater than the second.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.CompareTo(System.Object)">
+      <summary>
+            Compares this instance to a specified object and returns an indication of their relative values
+            </summary>
+      <param name="obj">A Duration object to compare</param>
+      <returns>Returns -1 if this instance is less than the value, 0 if they are equal, or 1 if this
+            instance is greater than the value or the value is null.</returns>
+      <exception cref="T:System.ArgumentException">This is thrown if the object to be compared is not a Duration</exception>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.Days">
+      <summary>
+            Gets the number of whole days represented by this instance
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.DaysInOneMonth">
+      <summary>
+            This property is used to set or get the number of days in one month
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.DaysInOneYear">
+      <summary>
+            This property is used to set or get the number of days in one year
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.Equals(EWSoftware.PDI.Duration,EWSoftware.PDI.Duration)">
+      <summary>
+            Returns a value indicating whether two specified instances of <c>Duration</c> are equal
+            </summary>
+      <param name="d1">The first duration to compare</param>
+      <param name="d2">The second duration to compare</param>
+      <returns>Returns true if the durations are equal, false if they are not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.Equals(System.Object)">
+      <summary>
+            This is overridden to allow proper comparison of <c>Duration</c> objects
+            </summary>
+      <param name="obj">The object to which this instance is compared</param>
+      <returns>Returns true if the object equals this instance, false if it does not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.FromMonths(System.Double)">
+      <summary>
+            Returns a <see cref="T:EWSoftware.PDI.Duration" /> that represents a specified number of months, where the
+            specification is accurate to the nearest millisecond.
+            </summary>
+      <param name="value">A number of months, accurate to the nearest millisecond</param>
+      <returns>A <see cref="T:EWSoftware.PDI.Duration" /> that represents the value</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.FromWeeks(System.Double)">
+      <summary>
+            Returns a <see cref="T:EWSoftware.PDI.Duration" /> that represents a specified number of weeks, where the specification
+            is accurate to the nearest millisecond.
+            </summary>
+      <param name="value">A number of weeks, accurate to the nearest millisecond</param>
+      <returns>A <see cref="T:EWSoftware.PDI.Duration" /> that represents the value</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.FromYears(System.Double)">
+      <summary>
+            Returns a <see cref="T:EWSoftware.PDI.Duration" /> that represents a specified number of years, where the specification
+            is accurate to the nearest millisecond.
+            </summary>
+      <param name="value">A number of years, accurate to the nearest millisecond</param>
+      <returns>A <see cref="T:EWSoftware.PDI.Duration" /> that represents the value</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.GetHashCode">
+      <summary>
+            Get a hash code for the duration object
+            </summary>
+      <returns>Returns the hash code for the duration object</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.Months">
+      <summary>
+            Gets the number of whole months represented by this instance
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.op_Equality(EWSoftware.PDI.Duration,EWSoftware.PDI.Duration)">
+      <summary>
+            Overload for equal operator
+            </summary>
+      <param name="d1">The first duration object</param>
+      <param name="d2">The second duration object</param>
+      <returns>True if equal, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.op_GreaterThan(EWSoftware.PDI.Duration,EWSoftware.PDI.Duration)">
+      <summary>
+            Overload for greater than operator
+            </summary>
+      <param name="d1">The first duration object</param>
+      <param name="d2">The second duration object</param>
+      <returns>True if r1 is greater than r2, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.op_GreaterThanOrEqual(EWSoftware.PDI.Duration,EWSoftware.PDI.Duration)">
+      <summary>
+            Overload for greater than or equal operator
+            </summary>
+      <param name="d1">The first duration object</param>
+      <param name="d2">The second duration object</param>
+      <returns>True if r1 is greater than or equal r2, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.op_Inequality(EWSoftware.PDI.Duration,EWSoftware.PDI.Duration)">
+      <summary>
+            Overload for not equal operator
+            </summary>
+      <param name="d1">The first duration object</param>
+      <param name="d2">The second duration object</param>
+      <returns>True if not equal, false if they are equal</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.op_LessThan(EWSoftware.PDI.Duration,EWSoftware.PDI.Duration)">
+      <summary>
+            Overload for less than operator
+            </summary>
+      <param name="d1">The first duration object</param>
+      <param name="d2">The second duration object</param>
+      <returns>True if r1 is less than r2, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.op_LessThanOrEqual(EWSoftware.PDI.Duration,EWSoftware.PDI.Duration)">
+      <summary>
+            Overload for less than or equal operator
+            </summary>
+      <param name="d1">The first duration object</param>
+      <param name="d2">The second duration object</param>
+      <returns>True if r1 is less than or equal r2, false if not</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.Ticks">
+      <summary>
+            This allows the underlying time span (and thus the duration) to be serialized and deserialized
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.TicksPerMonth">
+      <summary>
+            This returns the number of timer ticks in one month based on the current setting of
+            <see cref="P:EWSoftware.PDI.Duration.DaysInOneMonth" />.
+            </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.TicksPerWeek">
+      <summary>
+            Represents the number of ticks in 1 week. This field is read-only.
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.TicksPerYear">
+      <summary>
+            This returns the number of timer ticks in one year based on the current setting of
+            <see cref="P:EWSoftware.PDI.Duration.DaysInOneYear" />.
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.TimeSpan">
+      <summary>
+            This allows access to the underlying <see cref="P:EWSoftware.PDI.Duration.TimeSpan" /> object
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.ToDescription">
+      <summary>
+            Convert the duration instance to a text description
+            </summary>
+      <returns>Returns the duration description.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.ToDescription(EWSoftware.PDI.Duration.MaxUnit)">
+      <summary>
+            Convert the duration instance to a text description with the specified maximum unit of time
+            </summary>
+      <param name="maxUnit">The maximum unit of time that should be represented in the returned string</param>
+      <returns>Returns the duration description</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.ToString">
+      <summary>
+            Convert the duration instance to its ISO 8601 string form
+            </summary>
+      <returns>Returns the duration in ISO 8601 format</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.ToString(EWSoftware.PDI.Duration.MaxUnit)">
+      <summary>
+            Convert the duration instance to its ISO 8601 string form with the specified maximum unit of time
+            </summary>
+      <param name="maxUnit">The maximum unit of time that should be represented in the returned string</param>
+      <returns>Returns the duration in ISO 8601 format</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.TotalMonths">
+      <summary>
+            Gets the value of this instance expressed in whole and fractional months
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.TotalWeeks">
+      <summary>
+            Gets the value of this instance expressed in whole and fractional weeks
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.TotalYears">
+      <summary>
+            Gets the value of this instance expressed in whole and fractional years
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Duration.TryParse(System.String,EWSoftware.PDI.Duration@)">
+      <summary>
+            Construct a new <c>Duration</c> object from a duration specified in a string.  Parameters specify the
+            duration and the variable where the new <c>Duration</c> object is returned.
+            </summary>
+      <param name="duration">The string that specifies the duration.</param>
+      <param name="result">When this method returns, this contains an object that represents the duration
+            specified by s, or <see cref="F:EWSoftware.PDI.Duration.Zero" /> if the conversion failed. This parameter is passed in
+            uninitialized.</param>
+      <returns>True if successfully parsed or false if the value could not be parsed</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.Weeks">
+      <summary>
+            Gets the number of whole weeks represented by this instance
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Duration.Years">
+      <summary>
+            Gets the number of whole years represented by this instance
+            </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.Zero">
+      <summary>
+            This represents a zero length duration.  This field is read-only.
+            </summary>
+    </member>
+    <member name="T:EWSoftware.PDI.Duration.MaxUnit">
+      <summary>
+            This enumerated type defines the maximum unit of time allowed when converting a duration to its ISO
+            8601 string format.
+            </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.MaxUnit.Years">
+      <summary>Full syntax, all parts represented</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.MaxUnit.Months">
+      <summary>Time expressed in units up to months</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.MaxUnit.Weeks">
+      <summary>Time expressed in units up to weeks</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.MaxUnit.Days">
+      <summary>Time expressed in units up to days</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.MaxUnit.Hours">
+      <summary>Time expressed in units up to hours</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.MaxUnit.Minutes">
+      <summary>Time expressed in units up to minutes</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Duration.MaxUnit.Seconds">
+      <summary>Time expressed in units up to seconds</summary>
+    </member>
+    <member name="T:EWSoftware.PDI.EasterMethod">
+      <summary>
+            This enumerated type defines the various ways to calculate Easter
+            </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.EasterMethod.Julian">
+      <summary>Calculate Easter as the Sunday following the Paschal Full Moon (PFM) date for the year based
+            on the Julian Calendar.  This method is valid for all years from 326 onward.</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.EasterMethod.Orthodox">
+      <summary>This method is the same as the Julian method but converts the Julian calendar date to the
+            equivalent Gregorian calendar date. This method is valid for all years from 1583 to 4099.</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.EasterMethod.Gregorian">
+      <summary>Calculate Easter as the Sunday following the Paschal Full Moon (PFM) date for the year based
+            on the Gregorian Calendar.  This method is valid for all years from 1583 to 4099.</summary>
+    </member>
+    <member name="T:EWSoftware.PDI.FixedHoliday">
+      <summary>
+            This class is used to define a fixed holiday, one that falls on a specific month and day (i.e. July 4th).
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.FixedHoliday.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.FixedHoliday.#ctor(System.Int32,System.Int32,System.Boolean,System.String)">
+      <summary>
+            Construct a new holiday object that occurs on a fixed date.  The holiday date can optionally be
+            adjusted to a Friday or Monday if it falls on a weekend.
+            </summary>
+      <param name="month">The month of the holiday.</param>
+      <param name="day">The day of the month on which it occurs.</param>
+      <param name="adjust">Set to true to adjust date to the Friday or Monday if it falls on a weekend or
+            false to always keep it on the specified day of the month.</param>
+      <param name="description">A description of the holiday.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">An exception will be thrown if the month is not
+            between 1 and 12.</exception>
+      <exception cref="T:System.ArgumentException">An exception will be thrown if the day is not valid for the
+            month.  February 29th (leap year) is not accepted either.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.FixedHoliday.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            Deserialization constructor for use with <see cref="T:System.Runtime.Serialization.ISerializable" /></summary>
+      <param name="info">The serialization info object</param>
+      <param name="context">The streaming context object</param>
+    </member>
+    <member name="P:EWSoftware.PDI.FixedHoliday.AdjustFixedDate">
+      <summary>
+            This property is used to determine whether or not fixed holiday dates are adjusted so as not to fall
+            on a weekend.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.FixedHoliday.Clone">
+      <summary>
+            This is overridden to clone a fixed holiday object
+            </summary>
+      <returns>A clone of the object.</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.FixedHoliday.Day">
+      <summary>
+            This sets or gets the day used for the holiday
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">This will be thrown if the day is not valid for the
+            currently set month.  February 29th (leap year) is not accepted either.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.FixedHoliday.Equals(System.Object)">
+      <summary>
+            This is overridden to allow proper comparison of <c>FixedHoliday</c> objects
+            </summary>
+      <param name="obj">The object to which this instance is compared</param>
+      <returns>Returns true if the object equals this instance, false if it does not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.FixedHoliday.GetHashCode">
+      <summary>
+            Get a hash code for the holiday object
+            </summary>
+      <returns>Returns the hash code for the holiday object</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.FixedHoliday.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            This implements the <see cref="T:System.Runtime.Serialization.ISerializable" /> interface and adds the
+            appropriate members to the serialization info.
+            </summary>
+      <param name="info">The serialization info object</param>
+      <param name="context">The streaming context</param>
+    </member>
+    <member name="P:EWSoftware.PDI.FixedHoliday.Month">
+      <summary>
+            This sets or gets the month used for the holiday
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.FixedHoliday.ToDateTime(System.Int32)">
+      <summary>
+            Convert the instance to a <see cref="T:System.DateTime" /> object based on its settings and the passed year
+            value.
+            </summary>
+      <param name="year">The year in which the holiday occurs</param>
+      <returns>Returns a <see cref="T:System.DateTime" /> object that represents the holiday date</returns>
+    </member>
+    <member name="T:EWSoftware.PDI.FloatingHoliday">
+      <summary>
+            This class is used to define a floating holiday, one that falls on a particular day of the week instance
+            (i.e. Thanksgiving is the 4th Thursday in November).
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.FloatingHoliday.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.FloatingHoliday.#ctor(EWSoftware.PDI.DayOccurrence,System.DayOfWeek,System.Int32,System.Int32,System.String)">
+      <summary>
+            Construct a new holiday object that occurs on a floating date
+            </summary>
+      <param name="month">The month of the holiday.</param>
+      <param name="dow">The day of the week on which it occurs.</param>
+      <param name="occur">The occurrence of the day of the week on which the floating holiday falls.</param>
+      <param name="offset">The number of days before or after the calculated floating date on which the
+            holiday actually occurs.  See the <see cref="P:EWSoftware.PDI.FloatingHoliday.Offset" /> property for more information about this
+            parameter.</param>
+      <param name="description">A description of the holiday.</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">An exception will be thrown if the month is not
+            between 1 and 12.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.FloatingHoliday.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            Deserialization constructor for use with <see cref="T:System.Runtime.Serialization.ISerializable" /></summary>
+      <param name="info">The serialization info object</param>
+      <param name="context">The streaming context object</param>
+    </member>
+    <member name="M:EWSoftware.PDI.FloatingHoliday.Clone">
+      <summary>
+            This is overridden to clone a floating holiday object
+            </summary>
+      <returns>A clone of the object.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.FloatingHoliday.Equals(System.Object)">
+      <summary>
+            This is overridden to allow proper comparison of FloatingHoliday objects
+            </summary>
+      <param name="obj">The object to which this instance is compared</param>
+      <returns>Returns true if the object equals this instance, false if it does not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.FloatingHoliday.GetHashCode">
+      <summary>
+            Get a hash code for the holiday object
+            </summary>
+      <returns>Returns the hash code for the holiday object</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.FloatingHoliday.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            This implements the <see cref="T:System.Runtime.Serialization.ISerializable" /> interface and adds the
+            appropriate members to the serialization info.
+            </summary>
+      <param name="info">The serialization info object</param>
+      <param name="context">The streaming context</param>
+    </member>
+    <member name="P:EWSoftware.PDI.FloatingHoliday.Occurrence">
+      <summary>
+            This sets or gets the occurrence of the day of the week on which a floating holiday falls
+            </summary>
+      <exception cref="T:System.ArgumentException">This is thrown if <c>None</c> is specified as the value</exception>
+    </member>
+    <member name="P:EWSoftware.PDI.FloatingHoliday.Offset">
+      <summary>
+            This sets or gets the number of days before or after the calculated floating date on which the
+            holiday actually occurs.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.FloatingHoliday.ToDateTime(System.Int32)">
+      <summary>
+            Convert the instance to a <see cref="T:System.DateTime" /> object based on its settings and the passed year
+            value.
+            </summary>
+      <param name="year">The year in which the holiday occurs</param>
+      <returns>Returns a <see cref="T:System.DateTime" /> object that represents the holiday date</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.FloatingHoliday.Weekday">
+      <summary>
+            This sets or gets the week day used for the holiday
+            </summary>
+    </member>
+    <member name="T:EWSoftware.PDI.Holiday">
+      <summary>
+            This abstract base class defines the core features of a holiday object
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Holiday.#ctor">
+      <summary>
+            Constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Holiday.Clone">
+      <summary>
+            This must be overridden to clone a holiday object
+            </summary>
+      <returns>A clone of the object</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Holiday.Description">
+      <summary>
+            This sets or gets a description for the holiday
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Holiday.Month">
+      <summary>
+            This sets or gets the month used for the holiday
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">An exception will be thrown if the month is not
+            between 1 and 12.
+            </exception>
+    </member>
+    <member name="M:EWSoftware.PDI.Holiday.ToDateTime(System.Int32)">
+      <summary>
+            Convert the instance to a <see cref="T:System.DateTime" /> object based on its settings and the passed year
+            value.
+            </summary>
+      <param name="year">The year in which the holiday occurs</param>
+      <returns>Returns a <see cref="T:System.DateTime" /> object that represents the holiday date</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Holiday.ToString">
+      <summary>
+            Convert the holiday instance to its string description
+            </summary>
+      <returns>Returns the description of the holiday</returns>
+    </member>
+    <member name="T:EWSoftware.PDI.HolidayCollection">
+      <summary>
+            A type-safe collection of <see cref="T:EWSoftware.PDI.Holiday" /> objects
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.#ctor(System.Collections.Generic.IEnumerable{EWSoftware.PDI.Holiday})">
+      <summary>
+            Construct the collection from an enumerable list of <see cref="T:EWSoftware.PDI.Holiday" /> objects
+            </summary>
+      <param name="holidays">The enumerable list of holidays to add</param>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.AddFixed(System.Int32,System.Int32,System.Boolean,System.String)">
+      <summary>
+            Add a new holiday object to the collection that occurs on a fixed date
+            </summary>
+      <param name="month">The month of the holiday.</param>
+      <param name="day">The day of the month on which it occurs.</param>
+      <param name="adjust">Set to true to adjust date to the Friday or Monday if it falls on a weekend or
+            false to always keep it on the specified day of the month.</param>
+      <param name="description">A description of the holiday.</param>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.AddFloating(EWSoftware.PDI.DayOccurrence,System.DayOfWeek,System.Int32,System.Int32,System.String)">
+      <summary>
+            Add a new holiday object to the collection that occurs on a floating date
+            </summary>
+      <param name="month">The month of the holiday.</param>
+      <param name="dow">The day of the week on which it occurs.</param>
+      <param name="occur">The occurrence of the day of the week on which the floating holiday falls.</param>
+      <param name="offset">The number of days before or after the calculated floating date on which the
+            holiday actually occurs.  See the <see cref="P:EWSoftware.PDI.FloatingHoliday.Offset" /> property for more information
+            about this parameter.</param>
+      <param name="description">A description of the holiday.</param>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.AddRange(System.Collections.Generic.IEnumerable{EWSoftware.PDI.Holiday})">
+      <summary>
+            Add a range of <see cref="T:EWSoftware.PDI.Holiday" /> instances from an enumerable list
+            </summary>
+      <param name="holidays">The enumerable list of holiday instances to add</param>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.AddStandardHolidays">
+      <summary>
+            This adds a standard set of holidays to the collection
+            </summary>
+      <returns>A reference to the holiday collection</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.HolidayDescription(System.DateTime)">
+      <summary>
+            This method returns a description if the specified date falls on a holiday or an empty string if it
+            does not.
+            </summary>
+      <param name="date">The date to check to see if it is a holiday defined in this collection</param>
+      <returns>Returns the holiday description if the date is a holiday in this collection or an empty
+            string if it is not.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.HolidaysBetween(System.Int32,System.Int32)">
+      <summary>
+            This method returns an enumerable list of holidays between the given years
+            </summary>
+      <param name="startYear">The year in which to start generating holiday dates</param>
+      <param name="endYear">The year in which to stop generating holiday dates</param>
+      <returns>Returns an enumerable list of <see cref="T:System.DateTime" /> instances representing the holiday
+            dates.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.HolidayCollection.IsHoliday(System.DateTime)">
+      <summary>
+            This method returns true if the specified date falls on a holiday or false if it does not
+            </summary>
+      <param name="date">The date to check to see if it is a holiday defined in this collection</param>
+      <returns>Returns true if the date is a holiday in this collection, false if it is not</returns>
+    </member>
+    <member name="T:EWSoftware.PDI.ISO8601Format">
+      <summary>
+             A string "enumerated" type for formatting date/time values in the various ISO 8601 formats
+             </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.ISO8601Format.BasicDate">
+      <summary>Basic date format (yyyyMMdd)</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.ISO8601Format.BasicDateTimeLocal">
+      <summary>Basic local date/time format (yyyyMMddTHHmmss)</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.ISO8601Format.BasicDateTimeUniversal">
+      <summary>Basic universal date/time format (yyyyMMddTHHmmssZ)</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.ISO8601Format.ExtendedDate">
+      <summary>Extended date format (yyyy-MM-dd)</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.ISO8601Format.ExtendedDateTimeLocal">
+      <summary>Extended local date/time format (yyyy-MM-ddTHH:mm:ss)</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.ISO8601Format.ExtendedDateTimeUniversal">
+      <summary>Extended universal date/time format (yyyy-MM-ddTHH:mm:ssZ)</summary>
+    </member>
+    <member name="T:EWSoftware.PDI.ListItem">
+      <summary>
+            This is a simple list item object that can be used as part of a collection suitable for binding to a
+            combo box, radio button list, list box, etc.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.ListItem.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.ListItem.#ctor(System.Object)">
+      <summary>
+            Constructor
+            </summary>
+      <param name="value">The value for the item</param>
+    </member>
+    <member name="M:EWSoftware.PDI.ListItem.#ctor(System.Object,System.String)">
+      <summary>
+            Constructor
+            </summary>
+      <param name="value">The value for the item</param>
+      <param name="text">The display text for the item</param>
+    </member>
+    <member name="P:EWSoftware.PDI.ListItem.Display">
+      <summary>
+            This returns the display text for the item
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.ListItem.GetHashCode">
+      <summary>
+            This returns the hash code for the object
+            </summary>
+      <returns>The hash code of the <see cref="P:EWSoftware.PDI.ListItem.Display" /> member's value</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.ListItem.ToString">
+      <summary>
+            This is overridden to return the display value when the item is converted to a string
+            </summary>
+      <returns>The <see cref="P:EWSoftware.PDI.ListItem.Display" /> member's value</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.ListItem.Value">
+      <summary>
+            This returns the value of the item
+            </summary>
+    </member>
+    <member name="T:EWSoftware.PDI.Period">
+      <summary>
+            This class is used to represent a period of time
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.#ctor(EWSoftware.PDI.Period)">
+      <summary>
+            Copy constructor
+            </summary>
+      <param name="period">The period to copy</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.#ctor(System.DateTime,EWSoftware.PDI.Duration)">
+      <summary>
+            Construct a period from a start date and a duration
+            </summary>
+      <param name="startDateTime">The start date/time of the period</param>
+      <param name="duration">The duration of the period</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.#ctor(System.DateTime,System.DateTime)">
+      <summary>
+            Construct a period from a start date and an end date
+            </summary>
+      <param name="startDateTime">The start date/time of the period</param>
+      <param name="endDateTime">The end date/time of the period</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.#ctor(System.String)">
+      <summary>
+            Construct a period from a string in ISO 8601 period format
+            </summary>
+      <param name="period">The ISO 8601 formatted period to parse</param>
+      <exception cref="T:System.ArgumentException">This is thrown if the specified period string or any of its parts
+            are not valid.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.Compare(EWSoftware.PDI.Period,EWSoftware.PDI.Period)">
+      <summary>
+            Compares two <c>Period</c> values and returns an integer that indicates their relationship
+            </summary>
+      <param name="p1">The first period</param>
+      <param name="p2">The second period</param>
+      <returns>Returns -1 if the first instance is less than the second, 0 if they are equal, or 1 if the
+            first instance is greater than the second.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.CompareTo(System.Object)">
+      <summary>
+            Compares this instance to a specified object and returns an indication of their relative values
+            </summary>
+      <param name="obj">An object to compare or null</param>
+      <returns>Returns -1 if this instance is less than the value, 0 if they are equal, or 1 if this
+            instance is greater than the value or the value is null.</returns>
+      <exception cref="T:System.ArgumentException">This is thrown if the object to be compared is not a
+            <c>Period</c>.</exception>
+    </member>
+    <member name="P:EWSoftware.PDI.Period.Duration">
+      <summary>
+            This is used to set or get the duration of the time period
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Period.EndDateTime">
+      <summary>
+            This is used to set or get the ending date/time of the period
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.Equals(EWSoftware.PDI.Period,EWSoftware.PDI.Period)">
+      <summary>
+            Returns a value indicating whether two specified instances of <c>Period</c> are equal
+            </summary>
+      <param name="p1">The first period to compare</param>
+      <param name="p2">The second period to compare</param>
+      <returns>Returns true if the periods are equal, false if they are not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.Equals(System.Object)">
+      <summary>
+            This is overridden to allow proper comparison of <c>Period</c> objects
+            </summary>
+      <param name="obj">The object to which this instance is compared</param>
+      <returns>Returns true if the object equals this instance, false if it does not</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Period.Format">
+      <summary>
+            This is used to set the format used when the period is converted to its string format
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.GetHashCode">
+      <summary>
+            Get a hash code for the period object
+            </summary>
+      <returns>Returns the hash code for the period object</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.op_Equality(EWSoftware.PDI.Period,EWSoftware.PDI.Period)">
+      <summary>
+            Overload for equal operator
+            </summary>
+      <param name="p1">The first period object</param>
+      <param name="p2">The second period object</param>
+      <returns>True if equal, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.op_GreaterThan(EWSoftware.PDI.Period,EWSoftware.PDI.Period)">
+      <summary>
+            Overload for greater than operator
+            </summary>
+      <param name="p1">The first period object</param>
+      <param name="p2">The second period object</param>
+      <returns>True if r1 is greater than r2, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.op_GreaterThanOrEqual(EWSoftware.PDI.Period,EWSoftware.PDI.Period)">
+      <summary>
+            Overload for greater than or equal operator
+            </summary>
+      <param name="p1">The first period object</param>
+      <param name="p2">The second period object</param>
+      <returns>True if r1 is greater than or equal to r2, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.op_Inequality(EWSoftware.PDI.Period,EWSoftware.PDI.Period)">
+      <summary>
+            Overload for not equal operator
+            </summary>
+      <param name="p1">The first period object</param>
+      <param name="p2">The second period object</param>
+      <returns>True if not equal, false if they are equal</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.op_LessThan(EWSoftware.PDI.Period,EWSoftware.PDI.Period)">
+      <summary>
+            Overload for less than operator
+            </summary>
+      <param name="p1">The first period object</param>
+      <param name="p2">The second period object</param>
+      <returns>True if r1 is less than r2, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.op_LessThanOrEqual(EWSoftware.PDI.Period,EWSoftware.PDI.Period)">
+      <summary>
+            Overload for less than or equal operator
+            </summary>
+      <param name="p1">The first period object</param>
+      <param name="p2">The second period object</param>
+      <returns>True if r1 is less than or equal to r2, false if not</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Period.StartDateTime">
+      <summary>
+            This is used to set or get the starting date/time of the period
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.ToString">
+      <summary>
+            Convert the period instance to its ISO 8601 string form
+            </summary>
+      <returns>Returns the period in ISO 8601 format</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Period.TryParse(System.String,EWSoftware.PDI.Period@)">
+      <summary>
+            Construct a new <c>Period</c> object from a period specified in a string. Parameters specify the
+            period and the variable where the new <c>Period</c> object is returned.
+            </summary>
+      <param name="period">The string that specifies the period.</param>
+      <param name="result">When this method returns, this contains an object that represents the period
+            specified by s, or an empty period object if the conversion failed. This parameter is passed in
+            uninitialized.</param>
+      <returns>True if successfully parsed or false if the value could not be parsed</returns>
+    </member>
+    <member name="T:EWSoftware.PDI.Period.PeriodFormat">
+      <summary>
+            This enumerated type defines the format of the period when converted to a string
+            </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Period.PeriodFormat.StartDuration">
+      <summary>Format as start date and duration</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.Period.PeriodFormat.StartEnd">
+      <summary>Format as start date and end date</summary>
+    </member>
+    <member name="T:EWSoftware.PDI.PeriodCollection">
+      <summary>
+            A type-safe collection of <see cref="T:EWSoftware.PDI.Period" /> objects
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.PeriodCollection.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.PeriodCollection.#ctor(System.Collections.Generic.IEnumerable{EWSoftware.PDI.Period})">
+      <summary>
+            Construct a collection from an enumerable list of <see cref="T:EWSoftware.PDI.Period" /> objects
+            </summary>
+      <param name="periods">The enumerable list of periods</param>
+    </member>
+    <member name="M:EWSoftware.PDI.PeriodCollection.AddRange(System.Collections.Generic.IEnumerable{EWSoftware.PDI.Period})">
+      <summary>
+            Add a range of <see cref="T:EWSoftware.PDI.Period" /> objects from an enumerable list
+            </summary>
+      <param name="periods">The enumerable list of periods</param>
+    </member>
+    <member name="M:EWSoftware.PDI.PeriodCollection.RemoveRange(System.Int32,System.Int32)">
+      <summary>
+            Remove a range of items from the collection
+            </summary>
+      <param name="index">The zero-based index at which to start removing items</param>
+      <param name="count">The number of items to remove</param>
+    </member>
+    <member name="M:EWSoftware.PDI.PeriodCollection.Sort(System.Boolean)">
+      <summary>
+            This is used to sort the collection in ascending or descending order
+            </summary>
+      <param name="ascending">Pass true for ascending order, false for descending order</param>
+    </member>
+    <member name="T:EWSoftware.PDI.RecurFrequency">
+      <summary>
+            This enumerated type defines the recurrence frequency
+            </summary>
+    </member>
+    <member name="F:EWSoftware.PDI.RecurFrequency.Undefined">
+      <summary>Recurrence pattern is undefined and returns no dates</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.RecurFrequency.Yearly">
+      <summary>Yearly recurrence</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.RecurFrequency.Monthly">
+      <summary>Monthly recurrence</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.RecurFrequency.Weekly">
+      <summary>Weekly recurrence</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.RecurFrequency.Daily">
+      <summary>Daily recurrence</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.RecurFrequency.Hourly">
+      <summary>Hourly recurrence</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.RecurFrequency.Minutely">
+      <summary>Minutely recurrence</summary>
+    </member>
+    <member name="F:EWSoftware.PDI.RecurFrequency.Secondly">
+      <summary>Secondly recurrence</summary>
+    </member>
+    <member name="T:EWSoftware.PDI.RecurOptsDataSource">
+      <summary>
+            This is a helper class use to create data sources for such controls as combo boxes, list boxes, etc. so
+            that the various recurrence options can be shown and modified with them.  The descriptions are localized
+            and will be set according to the current culture.
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.RecurOptsDataSource.DayOccurrences">
+      <summary>
+            This read-only property returns a data source containing <see cref="T:EWSoftware.PDI.DayOccurrence" /> values
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.RecurOptsDataSource.DayOfWeek">
+      <summary>
+            This read-only property returns a data source containing the days of the week based on
+            <see cref="T:System.DayOfWeek" />.
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.RecurOptsDataSource.DaysOfWeek">
+      <summary>
+            This read-only property returns a data source containing the days of the week based on
+            <see cref="P:EWSoftware.PDI.RecurOptsDataSource.DaysOfWeek" />.  This includes entries for Weekdays, Weekends, and Every Day.
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.RecurOptsDataSource.MonthsOfYear">
+      <summary>
+            This read-only property returns a data source containing the months of the year
+            </summary>
+    </member>
+    <member name="T:EWSoftware.PDI.Recurrence">
+      <summary>
+            This class can be used to generate recurring date/time sequences based on a pattern defined by the RRULE
+            property in the iCalender 2.0 specification.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            Deserialization constructor for use with <see cref="T:System.Runtime.Serialization.ISerializable" /></summary>
+      <param name="info">The serialization info object</param>
+      <param name="context">The streaming context object</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.#ctor(System.String)">
+      <summary>
+            Construct a recurrence from a string in vCalendar 1.0 basic grammar format or iCalendar 2.0
+            RRULE/EXRULE format.
+            </summary>
+      <param name="recur">The recurrence parameters in vCalendar 1.0 basic grammar format or iCalendar 2.0
+            RRULE/EXRULE format.</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.AllInstances">
+      <summary>
+            This method is used to return all recurring instances based on the current settings alone
+            </summary>
+      <returns>Returns a <see cref="T:EWSoftware.PDI.DateTimeCollection" /> of <see cref="T:System.DateTime" /> objects that represent
+            all instances found using the current settings.</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.ByDay">
+      <summary>
+            This is used to modify the BYDAY rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.ByHour">
+      <summary>
+            This is used to modify the BYHOUR rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.ByMinute">
+      <summary>
+            This is used to modify the BYMINUTE rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.ByMonth">
+      <summary>
+            This is used to modify the BYMONTH rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.ByMonthDay">
+      <summary>
+            This is used to modify the BYMONTHDAY rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.BySecond">
+      <summary>
+            This is used to modify the BYSECOND rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.BySetPos">
+      <summary>
+            This is used to modify the BYSETPOS rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.ByWeekNo">
+      <summary>
+            This is used to modify the BYWEEKNO rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.ByYearDay">
+      <summary>
+            This is used to modify the BYYEARDAY rule of a recurrence
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.CanOccurOnHoliday">
+      <summary>
+            This is used to set or get whether or not the instances can occur on a holiday
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.CustomProperties">
+      <summary>
+            This returns a set of custom properties (if any) found when the recurrence properties where parsed
+            from a string.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.Equals(System.Object)">
+      <summary>
+            This is overridden to allow proper comparison of recurrence objects
+            </summary>
+      <param name="obj">The object to which this instance is compared</param>
+      <returns>Returns true if the object equals this instance, false if it does not</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.Frequency">
+      <summary>
+            This property is used to set or get the current recurrence frequency
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.GetEnumerator">
+      <summary>
+            Get a type-safe <see cref="T:EWSoftware.PDI.Recurrence" /> enumerator
+            </summary>
+      <returns>A type-safe <c>Recurrence</c> enumerator</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.GetHashCode">
+      <summary>
+            Get a hash code for the recurrence object
+            </summary>
+      <returns>Returns the hash code for the recurrence object</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+      <summary>
+            This implements the <see cref="T:System.Runtime.Serialization.ISerializable" /> interface and adds the
+            appropriate members to the serialization info based on the recurrence pattern.
+            </summary>
+      <param name="info">The serialization info object</param>
+      <param name="context">The streaming context</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.GetSchema">
+      <summary>
+            This returns the schema for the serialized recurrence
+            </summary>
+      <returns>The XML schema</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.Holidays">
+      <summary>
+            This is used to add holidays to the recurrence holiday list.  These will be used in conjunction with
+            the <see cref="P:EWSoftware.PDI.Recurrence.CanOccurOnHoliday" /> option if it is set to false.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.InstancesBetween(System.DateTime,System.DateTime)">
+      <summary>
+            This method is used to return all recurring instances between the two specified date/times based on
+            the current settings.
+            </summary>
+      <param name="fromDate">The minimum date/time on or after which instances should occur</param>
+      <param name="toDate">The maximum date/time on or before which instances should occur</param>
+      <returns>Returns a <see cref="T:EWSoftware.PDI.DateTimeCollection" /> of <see cref="T:System.DateTime" /> objects that represent
+            the instances found between the two specified date/times.</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.Interval">
+      <summary>
+            This property is used to set or get the interval between instances (the number of seconds, minutes,
+            hours, days, weeks, months, or years based on the recurrence frequency).
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">This is thrown if the value is less than one</exception>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.IsAdvancedPattern">
+      <summary>
+            This read-only property is used to examine the recurrence and determine if it is a simple pattern or
+            an advanced pattern.
+            </summary>
+      <returns>True if it is an advanced pattern or false if it is a simple pattern</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.MaximumOccurrences">
+      <summary>
+            This is used to get or set the maximum number of occurrences that should be generated by the
+            recurrence.
+            </summary>
+      <exception cref="T:System.ArgumentOutOfRangeException">This is thrown if the value is negative</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.NextInstance(System.DateTime,System.Boolean)">
+      <summary>
+            This method is used to return the next recurring instances on or after the specified date/time based
+            on the current settings.
+            </summary>
+      <param name="fromDate">The minimum date/time on or after which the instance should occur.</param>
+      <param name="onlyAfter">Specify true to only return a next instance if it occurs after the specified
+            date/time.  If false, it will allow an exact match on the specified date/time to be returned as well.</param>
+      <returns>Returns a <see cref="T:System.DateTime" /> that represent the next instance found or <c>DateTime.MinValue</c>
+            if there are no more instances.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.OccursOn(System.DateTime,System.Boolean)">
+      <summary>
+            This method is used to determine whether or not an instance of the recurrence falls on the specified
+            date/time.
+            </summary>
+      <param name="checkDate">The date/time to check for an occurrence.</param>
+      <param name="includeTime">If true, time is included in the search.  If false, time is ignored and it
+            returns true if an instance occurs at any time on the given date.</param>
+      <returns>Returns true if an instance occurs on the specified date/time, false if not</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.Parse(System.String)">
+      <summary>
+            This is used to parse recurrence properties from a string in vCalendar 1.0 basic grammar format or
+            iCalendar 2.0 RRULE/EXRULE format.
+            </summary>
+      <param name="recur">The recurrence parameters in vCalendar 1.0 basic grammar format or iCalendar 2.0
+            RRULE/EXRULE format.</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.ReadXml(System.Xml.XmlReader)">
+      <summary>
+            This is called to deserialize the instance from XML
+            </summary>
+      <param name="reader">The XML reader from which the instance is deserialized</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.RecurDaily(System.Int32)">
+      <summary>
+            Initialize a daily recurrence pattern
+            </summary>
+      <param name="recurInterval">The interval between occurrences in days</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.RecurEveryWeekday">
+      <summary>
+            This emulates the Microsoft Outlook daily pattern with the "Every Weekday" option selected
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.RecurMonthly(EWSoftware.PDI.DayOccurrence,EWSoftware.PDI.DaysOfWeek,System.Int32)">
+      <summary>
+            Initialize a monthly recurrence pattern that occurs on a specific occurrence of a day of the week at
+            the specified monthly interval (i.e. the 4th Tuesday every two months).
+            </summary>
+      <param name="occur">The occurrence of the day of the week on which to occur.</param>
+      <param name="daysOfWeek">The days of the week on which to occur.  This may be an individual week day
+            or any combination of week days.</param>
+      <param name="recurInterval">The interval between occurrences in months.</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.RecurMonthly(System.Int32,System.Int32)">
+      <summary>
+            Initialize a monthly recurrence pattern that occurs on a specific day of the month at the specified
+            monthly interval.
+            </summary>
+      <param name="day">The day of the month on which to occur</param>
+      <param name="recurInterval">The interval between occurrences in months</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">An exception will be thrown if the day value is not
+            between 1 and 31.</exception>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.RecurUntil">
+      <summary>
+            When retrieved, this property can be used to determine the end date of a recurrence based on the
+            current settings.  When set, it makes the recurrence end after the specified date.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.RecurWeekly(System.Int32,EWSoftware.PDI.DaysOfWeek)">
+      <summary>
+            Initialize a weekly recurrence pattern
+            </summary>
+      <param name="recurInterval">The interval between occurrences in weeks</param>
+      <param name="daysOfWeek">The days of the week on which the instances should occur</param>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.RecurYearly(EWSoftware.PDI.DayOccurrence,EWSoftware.PDI.DaysOfWeek,System.Int32,System.Int32)">
+      <summary>
+            Initialize a yearly recurrence pattern that occurs on a specific occurrence of a day of the week in
+            the specified month at the specified yearly interval (i.e. the last Sunday in September every year).
+            </summary>
+      <param name="occur">The occurrence of the day of the week on which to occur</param>
+      <param name="daysOfWeek">The day of the week on which to occur</param>
+      <param name="month">The month in which to occur.</param>
+      <param name="recurInterval">The interval between occurrences in years</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">An exception is thrown if the month is not between 1
+            and 12.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.RecurYearly(System.Int32,System.Int32,System.Int32)">
+      <summary>
+            Initialize a yearly recurrence that occurs on a specific month and day at the specified yearly
+            interval.
+            </summary>
+      <param name="month">The month in which to occur</param>
+      <param name="day">The day on which to occur</param>
+      <param name="recurInterval">The interval between occurrences in years</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">An exception is thrown if the month is not between 1
+            and 12.</exception>
+      <exception cref="T:System.ArgumentException">An exception is thrown if the day is not valid for the specified
+            month.</exception>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.Reset">
+      <summary>
+            This can be used to reset a recurrence to its default state
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.StartDateTime">
+      <summary>
+            This is used to set or get the starting date/time for the recurrence
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.ToDescription">
+      <summary>
+            Convert the recurrence to a plain text description
+            </summary>
+      <returns>The recurrence described in plain text</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.ToString">
+      <summary>
+            Convert the recurrence to its string form
+            </summary>
+      <returns>This returns the recurrence in its string form suitable for saving in an iCalendar file.
+            Since the start date is not part of the recurrence for iCalendar, it is omitted.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.ToStringWithStartDateTime">
+      <summary>
+            Convert the recurrence to its string form including the starting date/time
+            </summary>
+      <returns>This returns the recurrence in its string form (iCalendar format) but also includes the
+            starting date/time as an extended property (X-EWSOFTWARE-DTSTART) which isn't normally part of the
+            recurrence.  This is useful if you are using the recurrence outside of the iCalendar framework.</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.ToVCalendarString">
+      <summary>
+            Convert the recurrence to its vCalendar 1.0 string form
+            </summary>
+      <returns>A string containing the recurrence information</returns>
+    </member>
+    <member name="P:EWSoftware.PDI.Recurrence.WeekStart">
+      <summary>
+            This property is used to set or get the day of the week on which a week begins.  This only applies to
+            weekly and yearly recurrences.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.Recurrence.WriteXml(System.Xml.XmlWriter)">
+      <summary>
+            This is called to serialize the instance to XML
+            </summary>
+      <param name="writer">The XML writer to which the instance is serialized</param>
+    </member>
+    <member name="T:EWSoftware.PDI.RecurrenceEnumerator">
+      <summary>
+            A type-safe enumerator for the <see cref="T:EWSoftware.PDI.Recurrence" /> class
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.RecurrenceEnumerator.#ctor(EWSoftware.PDI.Recurrence)">
+      <summary>
+            Constructor
+            </summary>
+      <param name="recurrence">The <see cref="T:EWSoftware.PDI.Recurrence" /> object to enumerate</param>
+    </member>
+    <member name="P:EWSoftware.PDI.RecurrenceEnumerator.Current">
+      <summary>
+            Type-safe enumerator <c>Current</c> method
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.RecurrenceEnumerator.MoveNext">
+      <summary>
+            Move to the next element
+            </summary>
+      <returns>Returns true if not at the end, false if it is</returns>
+    </member>
+    <member name="M:EWSoftware.PDI.RecurrenceEnumerator.Reset">
+      <summary>
+            Reset the enumerator to the start
+            </summary>
+    </member>
+    <member name="T:EWSoftware.PDI.StringCollection">
+      <summary>
+            A type-safe collection of <see cref="T:System.String" /> objects
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.#ctor(System.Collections.Generic.IEnumerable{System.String})">
+      <summary>
+            Construct a collection from an enumerable list of <see cref="T:System.String" /> objects
+            </summary>
+      <param name="values">The enumerable list of strings</param>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.AddRange(System.Collections.Generic.IEnumerable{System.String})">
+      <summary>
+            Add a range of <see cref="T:System.String" /> objects from an enumerable list
+            </summary>
+      <param name="values">The enumerable list of values</param>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.ClearItems">
+      <summary>
+            This is overridden to raise the <see cref="E:EWSoftware.PDI.StringCollection.ListChanged" /> event
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.InsertItem(System.Int32,System.String)">
+      <summary>
+            This is overridden to raise the <see cref="E:EWSoftware.PDI.StringCollection.ListChanged" /> event
+            </summary>
+      <param name="index">The index at which to insert the item</param>
+      <param name="item">The item to insert</param>
+    </member>
+    <member name="E:EWSoftware.PDI.StringCollection.ListChanged">
+      <summary>
+            This event is raised when an item is added or removed from the list, when the list is cleared, and
+            when an item is replaced in the list.
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.OnListChanged(System.ComponentModel.ListChangedEventArgs)">
+      <summary>
+            This raises the <see cref="E:EWSoftware.PDI.StringCollection.ListChanged" /> event
+            </summary>
+      <param name="e">The event arguments</param>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.RemoveItem(System.Int32)">
+      <summary>
+            This is overridden to raise the <see cref="E:EWSoftware.PDI.StringCollection.ListChanged" /> event
+            </summary>
+      <param name="index">The index of the item to remove</param>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.RemoveRange(System.Int32,System.Int32)">
+      <summary>
+            Remove a range of items from the collection
+            </summary>
+      <param name="index">The zero-based index at which to start removing items</param>
+      <param name="count">The number of items to remove</param>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.SetItem(System.Int32,System.String)">
+      <summary>
+            This is overridden to raise the <see cref="E:EWSoftware.PDI.StringCollection.ListChanged" /> event
+            </summary>
+      <param name="index">The index of the item to set</param>
+      <param name="item">The item to store at the specified position</param>
+    </member>
+    <member name="M:EWSoftware.PDI.StringCollection.Sort(System.Boolean,System.Boolean)">
+      <summary>
+            This is used to sort the collection in ascending or descending order
+            </summary>
+      <param name="ascending">Pass true for ascending order, false for descending order</param>
+      <param name="ignoreCase">Pass true for a case-insensitive sort or false for a case-sensitive sort</param>
+    </member>
+    <member name="T:EWSoftware.PDI.UniqueIntegerCollection">
+      <summary>
+            A type-safe collection of unique integer values with an optional range restriction and zero exclusion
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.#ctor">
+      <summary>
+            Default constructor
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.#ctor(EWSoftware.PDI.UniqueIntegerCollection)">
+      <summary>
+            Copy constructor
+            </summary>
+      <param name="values">The <c>UniqueIntegerCollection</c> to copy.  The range and zero exclusion
+            setting are inherited from the copied collection.</param>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.#ctor(System.Collections.Generic.IEnumerable{System.Int32})">
+      <summary>
+            Construct a collection from an enumerable list of unique integers without range checking and with
+            zero allowed.
+            </summary>
+      <param name="values">The enumerable list of integers</param>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.#ctor(System.Collections.Generic.IEnumerable{System.Int32},System.Int32,System.Int32,System.Boolean)">
+      <summary>
+            Construct a collection from an enumerable list of unique integers with a range and zeros exclusion
+            setting.
+            </summary>
+      <param name="values">The enumerable list of integers</param>
+      <param name="min">The minimum value allowed</param>
+      <param name="max">The maximum value allowed</param>
+      <param name="zeroAllowed">Allow zero or not</param>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.#ctor(System.Int32,System.Int32,System.Boolean)">
+      <summary>
+            Construct a collection with a range and zero exclusion option
+            </summary>
+      <param name="min">The minimum value allowed</param>
+      <param name="max">The maximum value allowed</param>
+      <param name="zeroAllowed">Allow zero or not</param>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.AddRange(System.Collections.Generic.IEnumerable{System.Int32})">
+      <summary>
+            Add a range of integers from an enumerable list
+            </summary>
+      <param name="values">The enumerable list of integers</param>
+    </member>
+    <member name="P:EWSoftware.PDI.UniqueIntegerCollection.AllowZero">
+      <summary>
+            This read-only property is used to get whether or not zero is allowed as a valid value
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.InsertItem(System.Int32,System.Int32)">
+      <summary>
+            Insert an integer into the collection
+            </summary>
+      <param name="index">The index at which to insert the integer</param>
+      <param name="item">The integer to insert</param>
+      <exception cref="T:System.ArgumentOutOfRangeException">This is thrown if the value is less than
+            <see cref="P:EWSoftware.PDI.UniqueIntegerCollection.MinimumValue" /> or greater than <see cref="P:EWSoftware.PDI.UniqueIntegerCollection.MaximumValue" />.</exception>
+      <exception cref="T:System.ArgumentException">This is thrown if the value is zero and zeros are not allowed in
+            the collection.</exception>
+    </member>
+    <member name="P:EWSoftware.PDI.UniqueIntegerCollection.MaximumValue">
+      <summary>
+            This read-only property is used to get the highest value allowed to be added to the collection
+            </summary>
+    </member>
+    <member name="P:EWSoftware.PDI.UniqueIntegerCollection.MinimumValue">
+      <summary>
+            This read-only property is used to get the minimum value allowed to be added to the collection
+            </summary>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.ParseValues(System.String)">
+      <summary>
+            This is used to parse a set of individual numbers or ranges of numbers from a string and store them
+            in the collection.
+            </summary>
+      <param name="values">The string containing the values to parse and store</param>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.RemoveRange(System.Int32,System.Int32)">
+      <summary>
+            Remove a range of items from the collection
+            </summary>
+      <param name="index">The zero-based index at which to start removing items</param>
+      <param name="count">The number of items to remove</param>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.SetItem(System.Int32,System.Int32)">
+      <summary>
+            Set an item in the collection
+            </summary>
+      <param name="index">The index of the item to set</param>
+      <param name="item">The integer value to store</param>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.Sort(System.Boolean)">
+      <summary>
+            This is used to sort the collection in ascending or descending order
+            </summary>
+      <param name="ascending">Pass true for ascending order, false for descending order</param>
+    </member>
+    <member name="M:EWSoftware.PDI.UniqueIntegerCollection.ToString">
+      <summary>
+            This is used to get a string containing the values in the collection
+            </summary>
+      <returns>A string containing the values.  Ranges of consecutive values are compressed into an "X-Y"
+            format.  For example: 1,10,15-20,30-35,100</returns>
+    </member>
+  </members>
+</doc>

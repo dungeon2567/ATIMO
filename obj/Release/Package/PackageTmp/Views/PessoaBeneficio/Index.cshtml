@@ -1,0 +1,116 @@
+﻿@model ATIMO.ViewModel.PessoaBeneficioViewModel
+
+@{
+    ViewBag.Title = "Átimo - Pessoa/Beneficio";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-plus-circle"></i>
+                    <h3>PESSOAS / BENEFICIOS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <p>
+                        @Html.ActionLink("Incluir Novo", "Create", new { id = @Model.Pessoa }) |
+
+                        @switch (@Model.TipoPessoa)
+                        {
+                            case "U":
+                                @Html.ActionLink("Voltar", "Index", "Funcionario")
+                                break;
+                            case "T":
+                            @Html.ActionLink("Voltar", "Index", "Terceiro")
+                                break;
+                        }
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        BENEFICIO
+                                    </th>
+
+                                    <th>
+                                        TIPO DE DEDUÇÃO
+                                    </th>
+
+                                    <th>
+                                        VALOR
+                                    </th>
+
+                                    <th>
+                                        SITUAÇÃO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Lista)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BENEFICIO1.DESCRICAO)
+                                        </td>
+
+                                        @switch (item.TIPO_DEDUCAO)
+                                        {
+                                            case "V":
+                                                <td>
+                                                    <span class="label label-warning">VALOR</span>
+                                                </td>
+                                                break;
+                                            default:
+                                                <td>
+                                                    <span class="label label-danger">PERCENTUAL</span>
+                                                </td>
+                                                break;
+                                        }
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DEDUCAO)
+                                        </td>
+
+                                        @switch (item.SITUACAO)
+                                        {
+                                            case "A":
+                                                <td>
+                                                    <span class="label label-success">ATIVO</span>
+                                                </td>
+                                                break;
+                                            default:
+                                                <td>
+                                                    <span class="label label-default">INATIVO</span>
+                                                </td>
+                                                break;
+                                        }
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/PessoaBeneficio/Edit/@item.ID">
+                                                <i class="fa fa-edit"></i>
+                                                Editar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")

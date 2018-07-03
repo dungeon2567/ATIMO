@@ -1,0 +1,81 @@
+﻿@model ATIMO.ViewModel.ClienteProjetoViewModel
+
+@{
+    ViewBag.Title = "Horús - Cliente/Projeto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-ol"></i>
+                    <h3>CLIENTES/PROJETOS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <p>
+                        @Html.ActionLink("Incluir Novo", "Create", new { id = @Model.Cliente }) |
+                        @Html.ActionLink("Voltar", "Index", "Cliente")
+                    </p>
+
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        PROJETO
+                                    </th>
+
+                                    <th>
+                                        SITUAÇÃO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Lista)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PROJETO1.DESCRICAO)
+                                        </td>
+
+                                        @switch (item.SITUACAO)
+                                        {
+                                            case "A":
+                                                <td>
+                                                    <span class="label label-success">ATIVO</span>
+                                                </td>
+                                                break;
+                                            default:
+                                                <td>
+                                                    <span class="label label-default">INATIVO</span>
+                                                </td>
+                                                break;
+                                        }
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/ClienteProjeto/Edit/@item.ID">
+                                                <i class="fa fa-edit"></i>
+                                                Editar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")

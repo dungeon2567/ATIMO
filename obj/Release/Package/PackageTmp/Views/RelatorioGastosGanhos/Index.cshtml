@@ -1,0 +1,354 @@
+﻿@model ATIMO.ViewModel.RelatorioGastoGanhosViewModel
+
+@using ATIMO;
+
+
+@{
+    ViewBag.Title = "Átimo - Relatório Gastos x Ganhos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("MenuFinanceiro")
+
+@helper CreateLabel(decimal valor)
+    {
+        if (valor > 0)
+        {
+            <span class="label label-success">R$ @valor.ToString("N2")</span>
+        }
+        else
+        if (valor < 0)
+        {
+            <span class="label label-danger">R$ @valor.ToString("N2")</span>
+        }
+        else
+        {
+            <span class="label label-default">R$ @valor.ToString("N2")</span>
+        }
+}
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-alt"></i>
+                    <h3>Relatório Gastos x Ganhos</h3>
+                </div>
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        OSSB
+                                    </th>
+
+                                    <th>
+                                        DATA
+                                    </th>
+
+                                    <th>
+                                        PROJETO
+                                    </th>
+
+                                    <th>
+                                        PESSOA
+                                    </th>
+
+                                    <th>
+                                        DESPESA/OCORRÊNCIA
+                                    </th>
+
+                                    <th>
+                                        VALOR
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Items)
+                                {
+                                <tr>
+                                    <td>
+                                        @item.Ossb
+                                    </td>
+                                    <td>
+                                        @item.Data.ToString("dd/MM/yyyy")
+                                    </td>
+
+                                    <td>
+                                        @item.Projeto.DESCRICAO
+                                    </td>
+
+                                    <td title="@item.Pessoa.RAZAO" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px;">
+                                        @item.Pessoa.RAZAO
+                                    </td>
+
+                                    <td title="@item.Descricao" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px;">
+
+                                        @item.Descricao
+
+                                    </td>
+
+                                    <td>
+                                        @CreateLabel(item.Valor)
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td></td>
+                                    <td>TOTAL</td>
+                                    <td>
+                                        @CreateLabel(Model.Items.Select(i => i.Valor).DefaultIfEmpty().Sum())
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div id="receita"></div>
+                    </div>
+
+
+                    <div class="col-md-6">
+                        <div id="despesa"></div>
+                        <br />
+                    </div>
+
+                    <div class="col-md-12">
+                        <div id="saldo"></div>
+                        <br />
+                    </div>
+
+                    @if (Model.SaldoPorProjeto.Any(kv => kv.Key.ID == 4))
+                    {
+                        <div class="col-md-12">
+                            <div id="saldoLiquido"></div>
+                            <br />
+                        </div>
+                    }
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<br>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script>
+        $(function () {
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: '.',
+                    decimalPoint: ','
+                }
+            });
+
+            $('#receita').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'RECEITA POR PROJETO'
+                },
+                subtitle: {
+                    text: 'TOTAL: @(Model.ReceitaPorProjeto.Values.DefaultIfEmpty().Sum().ToString("C"))'
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 50,
+                        depth: 45,
+                        showInLegend: true
+                    },
+                             series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: 'R$ {point.y:,.2f}'
+                        }
+                    }
+                },
+                tooltip: {
+                    pointFormat: "Valor: R$ {point.y:,.2f}"
+                },
+                series: [{
+                    name: 'valor',
+
+                    data: [
+                        @foreach (var kv in Model.ReceitaPorProjeto)
+                        {
+                            @:['@Html.Raw(kv.Key.DESCRICAO)', @kv.Value],
+                        }
+                    ]
+                }],
+            });
+
+                        $('#despesa').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'DESPESA POR PROJETO'
+                },
+                subtitle: {
+                    text: 'TOTAL: @(Model.DespesaPorProjeto.Values.DefaultIfEmpty().Sum().ToString("C"))'
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 50,
+                        depth: 45,
+                        showInLegend: true
+                    },
+                             series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: 'R$ {point.y:,.2f}'
+                        }
+                    }
+                },
+                tooltip: {
+                    pointFormat: "Valor: R$ {point.y:,.2f}"
+                },
+                series: [{
+                    name: 'valor',
+
+                    data: [
+                        @foreach (var kv in Model.DespesaPorProjeto)
+                        {
+                            @:['@Html.Raw(kv.Key.DESCRICAO)', @kv.Value],
+                        }
+                    ]
+                }],
+            });
+
+
+            Highcharts.chart('saldo', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'SALDO POR PROJETO'
+                },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: "Valor: R$ {point.y:,.2f}"
+                },
+
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: 'R$ {point.y:,.2f}'
+                        }
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Valor total'
+                    }
+
+                },
+                series: [{
+                    name: 'Valor',
+                    data: [
+                        @foreach (var kv in Model.SaldoPorProjeto) {
+                            @:{ name: '@Html.Raw(kv.Key.DESCRICAO)', color: '@(kv.Value <= 0 ? "#f45b5b" : "#7cb5ec")', y: @kv.Value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)},
+
+                        }
+                    ]
+                }]
+            });
+
+            @if (Model.SaldoPorProjeto.Any(kv => kv.Key.ID == 4)) {
+                <text>
+
+                Highcharts.chart('saldoLiquido', {
+                    chart: {
+                        type: 'column'
+                                },
+                title: {
+                        text: 'SALDO LÍQUIDO POR PROJETO'
+                },
+                credits: {
+                        enabled: false
+                },
+                legend: {
+                        enabled: false
+                },
+                tooltip: {
+                        pointFormat: "Valor: R$ {point.y:,.2f}"
+                },
+
+                plotOptions: {
+                        series: {
+                            borderWidth: 0,
+                        dataLabels: {
+                                enabled: true,
+                            format: 'R$ {point.y:,.2f}'
+                        }
+                        }
+                    },
+                xAxis: {
+                        type: 'category'
+                },
+                yAxis: {
+                        title: {
+                            text: 'Valor total'
+                                    }
+
+                    },
+                series: [{
+                        name: 'Valor',
+                    data: [
+                        @foreach(var kv in Model.SaldoPorProjeto.Where(kv => kv.Key.ID != 4)) {
+                            decimal value = kv.Value +
+                                 (Model.SaldoPorProjeto
+                                .FirstOrDefault(kkv => kkv.Key.ID == 4)
+                                .Value / 2);
+
+
+                            @:{ name: '@Html.Raw(kv.Key.DESCRICAO)', color: '@(value <= 0 ? "#f45b5b" : "#7cb5ec")', y: @value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)},
+
+                        }
+                    ]
+                }]
+            });
+            </text>
+                }
+        });
+    </script>
+}

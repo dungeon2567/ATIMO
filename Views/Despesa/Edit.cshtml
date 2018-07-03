@@ -1,0 +1,86 @@
+﻿@model ATIMO.Models.DESPESA
+
+@{
+    ViewBag.Title = "ÁTIMO - Despesas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>DESPESAS - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID, new { id = "id" })
+
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>DESCRIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase requirido", maxlength = "200", placeholder = "DESCRIÇÃO", id = "descricao", required = "" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <div>
+                                    <label>CLASSE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("CLASSE", null, "SELECIONE UMA CLASSE", new { required = "", id = "classe" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>TIPO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <select required="required" name="TIPO">
+                                        <option @(Model.TIPO == "F" ? "selected" : "") value="F">FIXO</option>
+                                        <option @(Model.TIPO == "V" ? "selected" : "") value="V">VARIÁVEL</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Despesa/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("RodapeFixo")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

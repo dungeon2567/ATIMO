@@ -1,0 +1,138 @@
+﻿@model ATIMO.Models.PAGAMENTO_TERCEIRO
+
+@{
+    ViewBag.Title = "ÁTIMO - Adiantamentos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-th-large"></i>
+                    <h3>PAGAMENTOS TERCEIRO - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID);
+                        @Html.HiddenFor(model => model.DATA_CRIACAO);
+                        @Html.HiddenFor(model => model.OSSB_SERVICO);
+                        @Html.HiddenFor(model => model.TERCEIRO);
+
+                        <fieldset>
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>OSSB</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input class="form-control input-lg" maxlength="10" value="@Model.OSSB_SERVICO1.OSSB" id="ossb" readonly disabled />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>SERVIÇO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input class="form-control input-lg" value="@Model.OSSB_SERVICO1.DESCRICAO" id="servico" readonly disabled />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>TERCEIRO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input class="form-control input-lg" value="@Model.TERCEIRO1.RAZAO" id="t" readonly disabled />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>DESPESA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("DESPESA", null, "SELECIONE UMA DESPESA", new { required = "", id = "despesa" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>VALOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input name="VALOR_STRING" class="form-control input-lg" maxlength="10" alt="decimal" id="valor" value="@Model.VALOR.ToString("N2")" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>DATA DE PAGAMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input name="DATA_PAGAMENTO" class="form-control input-lg" maxlength="10" id="data_pagamento" value="@(Model.DATA_PAGAMENTO.HasValue?Model.DATA_PAGAMENTO.Value.ToString("dd/MM/yyyy"):"")" />
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/PagamentoTerceiro/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="~/Scripts/utils.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/moment-with-locales.js"></script>
+
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $("#data_pagamento").datepicker({
+            format: 'dd/mm/yyyy',
+            language: 'pt-BR'
+        });
+    </script>
+}

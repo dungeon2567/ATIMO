@@ -1,0 +1,111 @@
+﻿@model ATIMO.ViewModel.PagarViewModel
+
+@{
+    ViewBag.Title = "ÁTIMO - Pagar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>PAGAMENTOS - PAGAR</h3>
+                </div>
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.Id);
+
+
+
+                        <fieldset>
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>DATA DE PAGAMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DataPagamento, new { @class = "form-control input-lg datepicker", maxlength = "10", id = "data_pagamento", alt = "date" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>VALOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.ValorString, new { @class = "form-control input-lg", maxlength = "100", id = "valor", required = "", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>FORMA DE PAGAMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <select id="forma_pagamento" name="FormaPagamento" required="">
+                                        <option value="0" @(Model.FormaPagamento == 0 ? "selected" : "")>DOC</option>
+                                        <option value="1" @(Model.FormaPagamento == 1 ? "selected" : "")>BOLETO</option>
+                                        <option value="2" @(Model.FormaPagamento == 2 ? "selected" : "")>DINHEIRO</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>CONTA BANCÁRIA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("ContaBancaria", null, "SELECIONE UMA CONTA BANCÁRIA", new { required = "", id = "conta_bancaria", name = "CONTA_BANCARIA" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Pagamento/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

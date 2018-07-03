@@ -1,0 +1,153 @@
+﻿@model ATIMO.Models.CONTAS_RECEBER
+
+@{
+    ViewBag.Title = "ÁTIMO - Contas a Receber";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>CONTAS A RECEBER - EDITAR</h3>
+                </div>
+
+                <div class="widget-content">
+
+
+                    @using (Html.BeginForm())
+    {
+                <input value="@Model.ID" type="hidden" name="ID" />
+                <input value="@Model.OSSB" type="hidden" name="OSSB" />
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+
+                <div class="form-group col-md-6">
+                    <div>
+                        <label>VALOR BRUTO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <input name="VALOR_BRUTO_STRING"
+                               required="required"
+                               value="@Model.VALOR_BRUTO_STRING"
+                               class="form-control input-lg" alt="decimal" maxlength="10" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <div>
+                        <label>VALOR LIQUIDO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <input name="VALOR_LIQUIDO_STRING" value="@Model.VALOR_LIQUIDO_STRING" required="required" class="form-control input-lg" alt="decimal" maxlength="10" />
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-6">
+                    <div>
+                        <label>DATA DE EMISSÃO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <input name="DATA_EMISSAO" value="@Model.DATA_EMISSAO.ToString("dd/MM/yyyy")" class="form-control input-lg datepicker" alt="date" maxlength="10" />
+                    </div>
+                </div>
+
+
+                <div class="form-group col-md-6">
+                    <div>
+                        <label>DATA DE VENCIMENTO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <input name="DATA_VENCIMENTO" value="@Model.DATA_VENCIMENTO.ToString("dd/MM/yyyy")" class="form-control input-lg datepicker" alt="date" maxlength="10" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <div>
+                        <label>DATA DE RECEBIMENTO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <input name="DATA_RECEBIMENTO" value="@(Model.DATA_RECEBIMENTO == null ? "" : Model.DATA_RECEBIMENTO.Value.ToString("dd/MM/yyyy"))" class="form-control input-lg datepicker" alt="date" maxlength="10" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <div>
+                        <label>NOTA FISCAL</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <input name="NOTA_FISCAL" value="@Model.NOTA_FISCAL" class="form-control input-lg uppercase" maxlength="80" />
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <div>
+                        <label>OBSERVAÇÃO</label>
+                    </div>
+
+                    <div class="editor-field">
+                        <textarea name="OBSERVACAO" rows="5" class="form-control input-lg uppercase">@Model.OBSERVACAO</textarea>
+                    </div>
+                </div>
+
+                <div class="form-group col-md-12">
+                    <div>
+                        <label>CONTA BANCÁRIA</label>
+                    </div>
+
+                    <div class="editor-field">
+                        @Html.DropDownList("CONTA_BANCARIA", null, "SELECIONE UMA CONTA BANCÁRIA", new { required = "", id = "conta_bancaria", name = "CONTA_BANCARIA" })
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <hr />
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-check-square-o"></i> Salvar
+                    </button>
+
+                    |
+                    <a class="btn btn-danger" href="~/ContasReceber/Index">
+                        <i class="fa fa-rotate-left"></i>
+                        Voltar
+                    </a>
+                </div>
+}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

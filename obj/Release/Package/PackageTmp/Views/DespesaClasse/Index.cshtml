@@ -1,0 +1,91 @@
+﻿@model IEnumerable<ATIMO.Models.DESPESA_CLASSE>
+
+@{
+    ViewBag.Title = "ÁTIMO - Despesas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>DESPESAS - CLASSES</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-success" href="~/DespesaClasse/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/Financeiro/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Financeiro
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        DESCRIÇÃO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.DESCRICAO
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-info" href="~/DespesaClasse/Edit/@item.ID" title="Editar">
+                                                <i class="fa fa-edit"></i>
+                                                Editar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12">
+                        <hr />
+
+                        <a class="btn btn-success" href="~/DespesaClasse/Create">
+                            <i class="fa fa-plus-square-o"></i>
+                            Incluir Novo
+                        </a> |
+
+                        <a class="btn btn-danger" href="~/Financeiro/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar para Financeiro
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

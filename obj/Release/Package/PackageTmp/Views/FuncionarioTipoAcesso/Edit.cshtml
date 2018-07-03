@@ -1,0 +1,116 @@
+﻿@model ATIMO.Models.FUNCIONARIO_TIPO_ACESSO
+
+@{
+    ViewBag.Title = "ÁTIMO - Funcionario Tipo de Acesso";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-th"></i>
+                    <h3>FUNCIONÁRIO TIPO ACESSO - EDITAR</h3>
+                </div>
+
+                <div class="widget-content" ng-app="App" ng-controller="AppController">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID)
+
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>DESCRIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "DESCRIÇÃO", id = "descricao", required = "" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <caption class="text-center">ACESSOS</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                CAMINHO
+                                            </th>
+
+                                            <th>
+                                                AÇÕES
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="acesso in acessos track by $index">
+                                            <th>
+                                                <input ng-model="acessos[$index]" class="form-control input-lg" maxlength="80" />
+                                            </th>
+
+                                            <th>
+                                                <button type="button" class="btn btn-danger" ng-click="remover_item($index)">Remover</button>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th colspan="6" class="text-center">
+                                                <button type="button" class="btn btn-success" ng-click="novo_item()">Novo</button>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <input name="ACESSO" type="hidden" value="{{acessos.join(', ')}}" />
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/FuncionarioTipoAcesso/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="../../Scripts/angular.min.js"></script>
+
+    <script>
+        var app = angular.module("App", []);
+
+        app.controller("AppController", function ($scope, $http) {
+
+            $scope.acessos = [@Html.Raw(Model.ACESSO == null ? "" : String.Join(", ", Model.ACESSO.Split(',').Select(str => "'" + str.Trim() + "'")))];
+
+            $scope.novo_item = function () {
+                $scope.acessos.push("");
+            }
+
+            $scope.remover_item = function (index) {
+                $scope.acessos.splice(index, 1);
+            }
+
+        });
+    </script>
+}

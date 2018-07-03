@@ -1,0 +1,107 @@
+﻿@model ATIMO.Models.CAIXINHA
+
+@{
+    ViewBag.Title = "ÁTIMO - CAIXINHA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>CAIXINHA - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                    <fieldset>
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>PESSOA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("PESSOA", null, "SELECIONE UMA PESSOA", new { required = "", id = "pessoa", name = "PESSOA" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>CONTA BANCÁRIA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("CONTA_BANCARIA", null, "SELECIONE UMA CONTA BANCÁRIA", new { required = "", id = "conta_bancaria", name = "CONTA_BANCARIA" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-4">
+                            <div>
+                                <label>DATA DE ENTREGA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.DATA_ENTREGA, new { @class = "form-control input-lg datepicker", maxlength = "10", id = "data_entrega", required = "", alt = "date" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-8">
+                            <div>
+                                <label>VALOR</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.VALOR_STRING, new { @class = "form-control input-lg", maxlength = "100", id = "valor", required = "", alt = "decimal" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <hr />
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-check-square-o"></i> Salvar
+                            </button>
+
+                            |
+                            <a class="btn btn-danger" href="~/Pagamento/Index">
+                                <i class="fa fa-rotate-left"></i>
+                                Voltar
+                            </a>
+                        </div>
+                    </fieldset>
+                    }
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script src="../../Scripts/bootstrap-datepicker.js"></script>
+<script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+<link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

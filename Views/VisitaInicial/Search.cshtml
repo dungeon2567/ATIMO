@@ -1,0 +1,355 @@
+﻿
+@{
+    ViewBag.Title = "Átimo - Operacional - Pesquisa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-info" href="~/VisitaInicial/Create">
+                            <i class="fa fa-plus"></i>
+                            Novo
+                        </a>
+
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar();">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Pesquisar
+                        </button>
+
+
+                        <hr />
+
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>SITUAÇÃO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <select id="situacao" multiple="multiple">
+                                <option value="I">VISITA INICIAL</option>
+                                <option value="O">ORÇAR</option>
+                                <option value="R">ORÇAMENTO</option>
+                                <option value="E">EXECUTANDO</option>
+                                <option value="P">PARCELAMENTO</option>
+                                <option value="K">COBRANÇA</option>
+                                <option value="F">FINALIZADA</option>
+                                <option value="C">CANCELADA</option>
+                            </select>
+                        </div>
+                        <hr />
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>TIPO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <select id="tipo" multiple="multiple">
+                                <option value="C">CORRETIVA</option>
+                                <option value="O">ACOMPANHAMENTO</option>
+                                <option value="E">EMERGENCIAL</option>
+                                <option value="X">EXTRA CONTRATUAL</option>
+                                <option value="G">GARANTIA</option>
+                                <option value="P">PREVENTIVA</option>
+                            </select>
+                        </div>
+                        <hr />
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <div>
+                            <label>NUM</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input id="num" class="form-control uppercase" maxlength="10">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <div>
+                            <label>CLIENTE</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <select id="cliente" class="form-control"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <div>
+                            <label>LOJA</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <select id="loja" class="form-control"></select>
+                        </div>
+
+                        <hr />
+                    </div>
+
+
+                    <div class="form-group col-md-4">
+                        <div>
+                            <label>PROJETO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new { id = "projeto" })
+                        </div>
+                        <hr />
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <div>
+                            <label>DE</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input id="de" class="form-control input-lg datepicker" maxlength="10" alt="date" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <div>
+                            <label>ATÉ</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input id="ate" class="form-control input-lg datepicker" maxlength="10" alt="date" />
+                        </div>
+                        <hr />
+
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>OCORRÊNCIA</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <select id="ocorrencia" multiple="multiple" class="form-control">
+                                <option value="PREVENTIVA">PREVENTIVA</option>
+                                <option value="TÉCNICO">TÉCNICO</option>
+                                <option value="SERVIÇO">SERVIÇO</option>
+                                <option value="SISTEMA">SISTEMA</option>
+                                <option value="PROJETO">PROJETO</option>
+                                <option value="TROCA">TROCA</option>
+                                <option value="SUBSTITUIÇÃO">SUBSTITUIÇÃO</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar();">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Pesquisar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+
+    <script src="../../Scripts/select2/js/select2.min.js"></script>
+    <link href="../../Scripts/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="../../Scripts/select2/css/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .form-group input[type="checkbox"] {
+            display: none;
+        }
+
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                    display: none;
+                }
+
+                .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                    display: inline-block;
+                }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;
+            }
+
+        .select2-selection__choice {
+            text-transform: uppercase;
+        }
+    </style>
+
+    <script>
+        $("#cliente").select2({
+            ajax: {
+                url: function (params) {
+                    if (params.term) {
+                        return "/VisitaInicial/GetClientes/?query=" + encodeURIComponent(params.term);
+                    }
+                    else {
+                        return "/VisitaInicial/GetClientes/?query=" + encodeURIComponent("");
+                    }
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.clientes,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    }
+                },
+            },
+            minimumInputLength: 1,
+
+            placeholder: {
+                id: 0,
+                text: "NOME DO CLIENTE"
+            },
+
+            delay: 250,
+
+            theme: "bootstrap"
+        });
+
+        $("#situacao").select2({
+
+        });
+
+        $("#tipo").select2({
+
+        });
+
+        $("#ocorrencia").select2({
+            tags: true,
+            casesensitive: false,
+            tokenSeparators: [',', ' '],
+        });
+
+        $("#loja").select2({
+            ajax: {
+                url: function (params) {
+                    var par = {
+
+                    };
+
+                    if (params.term) {
+                        par.query = params.term;
+                    }
+
+                    if ($("#cliente").val() > 0) {
+                        par.cliente = $("#cliente").val();
+                    }
+
+                    return "/VisitaInicial/GetLojas/?" + jQuery.param(par, true);
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+
+                    return {
+                        results: data.lojas,
+                        pagination: {
+                            more: (params.page * 30) < data.total_count
+                        }
+                    }
+                },
+            },
+            minimumInputLength: 1,
+
+            placeholder: {
+                id: 0,
+                text: "APELIDO DA LOJA"
+            },
+
+            delay: 250,
+
+            theme: "bootstrap"
+        });
+
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+
+        function pesquisar() {
+            var params = {
+
+            };
+
+            if ($("#tipo").val()) {
+                params.tipo = $("#tipo").val();
+            }
+
+            if ($("#situacao").val()) {
+                params.situacao = $("#situacao").val();
+            }
+
+            if ($("#cliente").val() > 0) {
+                params.cliente = $("#cliente").val();
+            }
+
+
+            if ($("#projeto").val() > 0) {
+                params.projeto = $("#projeto").val();
+            }
+
+            if ($("#loja").val() > 0) {
+                params.loja = $("#loja").val();
+            }
+
+
+            if ($("#num").val() > 0) {
+                params.num = $("#num").val();
+            }
+
+            if ($("#de").val() != "") {
+                params.de = $("#de").val();
+            }
+
+            if ($("#ate").val() != "") {
+                params.ate = $("#ate").val();
+            }
+
+            if ($("#ocorrencia").val() != "") {
+                console.log($("#ocorrencia").val());
+
+                params.ocorrencia = $("#ocorrencia").val();
+            }
+
+            location.href = "/VisitaInicial/Index/?" + jQuery.param(params, true);
+        }
+    </script>
+}

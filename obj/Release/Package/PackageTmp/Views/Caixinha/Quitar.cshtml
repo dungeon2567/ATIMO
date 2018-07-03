@@ -1,0 +1,166 @@
+﻿@model ATIMO.Models.CAIXINHA_ITEM
+
+@{
+    ViewBag.Title = "ÁTIMO - CAIXINHA - QUITAR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>CAIXINHA - QUITAR</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm("Quitar", "Caixinha", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        if (TempData["MensagemSucesso"] != null)
+                        {
+                            <div class="alert alert-success">
+                                @TempData["MensagemSucesso"]
+                            </div>
+                        }
+
+                        <fieldset>
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>OSSB</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.OSSB, new { @class = "form-control input-lg", maxlength = "10", id = "ossb" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-10">
+                                <div>
+                                    <label>DESCRIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg", maxlength = "80", id = "descricao" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>PESSOA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("PESSOA", null, "SELECIONE UMA PESSOA", new { required = "", id = "pessoa", name = "PESSOA" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>DESPESA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("DESPESA", null, "SELECIONE UMA DESPESA", new { required = "", id = "despesa", name = "DESPESA" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>PROJETO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new { id = "projeto", required = "required" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>ANEXO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <input type='file' class="form-control input-lg" name='Files' />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>DATA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DATA_QUITADO, new { @class = "form-control input-lg datepicker", maxlength = "10", id = "data_entrega", required = "", alt = "date" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-8">
+                                <div>
+                                    <label>VALOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALOR_STRING, new { @class = "form-control input-lg", maxlength = "100", id = "valor", required = "", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>NOTA FISCAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NOTA_FISCAL, new { @class = "form-control input-lg", maxlength = "80", id = "nota_fiscal" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Pagamento/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

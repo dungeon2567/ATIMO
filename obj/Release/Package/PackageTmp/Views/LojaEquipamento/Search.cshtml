@@ -1,0 +1,201 @@
+﻿@model IEnumerable<ATIMO.Models.LOJA_EQUIPAMENTO>
+
+@{
+    ViewBag.Title = "Átimo - Pessoa/Lojas/Equipamentos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+@helper CreatePagination(Int32 page, Int32 pageCount)
+{
+Int32 min = Math.Max(1, Math.Min(page - 6, pageCount - 11));
+
+Int32 max = Math.Min(pageCount, min + 11);
+
+if (min != max)
+{
+
+        <ul class="pagination">
+            @if (page == 1)
+        {
+                <li class="page-item disabled"><a href="#" class="page-link"><<</a></li>
+            }
+            else
+            {
+                <li class="page-item"><a href="#" onclick="pesquisar(@(page - 1))" class="page-link"><<</a></li>
+            }
+
+            @for (Int32 it = min; it <= max; ++it)
+        {
+                <li class="page-item @((Int32)(ViewBag.PAGE) == it ? "active" : "" )"><a href="#" class="page-link" onclick="pesquisar(@it)">@it</a></li>
+            }
+
+            @if (page >= pageCount)
+        {
+                <li class="page-item disabled"><a href="#" class="page-link">>></a></li>
+            }
+            else
+            {
+                <li class="page-item"><a href="#" onclick="pesquisar(@(page + 1))" class="page-link">>></a></li>
+            }
+        </ul>
+}
+
+}
+
+
+
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-archive"></i>
+                    <h3>LOJAS/EQUIPAMENTOS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <p>
+                        <a class="btn btn-danger" href="/AreaDoFuncionario/Index">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar
+                        </a>
+                        <br />
+                        <hr />
+                    </p>
+
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>CLIENTE</label>
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.DropDownList("CLIENTE", null, "SELECIONE UM CLIENTE", new { id = "cliente" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar(@ViewBag.PAGE_NUMBER);">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Pesquisar
+                        </button>
+
+                        <hr />
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        CLIENTE
+                                    </th>
+
+                                    <th>
+                                        LOJA
+                                    </th>
+
+                                    <th>
+                                        TAG
+                                    </th>
+
+                                    <th>
+                                        SETOR
+                                    </th>
+
+                                    <th>
+                                        SUBSETOR
+                                    </th>
+
+                                    <th>
+                                        TIPO DE EQUIPAMENTO
+                                    </th>
+
+                                    <th>
+                                        MODELO
+                                    </th>
+
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var le in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @le.LOJA1.CLIENTE1.NOME
+                                        </td>
+
+                                        <td>
+                                            @le.LOJA1.APELIDO
+                                        </td>
+
+                                        <td>
+                                            @le.TAG
+                                        </td>
+
+                                        <td>
+                                            @le.SETOR
+                                        </td>
+
+                                        <td>
+                                            @le.SUBSETOR
+                                        </td>
+
+                                        <td>
+                                            @le.TIPO1.DESCRICAO
+                                        </td>
+
+                                        <td>
+                                            @le.MODELO1.DESCRICAO
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-info" href="/LojaEquipamento/Display/@le.ID">
+                                                <i class="fa fa-edit"></i>
+                                                Visualizar
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @CreatePagination((Int32)(ViewBag.PAGE), (Int32)(ViewBag.PAGE_COUNT))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/select2/js/select2.min.js"></script>
+    <link href="../../Scripts/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="../../Scripts/select2/css/select2-bootstrap.min.css" rel="stylesheet" />
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script>
+        function pesquisar(page) {
+            var params = {
+                page: page
+            };
+
+            if ($("#cliente").val() > 0) {
+                params.cliente = $("#cliente").val();
+            }
+
+            location.href = "/LojaEquipamento/Search/?" + jQuery.param(params, true);
+        }
+    </script>
+}

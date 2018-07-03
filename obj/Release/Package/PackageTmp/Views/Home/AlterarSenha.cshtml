@@ -1,0 +1,42 @@
+﻿@model ATIMO.ViewModel.AlterarSenhaViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+    @Styles.Render("~/Content/bootstrap")
+    <link href="~/Content/Login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="loginmodal-container">
+        <h1>Login</h1><br>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+            @Html.TextBoxFor(model => model.Email, new { @placeholder = "E-mail" })
+            @Html.PasswordFor(model => model.SenhaAntiga, new { @placeholder = "Senha antiga" })
+            @Html.PasswordFor(model => model.SenhaNova, new { @placeholder = "Senha nova" })
+            @Html.PasswordFor(model => model.SenhaNovaConfirmar, new { @placeholder = "Senha nova confirmar" })
+
+            <input type="submit" name="login" class="login btn btn-lg btn-primary" value="Confirmar">
+            <input type="button" class="login btn btn-lg btn-warning" value="Voltar" onclick="location.href = '../Home/Index'">
+        }
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-danger alert-dismissable text-center">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>@ViewBag.Message</strong>
+            </div>
+        }
+        <div class="login-help">
+         </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

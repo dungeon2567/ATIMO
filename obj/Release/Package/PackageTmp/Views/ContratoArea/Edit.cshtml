@@ -1,0 +1,86 @@
+﻿@model ATIMO.ViewModel.ContratoAreaManutencaoViewModel
+
+@{
+    ViewBag.Title = "Átimo - Contrato Loja/Área de Manutenção";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-indent"></i>
+                    <h3>CONTRATO LOJA / ÁREA DE MANUTENÇÃO - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.Contrato)
+                        @Html.HiddenFor(model => model.Area_Manutencao)
+
+                        <fieldset>
+                            <div class="form-group col-md-10">
+                                <div>
+                                    <label>ÁREA DE MANUTENÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("AREA_MANUTENCAO", null, "SELECIONE UMA AREA DE MANUTENÇÃO", new { required = "", disabled = "" })
+                                    @Html.ValidationMessageFor(model => model.Area_Manutencao, "Selecione uma area de manutenção!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select class="editor-field" name="situacao" required="">
+                                    @if ((Model != null) && (Model.Situacao == "A"))
+                                    {
+                                        <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ATIVO</option>
+                                    }
+
+
+                                    @if ((Model != null) && (Model.Situacao == "I"))
+                                    {
+                                        <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                | @if (Model != null)
+                                  {
+                                      @Html.ActionLink("Voltar", "Index", new { id = Model.Contrato })
+                                  }
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

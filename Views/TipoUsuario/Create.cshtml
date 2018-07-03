@@ -1,0 +1,155 @@
+﻿@model ATIMO.Models.TIPO_USUARIO
+
+@using ATIMO.Helpers;
+
+
+@{
+    ViewBag.Title = "ÁTIMO - Tipos de Usuário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-th-large"></i>
+                    <h3>TIPOS DE USUÁRIO - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <fieldset>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Marca/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+
+                                <hr />
+                            </div>
+
+                            <div class="form-group col-md-10">
+                                <div>
+                                    <label>DESCRIÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "DESCRIÇÃO", id = "descricao", required = "" })
+                                    @Html.ValidationMessageFor(model => model.DESCRICAO, "Informe uma descrição!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select class="editor-field" id="situacao" required="">
+                                    @if ((Model != null) && (Model.SITUACAO == "A"))
+                                    {
+                                    <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                    <option value="A">ATIVO</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.SITUACAO == "I"))
+                                    {
+                                    <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                    <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading panel-head">ACESSOS</div>
+                                    <div id="frm-author" class="panel-body">
+                                        @Html.CheckboxTree();
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="button" class="btn btn-primary" onclick="salvar()">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Marca/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("RodapeFixo")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-multiselect.js"></script>
+
+    <link rel="stylesheet" href="../../Content/bootstrap-multiselect.css" type="text/css" />
+
+    <script>
+        $(document).ready(function () {
+            $('#acessos').multiselect({
+                enableCollapsibleOptGroups: true,
+                enableClickableOptGroups: true,
+                buttonClass: 'btn btn-lg btn-default',
+            });
+        });
+
+        function salvar() {
+            var tipoUsuario = new Object();
+
+            tipoUsuario.DESCRICAO = $("#descricao").val();
+
+            tipoUsuario.SITUACAO = $("#situacao").val();
+
+            $.ajax({
+                url: "/TipoUsuario/ConfirmarCreate/",
+                data: JSON.stringify(marca),
+                type: "POST",
+                contentType: "application/json;",
+                dataType: "json",
+                success: function (data) {
+                    if (data.status === 200) {
+                        alert(data.msg);
+                        window.location.href = "/Marca/Index/";
+                    }
+
+                    if (data.status === 100) {
+                        alert(data.ex);
+                    }
+                }
+            });
+        }
+    </script>
+}

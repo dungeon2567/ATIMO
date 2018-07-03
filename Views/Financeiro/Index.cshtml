@@ -1,0 +1,173 @@
+﻿@{
+    ViewBag.Title = "ÁTIMO - Financeiro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using ATIMO;
+
+<link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+
+@Html.Partial("MenuFinanceiro")
+
+
+<div class="main">
+    <div class="container">
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>COMPRAS</h3>
+            </div>
+
+            <div class="widget-content">
+                <div class="shortcuts">
+                    <a href="~/OssbMaterial/Compras" class="shortcut">
+                        <i class="shortcut-icon fa fa-wrench"></i>
+                        <span class="shortcut-label">MATERIAIS</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>CONTAS A PAGAR</h3>
+            </div>
+
+            <div class="widget-content">
+                <div class="shortcuts">
+                    <a href="~/Pagamento/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-credit-card"></i>
+                        <span class="shortcut-label">PAGAMENTOS</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>CONTAS PAGAS</h3>
+            </div>
+
+            <div class="widget-content">
+                <div class="shortcuts">
+                    <a href="~/Caixinha/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-male"></i>
+                        <span class="shortcut-label">CAIXINHA</span>
+                    </a>
+
+                    <a href="~/Extrato/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-money"></i>
+                        <span class="shortcut-label">EXTRATO</span>
+                    </a>
+
+                    <a href="~/Caixinha/NaoValidadas" class="shortcut">
+                        <i class="shortcut-icon fa fa-exclamation"></i>
+                        <span class="shortcut-label">CAIXINHAS NÃO VALIDADAS</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>CONTAS A RECEBER</h3>
+            </div>
+
+            <div class="widget-content">
+                <div class="shortcuts">
+                    <a href="~/ContasReceber/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-money"></i>
+                        <span class="shortcut-label">CONTAS A RECEBER</span>
+                    </a>
+
+                    <a href="@Url.Action("Index","NotasFiscais")" class="shortcut">
+                        <i class="shortcut-icon fa fa-file"></i>
+                        <span class="shortcut-label">NOTA FISCAL</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget">
+
+            <!--Cabeçalho da caixa de agrupamento-->
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>CADASTROS</h3>
+            </div>
+
+            <!--Corpo da caixa de agrupamento-->
+            <div class="widget-content">
+                <div class="shortcuts">
+                    <a href="~/RecursosHumanos/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-male"></i>
+                        <span class="shortcut-label">RECURSOS HUMANOS</span>
+                    </a>
+
+                    <a href="~/Beneficio/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-plus-circle"></i>
+                        <span class="shortcut-label">BENEFICIOS</span>
+                    </a>
+
+                    <a href="~/Feriado/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-calendar"></i>
+                        <span class="shortcut-label">FERIADOS</span>
+                    </a>
+
+                    <a href="~/FormaPagamento/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-cc-visa"></i>
+                        <span class="shortcut-label">FORMAS DE PAGAMENTO</span>
+                    </a>
+
+                    <a href="~/Despesa/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-bar-chart"></i>
+                        <span class="shortcut-label">DESPESAS</span>
+                    </a>
+
+                    <a href="~/DespesaClasse/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-file"></i>
+                        <span class="shortcut-label">CLASSES</span>
+                    </a>
+
+                    <a href="~/Banco/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-bank"></i>
+                        <span class="shortcut-label">BANCOS</span>
+                    </a>
+
+                    <a href="~/Veiculo/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-automobile"></i>
+                        <span class="shortcut-label">VEICULOS</span>
+                    </a>
+
+                    <a href="~/Equipamento/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-laptop"></i>
+                        <span class="shortcut-label">EQUIPAMENTOS</span>
+                    </a>
+
+                    <a href="~/TipoConta/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-laptop"></i>
+                        <span class="shortcut-label">TIPOS DE CONTA</span>
+                    </a>
+
+
+                    <a href="~/ContaBancaria/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-laptop"></i>
+                        <span class="shortcut-label">CONTAS BANCÁRIAS</span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/bootstrap-datepicker.js")
+}
+

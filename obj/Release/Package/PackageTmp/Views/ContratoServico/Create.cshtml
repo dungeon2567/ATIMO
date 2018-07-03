@@ -1,0 +1,176 @@
+﻿
+@model ATIMO.ViewModel.ContratoServicoViewModel
+
+@{
+    ViewBag.Title = "Átimo - OSSB Serviço";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-wrench"></i>
+                    <h3>CONTRATO/SERVIÇOS - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.Contrato)
+                        @Html.HiddenFor(model => model.Erro)
+
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>AREA DE MANUTENÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.AreaManutencaoDescricao, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "AREA DE MANUTENÇÃO", required = "", id = "area_manutencao" })
+                                    @Html.ValidationMessageFor(model => model.AreaManutencaoDescricao, "Selecione uma area de manutenção!")
+                                </div>
+                            </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>SERVIÇO</label>
+                           </div>
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.ServicoDescricao, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "SERVIÇO", required = "", id = "servico" })
+                                @Html.ValidationMessageFor(model => model.ServicoDescricao, "Selecione um serviço!")
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <div>
+                                 <label>QUANTIDADE</label>
+                            </div>
+                            <div class="editor-field">
+                                 @Html.TextBoxFor(model => model.Quantidade, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "QUANTIDADE", id = "quantidade", required = "", alt = "decimal" })
+                                 @Html.ValidationMessageFor(model => model.Quantidade, "Informe uma quantidade!")
+                            </div>
+                        </div>
+
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>UNIDADE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("UNIDADE", null, null, new { required = "" })
+                                    @Html.ValidationMessageFor(model => model.Unidade, "Selecione uma unidade!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>VALOR MO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.ValorMo, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR MO", id = "valormo", required = "", alt = "decimal" })
+                                    @Html.ValidationMessageFor(model => model.ValorMo, "Informe um valor de mão de obra!")
+                                </div>
+                            </div>
+
+                                <div class="form-group col-md-10">
+                                    <div>
+                                        <label>TERCEIRO</label>
+                                    </div>
+
+                                    <div class="editor-field">
+                                        @Html.DropDownList("TERCEIRO", null, "SELECIONE UM TERCEIRO", new { required = "", id = "terceiro" })
+                                        @Html.ValidationMessageFor(model => model.Terceiro, "Selecione um terceiro!")
+                                    </div>
+                                </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>VALOR TERCEIRO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.ValorTerceiro, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR TERCEIRO", id = "valorterceiro", required = "", alt = "decimal" })
+                                    @Html.ValidationMessageFor(model => model.ValorTerceiro, "Informe um valor de mão de obra!")
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                @Html.ActionLink("Voltar", "Index", new { id = Model.Contrato })
+                            </div>
+
+                            <div class="col-md-12">
+                                <br />
+                                <table class="table table-striped table-bordered" id="servicos">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                SERVIÇOS
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                    </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+     <script>
+         $(document).ready(function () {
+             $("#servico").autocomplete({
+                 source: "@Url.Action("BuscarServicos", "OssbServico")",
+                 minLenth: 2
+             });
+
+             $("#area_manutencao").autocomplete({
+                 source: "@Url.Action("BuscarAreaManutencao", "OssbServico")",
+                 minLenth: 2
+             });
+
+             $("#area_manutencao").blur(populate_area);
+         });
+
+         function populate_area() {
+                 if($(this).val() != null){
+                     $.ajax({
+                         url: "/ContratoServico/ListaServicosArea",
+                         type: "POST",
+                         dataType: "json",
+                         data: { contrato: @Model.Contrato, area: $("#area_manutencao").val() },
+                         success: function(data) {
+                             var table = document.getElementById("servicos");
+
+                             while(table.rows.length > 1){
+                                 table.deleteRow(1);
+                             }
+
+                             data.forEach(function (value){
+                                 table.insertRow(-1)
+                                     .insertCell(-1)
+                                     .innerHTML = value;
+                             })
+                         }
+                     });
+                 }
+         }
+
+         $(document).ready(populate_area);
+  </script>
+}

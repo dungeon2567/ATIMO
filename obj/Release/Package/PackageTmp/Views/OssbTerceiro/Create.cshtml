@@ -1,0 +1,99 @@
+﻿@model ATIMO.Models.PAGAMENTO
+
+@{
+    ViewBag.Title = "Átimo - OSSB Terceiro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-wrench"></i>
+                    <h3>OSSB/TERCEIRO - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.OSSB)
+                        @Html.HiddenFor(model => model.DESPESA)
+
+                        <fieldset>
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>TERCEIRO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("PESSOA", null, "SELECIONE UM TERCEIRO", new { required = "", id = "terceiro", name = "PESSOA" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>SERVIÇO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("SERVICO", null, "", new { id = "servico", name = "SERVICO" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>DATA DE VENCIMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DATA_VENCIMENTO, new { @class = "form-control input-lg uppercase datepicker", maxlength = "10", id = "data_vencimento", alt = "date" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>VALOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALOR_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR", id = "valor", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                <input type="button" value="Voltar" class="btn btn-default" onclick="location.href = '@Url.Action("Index", new { id = Model.OSSB_SERVICO })'" />
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script src="../../Scripts/bootstrap-datepicker.js"></script>
+<script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+<link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+
+    </script>
+}

@@ -1,0 +1,318 @@
+﻿@model ATIMO.ViewModel.OssbViewModel
+
+@{
+    ViewBag.Title = "Átimo - Finalizadas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-line-chart"></i>
+                    <h3>FINALIZADA - EDIÇÃO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(model => model.Id)
+                        @Html.HiddenFor(model => model.DataCadastro)
+                        @Html.HiddenFor(model => model.VisitadoDia)
+                        @Html.HiddenFor(model => model.AgendadoDia)
+                        @Html.HiddenFor(model => model.ExecucaoInicio)
+                        @Html.HiddenFor(model => model.ExecucaoFim)
+                        @Html.HiddenFor(model => model.Projeto)
+                        @Html.HiddenFor(model => model.Cliente)
+                        @Html.HiddenFor(model => model.Contrato)
+                        @Html.HiddenFor(model => model.Loja)
+                        @Html.HiddenFor(model => model.Tipo)
+                        @Html.HiddenFor(model => model.Ambiente)
+                        @Html.HiddenFor(model => model.Porte)
+                        @Html.HiddenFor(model => model.Erro)
+                        @Html.HiddenFor(model => model.Ocorrencia)
+                        @Html.HiddenFor(model => model.Situacao)
+
+                        <fieldset>
+                        <div class="form-group col-md-12">
+                            @Html.ActionLink("Voltar", "Index")
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>PROJETO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new {required = "", id = "projeto", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.Projeto, "Selecione um projeto!")
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>CLIENTE</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("CLIENTE", null, "SELECIONE UM CLIENTE", new {required = "", id = "cliente", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.Cliente, "Selecione um cliente!")
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>CONTRATO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("CONTRATO", null, "SELECIONE UM CONTRATO", new {id = "contrato", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.Contrato)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <div>
+                                <label>LOJA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("LOJA", null, "SELECIONE UMA LOJA", new {id = "loja", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.Loja)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>OCORRENCIA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextAreaFor(model => model.Ocorrencia, new {@class = "form-control input-lg uppercase", placeholder = "OCORRENCIA", id = "ocorrencia", rows = "5", required = "", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.Ocorrencia, "Informe uma ocorrencia!")
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>AGENDADO DIA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.AgendadoDia, new {@class = "form-control input-lg", maxlength = "10", id = "agendadodia", required = "", alt = "date", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.AgendadoDia, "Informe uma data de agendamento!")
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>VISITADO DIA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.VisitadoDia, new {@class = "form-control input-lg", maxlength = "10", id = "visitadodia", alt = "date", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.VisitadoDia)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>EXECUÇÃO INICIO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.ExecucaoInicio, new {@class = "form-control input-lg", maxlength = "10", id = "ExecucaoInicio", alt = "date", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.ExecucaoInicio)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>EXECUÇÃO FIM</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.ExecucaoFim, new {@class = "form-control input-lg", maxlength = "10", id = "ExecucaoFim", alt = "date", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.ExecucaoFim)
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>PORTE</label>
+                            </div>
+
+                            <select class="editor-field" name="porte" required="" disabled="">
+                                @if ((Model != null) && (Model.Porte == "P"))
+                                {
+                                    <option value="P" selected="selected">P</option>
+                                }
+                                else
+                                {
+                                    <option value="P">P</option>
+                                }
+
+
+                                @if ((Model != null) && (Model.Porte == "M"))
+                                {
+                                    <option value="M" selected="selected">M</option>
+                                }
+                                else
+                                {
+                                    <option value="M">M</option>
+                                }
+
+                                @if ((Model != null) && (Model.Porte == "G"))
+                                {
+                                    <option value="G" selected="selected">G</option>
+                                }
+                                else
+                                {
+                                    <option value="G">G</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>AMBIENTE</label>
+                            </div>
+
+                            <select class="editor-field" name="ambiente" required="" disabled="">
+                                @if ((Model != null) && (Model.Ambiente == "A"))
+                                {
+                                    <option value="A" selected="selected">AMBOS</option>
+                                }
+                                else
+                                {
+                                    <option value="A">AMBOS</option>
+                                }
+
+
+                                @if ((Model != null) && (Model.Porte == "E"))
+                                {
+                                    <option value="E" selected="selected">EXTERNO</option>
+                                }
+                                else
+                                {
+                                    <option value="E">EXTERNO</option>
+                                }
+
+                                @if ((Model != null) && (Model.Porte == "I"))
+                                {
+                                    <option value="I" selected="selected">INTERNO</option>
+                                }
+                                else
+                                {
+                                    <option value="I">INTERNO</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>TIPO</label>
+                            </div>
+
+                            <select class="editor-field" name="tipo" disabled="">
+                                @if ((Model != null) && (Model.Tipo == "C"))
+                                {
+                                    <option value="C" selected="selected">CORRETIVA</option>
+                                }
+                                else
+                                {
+                                    <option value="C">CORRETIVA</option>
+                                }
+
+
+                                @if ((Model != null) && (Model.Tipo == "O"))
+                                {
+                                    <option value="O" selected="selected">ACOMPANHAMENTO</option>
+                                }
+                                else
+                                {
+                                    <option value="O">ACOMPANHAMENTO</option>
+                                }
+
+                                @if ((Model != null) && (Model.Tipo == "E"))
+                                {
+                                    <option value="E" selected="selected">EMERGENCIAL</option>
+                                }
+                                else
+                                {
+                                    <option value="E">EMERGENCIAL</option>
+                                }
+
+                                @if ((Model != null) && (Model.Tipo == "X"))
+                                {
+                                    <option value="X" selected="selected">EXTRA CONTRATUAL</option>
+                                }
+                                else
+                                {
+                                    <option value="X">EXTRA CONTRATUAL</option>
+                                }
+
+                                @if ((Model != null) && (Model.Tipo == "G"))
+                                {
+                                    <option value="G" selected="selected">GARANTIA</option>
+                                }
+                                else
+                                {
+                                    <option value="G">GARANTIA</option>
+                                }
+
+                                @if ((Model != null) && (Model.Tipo == "P"))
+                                {
+                                    <option value="P" selected="selected">PREVENTIVA</option>
+                                }
+                                else
+                                {
+                                    <option value="P">PREVENTIVA</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>SITUAÇÃO</label>
+                            </div>
+
+                            <select class="editor-field" name="situacao" required="" disabled="">
+                                @if ((Model != null) && (Model.Situacao == "F"))
+                                {
+                                    <option value="F" selected="selected">FINALIZADA</option>
+                                }
+                                else
+                                {
+                                    <option value="F">FINALIZADA</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>OBSERVAÇÃO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextAreaFor(model => model.Observacao, new {@class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5", disabled = ""})
+                                @Html.ValidationMessageFor(model => model.Observacao)
+                            </div>
+                        </div>
+
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

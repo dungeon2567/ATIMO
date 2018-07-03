@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "ÁTIMO - Cadastros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="widget">
+
+            <!--Cabeçalho da caixa de agrupamento-->
+            <div class="widget-header">
+                <i class="fa fa-bookmark"></i>
+                <h3>CADASTROS</h3>
+            </div>
+            <!--Corpo da caixa de agrupamento-->
+            <div class="widget-content">
+
+                <div class="shortcuts">
+                    <a href="~/Pessoa/Search" class="shortcut">
+                        <i class="shortcut-icon fa fa-male"></i>
+                        <span class="shortcut-label">PESSOAS</span>
+                    </a>
+
+                    <a href="~/Empresa/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-list-ol"></i>
+                        <span class="shortcut-label">EMPRESAS</span>
+                    </a>
+
+                    <a href="~/Projeto/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-list-ol"></i>
+                        <span class="shortcut-label">PROJETOS</span>
+                    </a>
+
+                    <a href="~/Departamento/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-book"></i>
+                        <span class="shortcut-label">DEPARTAMENTOS</span>
+                    </a>
+
+                    <a href="~/Tipo/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-suitcase"></i>
+                        <span class="shortcut-label">TIPOS</span>
+                    </a>
+
+                    <a href="~/Marca/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-th-large"></i>
+                        <span class="shortcut-label">MARCAS</span>
+                    </a>
+
+
+
+                    <a href="~/Modelo/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-th"></i>
+                        <span class="shortcut-label">MODELOS</span>
+                    </a>
+
+                    <a href="~/Grupo/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-gears"></i>
+                        <span class="shortcut-label">GRUPOS</span>
+                    </a>
+
+                    <a href="~/ComoConheceu/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-reddit"></i>
+                        <span class="shortcut-label">COMO CONHECEU</span>
+                    </a>
+
+                    <a href="~/AreaManutencao/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-reddit"></i>
+                        <span class="shortcut-label">AREA DE MANUTENÇÃO</span>
+                    </a>
+
+                    <a href="~/FuncionarioTipoAcesso/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-user-secret"></i>
+                        <span class="shortcut-label">TIPO DE ACESSO</span>
+                    </a>
+
+                    <a href="~/Especialidade/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-bars"></i>
+                        <span class="shortcut-label">ESPECIALIDADES</span>
+                    </a>
+
+                    <a href="~/Unidade/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-link"></i>
+                        <span class="shortcut-label">UNIDADES</span>
+                    </a>
+
+                    <a href="~/Servico/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-wrench"></i>
+                        <span class="shortcut-label">SERVIÇOS</span>
+                    </a>
+
+                    <a href="~/Material/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-paperclip"></i>
+                        <span class="shortcut-label">MATERIAIS</span>
+                    </a>
+
+                    <a href="~/Ferramenta/Index" class="shortcut">
+                        <i class="shortcut-icon fa fa-legal"></i>
+                        <span class="shortcut-label">FERRAMENTA</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

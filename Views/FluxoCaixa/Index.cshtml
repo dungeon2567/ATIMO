@@ -1,0 +1,547 @@
+﻿@model IEnumerable<ATIMO.ViewModel.FluxoCaixaModel>
+@using ATIMO;
+
+@{
+    ViewBag.Title = "Átimo - Fluxo de Caixa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@helper CreateLabel(decimal valor)
+    {
+        if (valor > 0)
+        {
+            <span class="label label-success">R$ @valor.ToString("N2")</span>
+        }
+        else
+        if (valor < 0)
+        {
+            <span class="label label-danger">R$ @valor.ToString("N2")</span>
+        }
+        else
+        {
+            <span class="label label-default">R$ @valor.ToString("N2")</span>
+        }
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>FLUXO DE CAIXA</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>DATA</label>
+                        </div>
+
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">DE</span>
+                            <input id="de" class="form-control input-lg datepicker" maxlength="10" alt="date" value="@ViewBag.DE" />
+                            <span class="input-group-addon" id="basic-addon1">ATÉ</span>
+                            <input id="ate" class="form-control input-lg datepicker" maxlength="10" alt="date" value="@ViewBag.ATE" />
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>PROJETO</label>
+                        </div>
+
+                        <div class="editor-field">
+                            @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new { id = "projeto" })
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <div>
+                            <label>CRITICIDADE</label>
+                        </div>
+                        <div class="editor-field">
+                            <select class="input-lg form-control" multiple="multiple" id="criticidade"></select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar();">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Pesquisar
+                        </button>
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-default" data-original-title="Clique para imprimir." onclick="imprimir();">
+                            <i class="fa fa-print"></i>
+                            Imprimir
+                        </button>
+                        <hr />
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover tree">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">
+                                        DATA
+                                    </th>
+
+                                    <th colspan="2" style="text-align:center">
+                                        ENTRADA
+                                    </th>
+
+                                    <th colspan="2" style="text-align:center">
+                                        SAÍDA
+                                    </th>
+
+                                    <th colspan="2" style="text-align:center">
+                                        RESULTADO
+                                    </th>
+                                </tr>
+
+                                <tr>
+                                    <th>
+
+                                    </th>
+
+                                    <th>
+                                        PREVISTO
+                                    </th>
+
+                                    <th>
+                                        REALIZADO
+                                    </th>
+
+                                    <th>
+                                        PREVISTO
+                                    </th>
+
+                                    <th>
+                                        REALIZADO
+                                    </th>
+
+                                    <th>
+                                        PREVISTO
+                                    </th>
+
+                                    <th>
+                                        REALIZADO
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                                @foreach (var week in from item in Model
+                                                     group item by item.Data.GetWeekOfMonth() into g
+                                                     select g)
+                                {
+                                    <tr class="warning">
+                                        <td>
+                                            SEMANA: @week.Key
+                                        </td>
+                                        <td>
+                                            @CreateLabel(week.Select(mi => mi.EntradaPrevisto).DefaultIfEmpty().Sum())
+                                        </td>
+
+                                        <td>
+                                            @CreateLabel(week.Select(mi => mi.EntradaRealizado).DefaultIfEmpty().Sum())
+                                        </td>
+
+                                        <td>
+                                            @CreateLabel(-week.Select(mi => mi.SaidaPrevisto).DefaultIfEmpty().Sum())
+                                        </td>
+
+                                        <td>
+                                            @CreateLabel(-week.Select(mi => mi.SaidaRealizado).DefaultIfEmpty().Sum())
+                                        </td>
+
+                                        <td>
+                                            @CreateLabel(week.Select(mi => mi.ResultadoPrevisto).DefaultIfEmpty().Sum())
+                                        </td>
+
+                                        <td>
+                                            @CreateLabel(week.Select(mi => mi.ResultadoRealizado).DefaultIfEmpty().Sum())
+                                        </td>
+                                    </tr>
+
+                                    foreach (var item in week)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.Data.ToString("dd/MM/yyyy")
+                                            </td>
+
+                                            <td>
+                                                @CreateLabel(item.EntradaPrevisto)
+                                            </td>
+
+                                            <td>
+                                                @CreateLabel(item.EntradaRealizado)
+                                            </td>
+
+                                            <td>
+                                                @CreateLabel(-item.SaidaPrevisto)
+                                            </td>
+
+                                            <td>
+                                                @CreateLabel(-item.SaidaRealizado)
+                                            </td>
+
+                                            <td>
+                                                @CreateLabel(item.EntradaPrevisto - item.SaidaPrevisto)
+                                            </td>
+
+                                            <td>
+                                                @CreateLabel(item.EntradaRealizado - item.SaidaRealizado)
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        TOTAL
+                                    </td>
+
+                                    <td>
+                                        @CreateLabel(Model.Select(mi => mi.EntradaPrevisto).DefaultIfEmpty().Sum())
+                                    </td>
+
+                                    <td>
+                                        @CreateLabel(Model.Select(mi => mi.EntradaRealizado).DefaultIfEmpty().Sum())
+                                    </td>
+
+                                    <td>
+                                        @CreateLabel(-Model.Select(mi => mi.SaidaPrevisto).DefaultIfEmpty().Sum())
+                                    </td>
+
+                                    <td>
+                                        @CreateLabel(-Model.Select(mi => mi.SaidaRealizado).DefaultIfEmpty().Sum())
+                                    </td>
+
+                                    <td>
+                                        @CreateLabel(Model.Select(mi => mi.ResultadoPrevisto).DefaultIfEmpty().Sum())
+                                    </td>
+
+                                    <td>
+                                        @CreateLabel(Model.Select(mi => mi.ResultadoRealizado).DefaultIfEmpty().Sum())
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12" id="entrada">
+
+                    </div>
+                    <hr />
+
+                    <div class="col-md-12" id="saida">
+
+                    </div>
+                    <hr />
+
+                    <div class="col-md-12" id="resultado">
+
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+    <script src="/Scripts/select2/js/select2.min.js"></script>
+    <link href="/Scripts/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="/Scripts/select2/css/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <script src="../../Scripts/accounting.min.js"></script>
+
+
+    <script>
+                $(document).ready(function () {
+                    $(".datepicker").datepicker({
+                        maxViewMode: 0,
+                        todayBtn: "linked",
+                        language: "pt-BR",
+                        autoclose: true,
+                        toggleActive: true
+                    });
+
+                    $("#criticidade").select2(
+                        {
+                            theme: "bootstrap",
+
+                            data: [
+                                {
+                                    id: 1,
+                                    text: '1'
+                                },
+                                {
+                                    id: 2,
+                                    text: '2'
+                                },
+                                {
+                                    id: 3,
+                                    text: '3'
+                                },
+                                {
+                                    id: 4,
+                                    text: '4'
+                                },
+                            ]
+                        });
+
+                    Highcharts.chart('entrada', {
+                        chart: {
+                            type: 'spline'
+                        },
+                        title: {
+                            text: 'ENTRADA'
+                        },
+
+                        xAxis: {
+                            categories: [@Html.Raw(String.Join(", ", Model.Where(mi => mi.EntradaPrevisto !=0 || mi.EntradaRealizado != 0).Select(mi => "'" + mi.Data.ToString("dd/MM/yyyy") + "'")))]
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'VALOR'
+                            },
+                            labels: {
+                                formatter: function () {
+                                    return 'R$ ' + accounting.formatNumber(this.value, 2, "", ",");
+                                }
+                            }
+                        },
+                        tooltip: {
+                            crosshairs: true,
+                            shared: true,
+                            formatter: function () {
+                                var s = '<b>' + this.x + '</b>';
+
+                                $.each(this.points, function (i, point) {
+                                    s += '<br/><span style="color:' + point.color + '">\u25CF</span>: ' + point.series.name + ': ' + 'R$ ' + accounting.formatNumber(point.y, 2, "", ",")
+                                });
+
+                                return s;
+                            },
+                        },
+                        plotOptions: {
+                            spline: {
+                                marker: {
+                                    radius: 4,
+                                    lineColor: '#666666',
+                                    lineWidth: 1
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'PREVISTO',
+                            marker: {
+                                symbol: 'square'
+                            },
+                            data: [@String.Join(", ", Model.Where(mi => mi.EntradaPrevisto != 0 || mi.EntradaRealizado != 0).Select(mi => mi.EntradaPrevisto.ToString(System.Globalization.CultureInfo.InvariantCulture)))]
+                        }, {
+                            name: 'REALIZADO',
+                            marker: {
+                                symbol: 'diamond'
+                            },
+                            data: [@String.Join(", ", Model.Where(mi => mi.EntradaPrevisto != 0 || mi.EntradaRealizado != 0).Select(mi => mi.EntradaRealizado.ToString(System.Globalization.CultureInfo.InvariantCulture)))]
+                        }]
+                    });
+
+
+                    Highcharts.chart('saida', {
+                        chart: {
+                            type: 'spline'
+                        },
+                        title: {
+                            text: 'SAÍDA'
+                        },
+
+                        xAxis: {
+                            categories: [@Html.Raw(String.Join(", ", Model.Where(mi => mi.SaidaPrevisto !=0 || mi.SaidaRealizado != 0).Select(mi => "'" + mi.Data.ToString("dd/MM/yyyy") + "'")))]
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'VALOR'
+                            },
+                            labels: {
+                                formatter: function () {
+                                    return 'R$ ' + accounting.formatNumber(this.value, 2, "", ",");
+                                }
+                            }
+                        },
+                        tooltip: {
+                            crosshairs: true,
+                            shared: true,
+                            formatter: function () {
+                                var s = '<b>' + this.x + '</b>';
+
+                                $.each(this.points, function (i, point) {
+                                    s += '<br/><span style="color:' + point.color + '">\u25CF</span>: ' + point.series.name + ': ' + 'R$ ' + accounting.formatNumber(point.y, 2, "", ",")
+                                });
+
+                                return s;
+                            },
+                        },
+                        plotOptions: {
+                            spline: {
+                                marker: {
+                                    radius: 4,
+                                    lineColor: '#666666',
+                                    lineWidth: 1
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'PREVISTO',
+                            marker: {
+                                symbol: 'square'
+                            },
+                            data: [@String.Join(", ", Model.Where(mi => mi.SaidaPrevisto != 0 || mi.SaidaRealizado != 0).Select(mi => mi.SaidaPrevisto.ToString(System.Globalization.CultureInfo.InvariantCulture)))]
+                        }, {
+                            name: 'REALIZADO',
+                            marker: {
+                                symbol: 'diamond'
+                            },
+                            data: [@String.Join(", ", Model.Where(mi => mi.SaidaPrevisto != 0 || mi.SaidaRealizado != 0).Select(mi => mi.SaidaRealizado.ToString(System.Globalization.CultureInfo.InvariantCulture)))]
+                        }]
+                    });
+
+
+                    Highcharts.chart('resultado', {
+                        chart: {
+                            type: 'spline'
+                        },
+                        title: {
+                            text: 'RESULTADO'
+                        },
+
+                        xAxis: {
+                            categories: [@Html.Raw(String.Join(", ", Model.Select(mi => "'" + mi.Data.ToString("dd/MM/yyyy") + "'")))]
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'VALOR'
+                            },
+                            labels: {
+                                formatter: function () {
+                                    return 'R$ ' + accounting.formatNumber(this.value, 2, "", ",");
+                                }
+                            }
+                        },
+                        tooltip: {
+                            crosshairs: true,
+                            shared: true,
+                            formatter: function () {
+                                var s = '<b>' + this.x + '</b>';
+
+                                $.each(this.points, function (i, point) {
+                                    s += '<br/><span style="color:' + point.color + '">\u25CF</span>: ' + point.series.name + ': ' + 'R$ ' + accounting.formatNumber(point.y, 2, "", ",")
+                                });
+
+                                return s;
+                            },
+                        },
+                        plotOptions: {
+                            spline: {
+                                marker: {
+                                    radius: 4,
+                                    lineColor: '#666666',
+                                    lineWidth: 1
+                                }
+                            }
+                        },
+                        series: [{
+                            name: 'PREVISTO',
+                            marker: {
+                                symbol: 'square'
+                            },
+                            data: [@String.Join(", ", Model.Select(mi => mi.ResultadoPrevisto.ToString(System.Globalization.CultureInfo.InvariantCulture)))]
+                        }, {
+                            name: 'REALIZADO',
+                            marker: {
+                                symbol: 'diamond'
+                            },
+                            data: [@String.Join(", ", Model.Select(mi => mi.ResultadoRealizado.ToString(System.Globalization.CultureInfo.InvariantCulture)))]
+                        }]
+                    });
+
+                });
+
+        function pesquisar() {
+            var params = {
+
+            };
+
+
+            if ($("#criticidade").val() != "") {
+                params.criticidade = $("#criticidade").val();
+            }
+
+
+            if ($("#projeto").val()) {
+                params.projeto = $("#projeto").val();
+            }
+
+
+            if ($("#de").val() != "") {
+                    params.de = $("#de").val();
+                }
+
+            if ($("#ate").val() != "") {
+                    params.ate = $("#ate").val();
+            }
+
+            location.href = "/FluxoCaixa/Index/?" + jQuery.param(params, true);
+                }
+
+            function imprimir() {
+                var params = {
+
+                };
+
+
+                if ($("#criticidade").val() != "") {
+                    params.criticidade = $("#criticidade").val();
+                }
+
+
+                if ($("#projeto").val()) {
+                    params.projeto = $("#projeto").val();
+                }
+
+
+                if ($("#de").val() != "") {
+                    params.de = $("#de").val();
+                }
+
+                if ($("#ate").val() != "") {
+                    params.ate = $("#ate").val();
+                }
+
+                location.href = "/FluxoCaixa/Imprimir/?" + jQuery.param(params, true);
+            }
+    </script>
+
+}

@@ -1,0 +1,138 @@
+﻿@model IEnumerable<KeyValuePair<String, Decimal>>
+
+@{
+    ViewBag.Title = "Átimo - Resultado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@helper CreateLabel(decimal valor)
+    {
+        if (valor > 0)
+        {
+            <span class="label label-success">R$ @valor.ToString("N2")</span>
+        }
+        else
+        if (valor < 0)
+        {
+            <span class="label label-danger">R$ @valor.ToString("N2")</span>
+        }
+        else
+        {
+            <span class="label label-default">R$ @valor.ToString("N2")</span>
+        }
+}
+
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>Resultado</h3>
+                </div>
+                <div class="widget-content">
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>DE</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input id="de" class="form-control input-lg datepicker" maxlength="10" alt="date" value="@ViewBag.DE" />
+                        </div>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <div>
+                            <label>ATÉ</label>
+                        </div>
+
+                        <div class="editor-field">
+                            <input id="ate" class="form-control input-lg datepicker" maxlength="10" alt="date" value="@ViewBag.ATE" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <button type="button" data-toggle="tooltip" data-placement="right" title="" class="btn btn-info" data-original-title="Clique para pesquisar." onclick="pesquisar();">
+                            <i class="glyphicon glyphicon-search"></i>
+                            Atualizar
+                        </button>
+                    </div>
+
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                <tr>
+                                    <th>
+                                        PESSOA
+                                    </th>
+
+                                    <th>
+                                        VALOR
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @item.Key
+                                        </td>
+
+                                        <td>
+                                            @CreateLabel(item.Value)
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script>
+
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+
+        function pesquisar() {
+            var params = {
+
+            };
+
+            if ($("#de").val() != "") {
+                params.de = $("#de").val();
+            }
+
+            if ($("#ate").val() != "") {
+                params.ate = $("#ate").val();
+            }
+
+
+            location.href = "/AreaGerencial/Resultados/?" + jQuery.param(params, true);
+        }
+    </script>
+}

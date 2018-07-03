@@ -1,0 +1,294 @@
+﻿@model ATIMO.Models.COMPRA
+
+@{
+    ViewBag.Title = "ÁTIMO - Contas a Pagar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>CONTAS A PAGAR - NOVO</h3>
+                </div>
+
+                <div class="widget-content" ng-app="App" ng-controller="AppController">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+
+                        <fieldset>
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>OSSB</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.OSSB, new { @class = "form-control input-lg", maxlength = "10", id = "ossb" })
+                                    @Html.ValidationMessageFor(model => model.OSSB, "Informe uma ossb!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>FORNECEDOR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("FORNECEDOR", null, "SELECIONE UM FORNECEDOR", new { required = "", id = "fornecedor" })
+                                    @Html.ValidationMessageFor(model => model.FORNECEDOR, "SELECIONE UM FORNECEDOR!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>PROJETO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new { required = "", id = "projeto" })
+                                    @Html.ValidationMessageFor(model => model.PROJETO, "SELECIONE UM PROJETO!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>DESPESA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("DESPESA", null, "SELECIONE UMA DESPESA", new { required = "", id = "despesa" })
+                                    @Html.ValidationMessageFor(model => model.DESPESA, "SELECIONE UMA DESPESA!")
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>NOTA FISCAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NOTA_FISCAL, new { @class = "form-control input-lg", maxlength = "80", id = "nota_fiscal" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12 table-responsive">
+                                <table class="table table-hover table-bordered">
+                                    <caption class="text-center">ITEMS</caption>
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                DESCRIÇÃO
+                                            </th>
+
+                                            <th>
+                                                UNIDADE
+                                            </th>
+
+                                            <th>
+                                                VALOR
+                                            </th>
+
+                                            <th>
+                                                QUANTIDADE
+                                            </th>
+
+                                            <th>
+                                                SUBTOTAL
+                                            </th>
+
+                                            <th>
+                                                AÇÕES
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="item in items">
+                                            <th>
+                                                <input name="COMPRA_ITEM[{{$index}}].DESCRICAO" ng-model="item.descricao" class="form-control input-lg" maxlength="80" />
+                                            </th>
+
+                                            <th>
+                                                <select name="COMPRA_ITEM[{{$index}}].UNIDADE" ng-model="item.unidade" ng-options="k as v for (k, v) in unidades track by k"></select>
+                                            </th>
+                                            <th>
+                                                <input name="COMPRA_ITEM[{{$index}}].VALOR" ng-pattern="/^[0-9]+(\,[0-9]{1,2})?$/" ng-blur="item.valor = format_number(unformat_number(item.valor))" ng-model="item.valor" ng-change="update_total()" class="form-control input-lg" maxlength="10" />
+                                            </th>
+                                            <th>
+                                                <input name="COMPRA_ITEM[{{$index}}].QUANTIDADE" ng-pattern="/^[0-9]+(\,[0-9]{1,2})?$/" ng-blur="item.quantidade = format_number(unformat_number(item.quantidade))" ng-model="item.quantidade" ng-change="update_total()" class="form-control input-lg" maxlength="10" />
+                                            </th>
+
+                                            <th>
+                                                <input ng-value="format_number(unformat_number(item.valor) * unformat_number(item.quantidade))" class="form-control input-lg" readonly="readonly" maxlength="10" />
+                                            </th>
+
+                                            <th>
+                                                <button type="button" ng-disabled="$index == 0" class="btn btn-danger" ng-click="remover_item($index)">Remover</button>
+                                            </th>
+                                        </tr>
+                                    </tbody>
+                                    <tr>
+                                        <th colspan="6" class="text-center">
+                                            <button type="button" class="btn btn-success" ng-click="novo_item()">Novo</button>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="6" class="text-center">
+                                            <span>{{"TOTAL: " + total}} </span>
+                                        </th>
+                                    </tr>
+                                    <tfoot>
+
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>DATA DE VENCIMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.DATA_VENCIMENTO, new { @class = "form-control input-lg datepicker", maxlength = "10", id = "data_vencimento", required = "", alt = "date" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CONDIÇÃO DE PAGAMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <select class="form-control input-lg" name="PARCELAS" required="required">
+                                        @for (Int32 it = 1; it <= 180; ++it)
+                                        {
+                                            if (Model.PARCELAS == it)
+                                            {
+                                                <option value="@it" selected>@(it)x</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@it">@(it)x</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/Compra/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    <script src="../../Scripts/accounting.min.js"></script>
+
+    <script src="~/Scripts/utils.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/moment-with-locales.js"></script>
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+
+    <script src="../../Scripts/angular.min.js"></script>
+
+
+
+    <script>
+
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+
+        var app = angular.module("App", []);
+
+        app.controller("AppController", function ($scope, $http) {
+            $scope.items = @Html.Raw(Json.Encode(Model.COMPRA_ITEM.Select(ci => new { descricao = ci.DESCRICAO, valor = ci.VALOR.ToString("N2"), quantidade = ci.QUANTIDADE.ToString("N2"), unidade = ci.UNIDADE.ToString() })))
+
+            $scope.unidades  = @Html.Raw(Json.Encode(ViewBag.UNIDADES));
+
+            $scope.total = "0,00";
+
+            $scope.update_total = function(){
+                var total = 0;
+
+                $scope.items.forEach(function (item) {
+
+                    total += $scope.unformat_number(item.valor)  * $scope.unformat_number(item.quantidade);
+                });
+
+                $scope.total = $scope.format_number(total);
+            }
+
+            $scope.unformat_number = function (value) {
+                    return accounting.unformat(value, ",");
+                }
+
+            $scope.format_number = function (value) {
+                    return accounting.formatNumber(value, 2,"", ",");
+                };
+
+
+            $scope.novo_item = function(){
+                $scope.items.push({unidade: "1", valor: "0,00", quantidade: "1,00", descricao: ""});
+
+                $scope.update_total();
+                };
+
+            $scope.remover_item = function(index){
+                    if(index > -1){
+                    $scope.items.splice(index, 1);
+
+                    $scope.update_total();
+                    }
+                }
+
+            $scope.update_total();
+        });
+
+    </script>
+}

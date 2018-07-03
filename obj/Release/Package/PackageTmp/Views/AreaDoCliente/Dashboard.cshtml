@@ -1,0 +1,110 @@
+﻿@model ATIMO.ViewModel.DashboardViewModel
+
+@using ATIMO.Helpers;
+
+@{
+    ViewBag.Title = "Átimo - Area do Cliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("MenuDashboard")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-alt"></i>
+                    <h3>DASHBOARD</h3>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div id="status_os"></div>
+            </div>
+            <div class="col-md-6">
+                <div id="tipo_os"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script>
+        $(function () {
+            $('#status_os').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'OS POR STATUS'
+                },
+                subtitle: {
+                    text: 'TOTAL: @(Model.StatusOs.Values.Sum())'
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45
+                    }
+                },
+                series: [{
+                    name: 'quantidade',
+                    data: [
+                        @foreach (var kv in Model.StatusOs)
+                            {
+                                @:['@Html.Raw(kv.Key)', @kv.Value],
+                                }
+                    ]
+                }],
+
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#tipo_os').highcharts({
+                chart: {
+                    type: 'pie',
+                    options3d: {
+                        enabled: true,
+                        alpha: 45
+                    }
+                },
+                title: {
+                    text: 'OS POR TIPO'
+                },
+                subtitle: {
+                    text: 'TOTAL: @(Model.TipoOs.Values.Sum())'
+                },
+                plotOptions: {
+                    pie: {
+                        innerSize: 100,
+                        depth: 45
+                    }
+                },
+                series: [{
+                    name: 'quantidade',
+                    data: [
+                        @foreach(var kv in Model.TipoOs)
+                            {
+                                @:['@kv.Key', @kv.Value],
+                                }
+                    ]
+                }]
+            });
+        });
+    </script>
+}

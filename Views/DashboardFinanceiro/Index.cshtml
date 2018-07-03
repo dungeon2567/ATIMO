@@ -1,0 +1,196 @@
+﻿@model ATIMO.ViewModel.DashboardFinanceiroViewModel
+
+@using ATIMO;
+
+
+@{
+    ViewBag.Title = "Átimo - Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-list-alt"></i>
+                    <h3>DASHBOARD FINANCEIRO</h3>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div id="saldo"></div>
+                <br />
+            </div>
+
+            <div class="col-md-12">
+                <div id="saida"></div>
+                <br />
+            </div>
+
+
+            <div class="col-md-12">
+                <div id="entrada"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+
+    <script>
+        $(function () {
+            Highcharts.chart('entrada', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'ENTRADA'
+                },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: "Valor: R$ {point.y:,.2f}"
+                },
+
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: 'R$ {point.y:,.2f}'
+                        }
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Valor total do mês'
+                    }
+
+                },
+                series: [{
+                    name: 'Valor',
+                    data: [
+                        @foreach (var kv in Model.Entrada)
+                        {
+                       @:{ name: '@kv.Key.ToString("MMM/yyyy")', color: '#7cb5ec' , y: @kv.Value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)},
+                    }
+                    ]
+                }]
+            });
+
+            Highcharts.chart('saida', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'SAÍDA'
+                },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: "Valor: R$ {point.y:,.2f}"
+                },
+
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: 'R$ {point.y:,.2f}'
+                        }
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Valor total do mês'
+                    }
+
+                },
+                series: [{
+                    name: 'Valor',
+                    data: [
+                        @foreach (var kv in Model.Saida)
+                        {
+                            @:{ name: '@Html.Raw(kv.Key.ToString("MMM/yyyy"))', color: '#f45b5b', y: @kv.Value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)},
+
+                        }
+                    ]
+                }]
+            });
+
+             Highcharts.chart('saldo', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'SALDO'
+                },
+                credits: {
+                    enabled: false
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: "Valor: R$ {point.y:,.2f}"
+                },
+
+                plotOptions: {
+                    series: {
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: 'R$ {point.y:,.2f}'
+                        }
+                    }
+                },
+                xAxis: {
+                    type: 'category'
+                },
+                yAxis: {
+                    title: {
+                        text: 'Valor total do mês'
+                    }
+
+                },
+                series: [{
+                    name: 'Valor',
+                    data: [
+                        @foreach (var kv in Model.Saida.GroupJoin(Model.Entrada, saida => saida.Key, entrada => entrada.Key, (saida, entrada) => new KeyValuePair<DateTime, Decimal>(saida.Key, entrada.Select(item => item.Value).DefaultIfEmpty().Sum() - saida.Value))) {
+                            @:{ name: '@Html.Raw(kv.Key.ToString("MMM/yyyy"))', color: '@(kv.Value <= 0 ? "#f45b5b" : "#7cb5ec")', y: @kv.Value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture)},
+
+                        }
+                    ]
+                }]
+            });
+
+
+
+        });
+    </script>
+}

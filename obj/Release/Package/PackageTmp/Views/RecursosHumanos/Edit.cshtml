@@ -1,0 +1,328 @@
+﻿@model ATIMO.Models.PESSOA
+@using ATIMO;
+
+@{
+    ViewBag.Title = "Átimo - Pessoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa  fa-group"></i>
+                    <h3>RECURSOS HUMANOS - EDITAR</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.ID)
+
+                        <fieldset>
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>CPF/CNPJ</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NUM_DOC, new { @class = "form-control input-lg", maxlength = "18", placeholder = "CPF/CNPJ", id = "num_doc", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>RG/INSC. ESTADUAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.INSC_ESTADUAL, new { @class = "form-control input-lg", maxlength = "50", placeholder = "RG/INSC. ESTADUAL", id = "insc_estadual", disabled = "disabled" })
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select name="situacao" disabled="disabled">
+                                    @if ((Model != null) && (Model.SITUACAO == "A"))
+                                    {
+                                        <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ATIVO</option>
+                                    }
+                                    @if ((Model != null) && (Model.SITUACAO == "I"))
+                                    {
+                                        <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>NOME/RAZÃO SOCIAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.RAZAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "NOME/RAZÃO SOCIAL", id = "razao", required = "", disabled = "disabled" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>NOME FANTASIA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NOME, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "NOME FANTASIA", id = "nome", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>CEP</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CEP, new { @class = "form-control input-lg uppercase", maxlength = "9", placeholder = "CEP", id = "cep", alt = "cep", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-10">
+                                <div>
+                                    <label>ENDEREÇO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.ENDERECO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "ENDEREÇO", id = "endereco", required = "", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>COMPLEMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.COMPLEMENTO, new { @class = "form-control input-lg uppercase", placeholder = "COMPLEMENTO", id = "complemento", rows = "5", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>BAIRRO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.BAIRRO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "BAIRRO", id = "bairro", required = "", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CIDADE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CIDADE, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "CIDADE", id = "cidade", required = "", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-1">
+                                <div>
+                                    <label>UF</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.UF, new { @class = "form-control input-lg uppercase", maxlength = "2", placeholder = "UF", id = "uf", required = "", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>ZONA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.ZONA, new { @class = "form-control input-lg uppercase", maxlength = "150", placeholder = "ZONA", id = "zona", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>TELEFONE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.TELEFONE1, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "TELEFONE", id = "telefone1", alt = "phone", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>CELULAR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.TELEFONE2, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "CELULAR", id = "telefone2", alt = "phone_9digito", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>TEL. CONTATO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.TELEFONE3, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "TEL. CONTATO", id = "telefone3", alt = "phone", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>CONTATO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CONTATO, new { @class = "form-control input-lg uppercase", maxlength = "150", placeholder = "CONTATO", id = "contato", required = "", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>EMAIL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.EMAIL, new { @class = "form-control input-lg", type = "email", maxlength = "255", placeholder = "EMAIL", id = "email", required = "", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5", disabled = "disabled" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>PROJETO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("PROJETO", null, "SELECIONE UM PROJETO", new { required = "", id = "projeto" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>SALÁRIO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SALARIO_STRING, new { @class = "form-control input-lg uppercase", maxlength = "10", id = "salario", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>VALE TRANSPORTE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALE_TRANSPORTE_STRING, new { @class = "form-control input-lg uppercase", maxlength = "10", id = "vale_transporte", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>VALE ALIMENTAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.VALE_ALIMENTACAO_STRING, new { @class = "form-control input-lg uppercase", maxlength = "10", id = "vale_alimentacao", alt = "decimal" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>ESPECIALIDADE 1</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("ESPECIALIDADE1", null, "SELECIONE UMA ESPECIALIDADE", new { id = "especialidade1" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>ESPECIALIDADE 2</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("ESPECIALIDADE2", null, "SELECIONE UMA ESPECIALIDADE", new { id = "especialidade2" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>ESPECIALIDADE 3</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("ESPECIALIDADE3", null, "SELECIONE UMA ESPECIALIDADE", new { id = "especialidade2" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>TIPO DE ACESSO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("TIPO_ACESSO", null, "SELECIONE UM TIPO DE ACESSO", new { id = "tipo_acesso" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                | @Html.ActionLink("Voltar", "Index")
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+    </script>
+}

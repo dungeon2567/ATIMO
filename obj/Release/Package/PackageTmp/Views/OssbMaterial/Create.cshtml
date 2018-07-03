@@ -1,0 +1,150 @@
+﻿@model ATIMO.Models.OSSB_MATERIAL
+
+
+@{
+    ViewBag.Title = "Átimo - OSSB Material";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuOperacional")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-paperclip"></i>
+                    <h3>OSSB/SERVIÇO/MATERIAIS - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.OSSB)
+
+                    <fieldset>
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>DESCRIÇÃO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.DESCRICAO, new { @class = "form-control input-lg uppercase typeahead", autocomplete = "off", maxlength = "200", placeholder = "DESCRIÇÃO", id = "descricao" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>FORNECEDOR</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("FORNECEDOR", null, "SELECIONE UM FORNECEDOR", new { id = "fornecedor", name = "FORNECEDOR" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>UNIDADE</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.DropDownList("UNIDADE", null, "SELECIONE UMA UNIDADE", new { id = "unidade" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>QUANTIDADE</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.QUANTIDADE_STRING, new { @class = "form-control input-lg uppercase", maxlength = "10", placeholder = "QUANTIDADE", id = "quantidade", required = "", alt = "decimal" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>VALOR</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.VALOR_STRING, new { @class = "form-control input-lg uppercase", maxlength = "18", placeholder = "VALOR", id = "valor", alt = "decimal" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-md-3">
+                            <div>
+                                <label>DATA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.DATA, new { @class = "form-control input-lg datepicker", maxlength = "10", required = "", id = "data", alt = "date" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>LOCAL DE ENTREGA</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextBoxFor(model => model.LOCAL_ENTREGA, new { @class = "form-control input-lg uppercase typeahead", autocomplete = "off", maxlength = "200", placeholder = "LOCAL DE ENTREGA", id = "local_entrega" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <div>
+                                <label>OBSERVAÇÃO</label>
+                            </div>
+
+                            <div class="editor-field">
+                                @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", autocomplete = "off", maxlength = "1000", placeholder = "OBSERVACAO", id = "observacao" })
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <input type="submit" value="Salvar" class="btn btn-primary" />|
+                            <input type="button" value="Voltar" class="btn btn-danger" href="@Url.Action("Index", new {id = Model.OSSB})" />
+                        </div>
+                    </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/bootstrap-datepicker.js"></script>
+    <script src="../../Scripts/locales/bootstrap-datepicker.pt-BR.min.js"></script>
+
+    <link href="../../Content/bootstrap-datepicker.css" rel="stylesheet" />
+    <script src="../../Scripts/bootstrap-typeahead.min.js"></script>
+
+    <script>
+        $('#descricao').typeahead({
+            ajax: '/OssbMaterial/Autocomplete'
+        });
+
+        $('#local_entrega').typeahead({
+            ajax: '/OssbMaterial/AutocompleteLocalEntrega'
+        });
+
+        $(".datepicker").datepicker({
+            maxViewMode: 0,
+            todayBtn: "linked",
+            language: "pt-BR",
+            autoclose: true,
+            toggleActive: true
+        });
+    </script>
+}

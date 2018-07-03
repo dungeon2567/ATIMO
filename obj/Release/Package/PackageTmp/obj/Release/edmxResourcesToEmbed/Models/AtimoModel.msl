@@ -1,0 +1,1015 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ATIMOModelStoreContainer" CdmEntityContainer="ATIMOEntities">
+    <EntitySetMapping Name="ANEXO">
+      <EntityTypeMapping TypeName="ATIMOModel.ANEXO">
+        <MappingFragment StoreEntitySet="ANEXO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NOME" ColumnName="NOME" />
+          <ScalarProperty Name="BUFFER" ColumnName="ANEXO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BANCO">
+      <EntityTypeMapping TypeName="ATIMOModel.BANCO">
+        <MappingFragment StoreEntitySet="BANCO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CODIGO" ColumnName="CODIGO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BENEFICIO">
+      <EntityTypeMapping TypeName="ATIMOModel.BENEFICIO">
+        <MappingFragment StoreEntitySet="BENEFICIO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FORNECEDOR" ColumnName="FORNECEDOR" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="CUMULATIVO" ColumnName="CUMULATIVO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTE_COMO_CONHECEU">
+      <EntityTypeMapping TypeName="ATIMOModel.CLIENTE_COMO_CONHECEU">
+        <MappingFragment StoreEntitySet="CLIENTE_COMO_CONHECEU">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="COMO_CONHECEU" ColumnName="COMO_CONHECEU" />
+          <ScalarProperty Name="OUTROS" ColumnName="OUTROS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMO_CONHECEU">
+      <EntityTypeMapping TypeName="ATIMOModel.COMO_CONHECEU">
+        <MappingFragment StoreEntitySet="COMO_CONHECEU">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTRATO">
+      <EntityTypeMapping TypeName="ATIMOModel.CONTRATO">
+        <MappingFragment StoreEntitySet="CONTRATO">
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="GERADO" ColumnName="GERADO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTRATO_ESPECIALIDADE">
+      <EntityTypeMapping TypeName="ATIMOModel.CONTRATO_ESPECIALIDADE">
+        <MappingFragment StoreEntitySet="CONTRATO_ESPECIALIDADE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CONTRATO" ColumnName="CONTRATO" />
+          <ScalarProperty Name="ESPECIALIDADE" ColumnName="ESPECIALIDADE" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTRATO_SERVICO">
+      <EntityTypeMapping TypeName="ATIMOModel.CONTRATO_SERVICO">
+        <MappingFragment StoreEntitySet="CONTRATO_SERVICO">
+          <ScalarProperty Name="SERVICO" ColumnName="SERVICO" />
+          <ScalarProperty Name="AREA_MANUTENCAO" ColumnName="AREA_MANUTENCAO" />
+          <ScalarProperty Name="VALOR_TERCEIRO" ColumnName="VALOR_TERCEIRO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CONTRATO" ColumnName="CONTRATO" />
+          <ScalarProperty Name="UNIDADE" ColumnName="UNIDADE" />
+          <ScalarProperty Name="TERCEIRO" ColumnName="TERCEIRO" />
+          <ScalarProperty Name="QUANTIDADE" ColumnName="QUANTIDADE" />
+          <ScalarProperty Name="VALOR_MO" ColumnName="VALOR_MO" />
+          <ScalarProperty Name="VALOR_MAT" ColumnName="VALOR_MAT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DEPARTAMENTO">
+      <EntityTypeMapping TypeName="ATIMOModel.DEPARTAMENTO">
+        <MappingFragment StoreEntitySet="DEPARTAMENTO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EQUIPAMENTO">
+      <EntityTypeMapping TypeName="ATIMOModel.EQUIPAMENTO">
+        <MappingFragment StoreEntitySet="EQUIPAMENTO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GRUPO" ColumnName="GRUPO" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="MARCA" ColumnName="MARCA" />
+          <ScalarProperty Name="MODELO" ColumnName="MODELO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="FABRICANTE" ColumnName="FABRICANTE" />
+          <ScalarProperty Name="NUM_SERIE" ColumnName="NUM_SERIE" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ESPECIALIDADE">
+      <EntityTypeMapping TypeName="ATIMOModel.ESPECIALIDADE">
+        <MappingFragment StoreEntitySet="ESPECIALIDADE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FERIADO">
+      <EntityTypeMapping TypeName="ATIMOModel.FERIADO">
+        <MappingFragment StoreEntitySet="FERIADO">
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATA" ColumnName="DATA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FERRAMENTA">
+      <EntityTypeMapping TypeName="ATIMOModel.FERRAMENTA">
+        <MappingFragment StoreEntitySet="FERRAMENTA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GRUPO" ColumnName="GRUPO" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="MINIMO" ColumnName="MINIMO" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="FLG_CONSUMIVEL" ColumnName="FLG_CONSUMIVEL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FORMA_PAGAMENTO">
+      <EntityTypeMapping TypeName="ATIMOModel.FORMA_PAGAMENTO">
+        <MappingFragment StoreEntitySet="FORMA_PAGAMENTO">
+          <ScalarProperty Name="AGENCIA" ColumnName="AGENCIA" />
+          <ScalarProperty Name="NUMERO_CONTA" ColumnName="NUMERO_CONTA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FORNECEDOR_TIPO_MATERIAL">
+      <EntityTypeMapping TypeName="ATIMOModel.FORNECEDOR_TIPO_MATERIAL">
+        <MappingFragment StoreEntitySet="FORNECEDOR_TIPO_MATERIAL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FORNECEDOR" ColumnName="FORNECEDOR" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNCAO">
+      <EntityTypeMapping TypeName="ATIMOModel.FUNCAO">
+        <MappingFragment StoreEntitySet="FUNCAO">
+          <ScalarProperty Name="SITUCAO" ColumnName="SITUCAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNCIONARIO_CHECK_LIST">
+      <EntityTypeMapping TypeName="ATIMOModel.FUNCIONARIO_CHECK_LIST">
+        <MappingFragment StoreEntitySet="FUNCIONARIO_CHECK_LIST">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FUNCIONARIO" ColumnName="FUNCIONARIO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ANEXO" ColumnName="ANEXO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNCIONARIO_DEPARTAMENTO">
+      <EntityTypeMapping TypeName="ATIMOModel.FUNCIONARIO_DEPARTAMENTO">
+        <MappingFragment StoreEntitySet="FUNCIONARIO_DEPARTAMENTO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FUNCIONARIO" ColumnName="FUNCIONARIO" />
+          <ScalarProperty Name="DEPARTAMENTO" ColumnName="DEPARTAMENTO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GRUPO">
+      <EntityTypeMapping TypeName="ATIMOModel.GRUPO">
+        <MappingFragment StoreEntitySet="GRUPO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOJA">
+      <EntityTypeMapping TypeName="ATIMOModel.LOJA">
+        <MappingFragment StoreEntitySet="LOJA">
+          <ScalarProperty Name="INSC_ESTADUAL" ColumnName="INSC_ESTADUAL" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="APELIDO" ColumnName="APELIDO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="CEP" ColumnName="CEP" />
+          <ScalarProperty Name="ENDERECO" ColumnName="ENDERECO" />
+          <ScalarProperty Name="COMPLEMENTO" ColumnName="COMPLEMENTO" />
+          <ScalarProperty Name="BAIRRO" ColumnName="BAIRRO" />
+          <ScalarProperty Name="CIDADE" ColumnName="CIDADE" />
+          <ScalarProperty Name="UF" ColumnName="UF" />
+          <ScalarProperty Name="ZONA" ColumnName="ZONA" />
+          <ScalarProperty Name="TELEFONE1" ColumnName="TELEFONE1" />
+          <ScalarProperty Name="TELEFONE2" ColumnName="TELEFONE2" />
+          <ScalarProperty Name="TELEFONE3" ColumnName="TELEFONE3" />
+          <ScalarProperty Name="CONTATO" ColumnName="CONTATO" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MARCA">
+      <EntityTypeMapping TypeName="ATIMOModel.MARCA">
+        <MappingFragment StoreEntitySet="MARCA">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MATERIAL">
+      <EntityTypeMapping TypeName="ATIMOModel.MATERIAL">
+        <MappingFragment StoreEntitySet="MATERIAL">
+          <ScalarProperty Name="DATA_ORCAMENTO" ColumnName="DATA_ORCAMENTO" />
+          <ScalarProperty Name="PRECO" ColumnName="PRECO" />
+          <ScalarProperty Name="FORNECEDOR" ColumnName="FORNECEDOR" />
+          <ScalarProperty Name="UNIDADE" ColumnName="UNIDADE" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MODELO">
+      <EntityTypeMapping TypeName="ATIMOModel.MODELO">
+        <MappingFragment StoreEntitySet="MODELO">
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB">
+        <MappingFragment StoreEntitySet="OSSB">
+          <ScalarProperty Name="PRAZO_EXECUCAO" ColumnName="PRAZO_EXECUCAO" />
+          <ScalarProperty Name="PRAZO_PAGAMENTO" ColumnName="PRAZO_PAGAMENTO" />
+          <ScalarProperty Name="DATA_FOLLOW_UP" ColumnName="DATA_FOLLOW_UP" />
+          <ScalarProperty Name="DATA_VISITA" ColumnName="DATA_VISITA" />
+          <ScalarProperty Name="QUANDO_PRECISA_ORCAMENTO" ColumnName="QUANDO_PRECISA_ORCAMENTO" />
+          <ScalarProperty Name="LOJA" ColumnName="LOJA" />
+          <ScalarProperty Name="ORCAMENTISTA" ColumnName="ORCAMENTISTA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="RESPONSAVEL" ColumnName="RESPONSAVEL" />
+          <ScalarProperty Name="SUPERVISOR" ColumnName="SUPERVISOR" />
+          <ScalarProperty Name="CONTRATO" ColumnName="CONTRATO" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="OCORRENCIA" ColumnName="OCORRENCIA" />
+          <ScalarProperty Name="PORTE" ColumnName="PORTE" />
+          <ScalarProperty Name="AMBIENTE" ColumnName="AMBIENTE" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+          <ScalarProperty Name="EXECUCAO_INICIO" ColumnName="EXECUCAO_INICIO" />
+          <ScalarProperty Name="EXECUCAO_FIM" ColumnName="EXECUCAO_FIM" />
+          <ScalarProperty Name="PREVISAO_INICIO" ColumnName="PREVISAO_INICIO" />
+          <ScalarProperty Name="PREVISAO_FIM" ColumnName="PREVISAO_FIM" />
+          <ScalarProperty Name="EFETIVO_INICIO" ColumnName="EFETIVO_INICIO" />
+          <ScalarProperty Name="EFETIVO_FIM" ColumnName="EFETIVO_FIM" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_COMUNICACAO">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_COMUNICACAO">
+        <MappingFragment StoreEntitySet="OSSB_COMUNICACAO">
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="DATA" ColumnName="DATA" />
+          <ScalarProperty Name="TEXTO" ColumnName="TEXTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_ESPECIALIDADE">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_ESPECIALIDADE">
+        <MappingFragment StoreEntitySet="OSSB_ESPECIALIDADE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="ESPECIALIDADE" ColumnName="ESPECIALIDADE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_SERVICO">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_SERVICO">
+        <MappingFragment StoreEntitySet="OSSB_SERVICO">
+          <ScalarProperty Name="VALOR_MO_BDI" ColumnName="VALOR_MO_BDI" />
+          <ScalarProperty Name="VALOR_MA_BDI" ColumnName="VALOR_MA_BDI" />
+          <ScalarProperty Name="SUBDIVISAO" ColumnName="SUBDIVISAO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="VALOR_MA" ColumnName="VALOR_MA" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="VALOR_PAGO_ABANDONO" ColumnName="VALOR_PAGO_ABANDONO" />
+          <ScalarProperty Name="FLG_ABANDONO" ColumnName="FLG_ABANDONO" />
+          <ScalarProperty Name="VALOR_MO" ColumnName="VALOR_MO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="UNIDADE" ColumnName="UNIDADE" />
+          <ScalarProperty Name="QUANTIDADE" ColumnName="QUANTIDADE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PATRIMONIO">
+      <EntityTypeMapping TypeName="ATIMOModel.PATRIMONIO">
+        <MappingFragment StoreEntitySet="PATRIMONIO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NUMERO" ColumnName="NUMERO" />
+          <ScalarProperty Name="FLG_DEPRECIA" ColumnName="FLG_DEPRECIA" />
+          <ScalarProperty Name="DATA_AQUISICAO" ColumnName="DATA_AQUISICAO" />
+          <ScalarProperty Name="VALOR_COMPRA" ColumnName="VALOR_COMPRA" />
+          <ScalarProperty Name="TIPO_DEPRECIACAO" ColumnName="TIPO_DEPRECIACAO" />
+          <ScalarProperty Name="DEPRECIACAO" ColumnName="DEPRECIACAO" />
+          <ScalarProperty Name="FERRAMENTA" ColumnName="FERRAMENTA" />
+          <ScalarProperty Name="VEICULO" ColumnName="VEICULO" />
+          <ScalarProperty Name="EQUIPAMENTO" ColumnName="EQUIPAMENTO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PESSOA">
+      <EntityTypeMapping TypeName="ATIMOModel.PESSOA">
+        <MappingFragment StoreEntitySet="PESSOA">
+          <ScalarProperty Name="IMAGEM" ColumnName="IMAGEM" />
+          <ScalarProperty Name="TIPO_ACESSO" ColumnName="TIPO_ACESSO" />
+          <ScalarProperty Name="ESPECIALIDADE3" ColumnName="ESPECIALIDADE3" />
+          <ScalarProperty Name="ESPECIALIDADE2" ColumnName="ESPECIALIDADE2" />
+          <ScalarProperty Name="ESPECIALIDADE1" ColumnName="ESPECIALIDADE1" />
+          <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+          <ScalarProperty Name="VALE_ALIMENTACAO" ColumnName="VALE_ALIMENTACAO" />
+          <ScalarProperty Name="VALE_TRANSPORTE" ColumnName="VALE_TRANSPORTE" />
+          <ScalarProperty Name="DATA_EFETIVACAO" ColumnName="DATA_EFETIVACAO" />
+          <ScalarProperty Name="SALARIO" ColumnName="SALARIO" />
+          <ScalarProperty Name="DATA_DEMISSAO" ColumnName="DATA_DEMISSAO" />
+          <ScalarProperty Name="DATA_ADMISSAO" ColumnName="DATA_ADMISSAO" />
+          <ScalarProperty Name="ADMINISTRADOR" ColumnName="ADMINISTRADOR" />
+          <ScalarProperty Name="RESPONSAVEL" ColumnName="RESPONSAVEL" />
+          <ScalarProperty Name="INSC_MUNICIPAL" ColumnName="INSC_MUNICIPAL" />
+          <ScalarProperty Name="TIPO_PESSOA_TRIBUTACAO" ColumnName="TIPO_PESSOA_TRIBUTACAO" />
+          <ScalarProperty Name="COMO_CONHECEU" ColumnName="COMO_CONHECEU" />
+          <ScalarProperty Name="SENHA" ColumnName="SENHA" />
+          <ScalarProperty Name="TERCEIRO" ColumnName="TERCEIRO" />
+          <ScalarProperty Name="FORNECEDOR" ColumnName="FORNECEDOR" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="FUNCIONARIO" ColumnName="FUNCIONARIO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIPO_DOC" ColumnName="TIPO_DOC" />
+          <ScalarProperty Name="NUM_DOC" ColumnName="NUM_DOC" />
+          <ScalarProperty Name="INSC_ESTADUAL" ColumnName="INSC_ESTADUAL" />
+          <ScalarProperty Name="RAZAO" ColumnName="RAZAO" />
+          <ScalarProperty Name="NOME" ColumnName="NOME" />
+          <ScalarProperty Name="CEP" ColumnName="CEP" />
+          <ScalarProperty Name="ENDERECO" ColumnName="ENDERECO" />
+          <ScalarProperty Name="COMPLEMENTO" ColumnName="COMPLEMENTO" />
+          <ScalarProperty Name="BAIRRO" ColumnName="BAIRRO" />
+          <ScalarProperty Name="CIDADE" ColumnName="CIDADE" />
+          <ScalarProperty Name="UF" ColumnName="UF" />
+          <ScalarProperty Name="ZONA" ColumnName="ZONA" />
+          <ScalarProperty Name="TELEFONE1" ColumnName="TELEFONE1" />
+          <ScalarProperty Name="TELEFONE2" ColumnName="TELEFONE2" />
+          <ScalarProperty Name="TELEFONE3" ColumnName="TELEFONE3" />
+          <ScalarProperty Name="CONTATO" ColumnName="CONTATO" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PESSOA_CLIENTE">
+      <EntityTypeMapping TypeName="ATIMOModel.PESSOA_CLIENTE">
+        <MappingFragment StoreEntitySet="PESSOA_CLIENTE">
+          <ScalarProperty Name="COMO_CONHECEU" ColumnName="COMO_CONHECEU" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="CLIENTE" ColumnName="CLIENTE" />
+          <ScalarProperty Name="FLG_LOJA" ColumnName="FLG_LOJA" />
+          <ScalarProperty Name="FLG_CONTRATO" ColumnName="FLG_CONTRATO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PESSOA_FUNCIONARIO">
+      <EntityTypeMapping TypeName="ATIMOModel.PESSOA_FUNCIONARIO">
+        <MappingFragment StoreEntitySet="PESSOA_FUNCIONARIO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="FUNCIONARIO" ColumnName="FUNCIONARIO" />
+          <ScalarProperty Name="FUNCAO" ColumnName="FUNCAO" />
+          <ScalarProperty Name="DATA_ADMISSAO" ColumnName="DATA_ADMISSAO" />
+          <ScalarProperty Name="DATA_DEMISSAO" ColumnName="DATA_DEMISSAO" />
+          <ScalarProperty Name="SALARIO" ColumnName="SALARIO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROJETO">
+      <EntityTypeMapping TypeName="ATIMOModel.PROJETO">
+        <MappingFragment StoreEntitySet="PROJETO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RATEIO">
+      <EntityTypeMapping TypeName="ATIMOModel.RATEIO">
+        <MappingFragment StoreEntitySet="RATEIO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+          <ScalarProperty Name="FERRAMENTA" ColumnName="FERRAMENTA" />
+          <ScalarProperty Name="DEPARTAMENTO" ColumnName="DEPARTAMENTO" />
+          <ScalarProperty Name="VEICULO" ColumnName="VEICULO" />
+          <ScalarProperty Name="EQUIPAMENTO" ColumnName="EQUIPAMENTO" />
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SERVICO">
+      <EntityTypeMapping TypeName="ATIMOModel.SERVICO">
+        <MappingFragment StoreEntitySet="SERVICO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="ESPECIALIDADE" ColumnName="ESPECIALIDADE" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TERCEIRO_SERVICO">
+      <EntityTypeMapping TypeName="ATIMOModel.TERCEIRO_SERVICO">
+        <MappingFragment StoreEntitySet="TERCEIRO_SERVICO">
+          <ScalarProperty Name="AREA_MANUTENCAO" ColumnName="AREA_MANUTENCAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TERCEIRO" ColumnName="TERCEIRO" />
+          <ScalarProperty Name="SERVICO" ColumnName="SERVICO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPO">
+      <EntityTypeMapping TypeName="ATIMOModel.TIPO">
+        <MappingFragment StoreEntitySet="TIPO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TIPO1" ColumnName="TIPO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UNIDADE">
+      <EntityTypeMapping TypeName="ATIMOModel.UNIDADE">
+        <MappingFragment StoreEntitySet="UNIDADE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="SIGLA" ColumnName="SIGLA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VEICULO">
+      <EntityTypeMapping TypeName="ATIMOModel.VEICULO">
+        <MappingFragment StoreEntitySet="VEICULO">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="MARCA" ColumnName="MARCA" />
+          <ScalarProperty Name="MODELO" ColumnName="MODELO" />
+          <ScalarProperty Name="ANO" ColumnName="ANO" />
+          <ScalarProperty Name="CHASSI" ColumnName="CHASSI" />
+          <ScalarProperty Name="PLACA" ColumnName="PLACA" />
+          <ScalarProperty Name="COMBUSTIVEL" ColumnName="COMBUSTIVEL" />
+          <ScalarProperty Name="SEGURO" ColumnName="SEGURO" />
+          <ScalarProperty Name="IPVA" ColumnName="IPVA" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AREA_MANUTENCAOSet">
+      <EntityTypeMapping TypeName="ATIMOModel.AREA_MANUTENCAO">
+        <MappingFragment StoreEntitySet="AREA_MANUTENCAO">
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTRATO_AREA_MANUTENCAO">
+      <EntityTypeMapping TypeName="ATIMOModel.CONTRATO_AREA_MANUTENCAO">
+        <MappingFragment StoreEntitySet="CONTRATO_AREA_MANUTENCAO">
+          <ScalarProperty Name="AREA_MANUTENCAO" ColumnName="AREA_MANUTENCAO" />
+          <ScalarProperty Name="CONTRATO" ColumnName="CONTRATO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DESPESA">
+      <EntityTypeMapping TypeName="ATIMOModel.DESPESA">
+        <MappingFragment StoreEntitySet="DESPESA">
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="CLASSE" ColumnName="CLASSE" />
+          <ScalarProperty Name="MASCARA" ColumnName="MASCARA" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMPRA">
+      <EntityTypeMapping TypeName="ATIMOModel.COMPRA">
+        <MappingFragment StoreEntitySet="COMPRA">
+          <ScalarProperty Name="NOTA_FISCAL" ColumnName="NOTA_FISCAL" />
+          <ScalarProperty Name="FORNECEDOR" ColumnName="FORNECEDOR" />
+          <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+          <ScalarProperty Name="DESPESA" ColumnName="DESPESA" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_IMAGEM">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_IMAGEM">
+        <MappingFragment StoreEntitySet="OSSB_IMAGEM">
+          <ScalarProperty Name="ANEXO" ColumnName="ANEXO" />
+          <ScalarProperty Name="ALBUM" ColumnName="ALBUM" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMPRA_PARCELA">
+      <EntityTypeMapping TypeName="ATIMOModel.COMPRA_PARCELA">
+        <MappingFragment StoreEntitySet="COMPRA_PARCELA">
+          <ScalarProperty Name="COMPRA" ColumnName="COMPRA" />
+          <ScalarProperty Name="FORMA_PAGAMENTO" ColumnName="FORMA_PAGAMENTO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DATA_PAGAMENTO" ColumnName="DATA_PAGAMENTO" />
+          <ScalarProperty Name="DATA_VENCIMENTO" ColumnName="DATA_VENCIMENTO" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTRATO_LOJA">
+      <EntityTypeMapping TypeName="IsTypeOf(ATIMOModel.CONTRATO_LOJA)">
+        <MappingFragment StoreEntitySet="CONTRATO_LOJA">
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="PERIODICIDADE" ColumnName="PERIODICIDADE" />
+          <ScalarProperty Name="VALOR_EXTRA" ColumnName="VALOR_EXTRA" />
+          <ScalarProperty Name="VALOR_TERCEIRO" ColumnName="VALOR_TERCEIRO" />
+          <ScalarProperty Name="VALOR_CONTRATO" ColumnName="VALOR_CONTRATO" />
+          <ScalarProperty Name="QTD_CORTESIA" ColumnName="QTD_CORTESIA" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+          <ScalarProperty Name="QUANTIDADE" ColumnName="QUANTIDADE" />
+          <ScalarProperty Name="LOJA" ColumnName="LOJA" />
+          <ScalarProperty Name="CONTRATO" ColumnName="CONTRATO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAREFAs">
+      <EntityTypeMapping TypeName="ATIMOModel.TAREFA">
+        <MappingFragment StoreEntitySet="TAREFA">
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAREFA_MEMBRO">
+      <EntityTypeMapping TypeName="ATIMOModel.TAREFA_MEMBRO">
+        <MappingFragment StoreEntitySet="TAREFA_MEMBRO">
+          <ScalarProperty Name="MEMBRO" ColumnName="MEMBRO" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="TAREFA" ColumnName="TAREFA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SUBTAREFA">
+      <EntityTypeMapping TypeName="ATIMOModel.SUBTAREFA">
+        <MappingFragment StoreEntitySet="SUBTAREFA">
+          <ScalarProperty Name="TAREFA" ColumnName="TAREFA" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="COMPRA_ITEM">
+      <EntityTypeMapping TypeName="ATIMOModel.COMPRA_ITEM">
+        <MappingFragment StoreEntitySet="COMPRA_ITEM">
+          <ScalarProperty Name="COMPRA" ColumnName="COMPRA" />
+          <ScalarProperty Name="QUANTIDADE" ColumnName="QUANTIDADE" />
+          <ScalarProperty Name="UNIDADE" ColumnName="UNIDADE" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EMPRESA">
+      <EntityTypeMapping TypeName="ATIMOModel.EMPRESA">
+        <MappingFragment StoreEntitySet="EMPRESA">
+          <ScalarProperty Name="ALIQUOTA_ISS_FORA_MUNICIPIO" ColumnName="ALIQUOTA_ISS_FORA_MUNICIPIO" />
+          <ScalarProperty Name="SERIE_RPS" ColumnName="SERIE_RPS" />
+          <ScalarProperty Name="PERC_CARGA_TRIB" ColumnName="PERC_CARGA_TRIB" />
+          <ScalarProperty Name="NOM_FONTE_CARGA_TRIB" ColumnName="NOM_FONTE_CARGA_TRIB" />
+          <ScalarProperty Name="FLG_OPTANTE_SIMPLES_NACIONAL" ColumnName="FLG_OPTANTE_SIMPLES_NACIONAL" />
+          <ScalarProperty Name="NUM_ULTIMA_RPS" ColumnName="NUM_ULTIMA_RPS" />
+          <ScalarProperty Name="FLG_EMITE_NF" ColumnName="FLG_EMITE_NF" />
+          <ScalarProperty Name="CCM_PMSP" ColumnName="CCM_PMSP" />
+          <ScalarProperty Name="COD_SERVICO_PMSP" ColumnName="COD_SERVICO_PMSP" />
+          <ScalarProperty Name="CNPJ" ColumnName="CNPJ" />
+          <ScalarProperty Name="SERIAL_CERTIFICADO" ColumnName="SERIAL_CERTIFICADO" />
+          <ScalarProperty Name="NOME" ColumnName="NOME" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_SERVICO_TERCEIRO">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_SERVICO_TERCEIRO">
+        <MappingFragment StoreEntitySet="OSSB_SERVICO_TERCEIRO">
+          <ScalarProperty Name="DESPESA" ColumnName="DESPESA" />
+          <ScalarProperty Name="DATE_VENCIMENTO" ColumnName="DATE_VENCIMENTO" />
+          <ScalarProperty Name="TERCEIRO" ColumnName="TERCEIRO" />
+          <ScalarProperty Name="OSSB_SERVICO" ColumnName="OSSB_SERVICO" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REGISTRO">
+      <EntityTypeMapping TypeName="ATIMOModel.REGISTRO">
+        <MappingFragment StoreEntitySet="REGISTRO">
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="DATA_CRIACAO" ColumnName="DATA_CRIACAO" />
+          <ScalarProperty Name="USUARIO" ColumnName="USUARIO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_ALBUM">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_ALBUM">
+        <MappingFragment StoreEntitySet="OSSB_ALBUM">
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_CHECK_LIST">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_CHECK_LIST">
+        <MappingFragment StoreEntitySet="OSSB_CHECK_LIST">
+          <ScalarProperty Name="ANEXO" ColumnName="ANEXO" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="VISITADO" ColumnName="VISITADO" />
+          <ScalarProperty Name="AGENDADO" ColumnName="AGENDADO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_TECNICO">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_TECNICO">
+        <MappingFragment StoreEntitySet="OSSB_TECNICO">
+          <ScalarProperty Name="TECNICO" ColumnName="TECNICO" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_VISTORIADOR">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_VISTORIADOR">
+        <MappingFragment StoreEntitySet="OSSB_VISTORIADOR">
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="VISTORIADOR" ColumnName="VISTORIADOR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PAGAMENTO_TERCEIRO">
+      <EntityTypeMapping TypeName="IsTypeOf(ATIMOModel.PAGAMENTO_TERCEIRO)">
+        <MappingFragment StoreEntitySet="PAGAMENTO_TERCEIRO">
+          <ScalarProperty Name="ANEXO" ColumnName="ANEXO" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="DATA_PAGAMENTO" ColumnName="DATA_PAGAMENTO" />
+          <ScalarProperty Name="OSSB_SERVICO" ColumnName="OSSB_SERVICO" />
+          <ScalarProperty Name="TERCEIRO" ColumnName="TERCEIRO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FAT_FATURAMENTO">
+      <EntityTypeMapping TypeName="ATIMOModel.FAT_FATURAMENTO">
+        <MappingFragment StoreEntitySet="FAT_FATURAMENTO">
+          <ScalarProperty Name="CONREC_TIPOPAGTO" ColumnName="CONREC_TIPOPAGTO" />
+          <ScalarProperty Name="CONREC_DATAPAGTO" ColumnName="CONREC_DATAPAGTO" />
+          <ScalarProperty Name="VALOR_LIQUIDO" ColumnName="VALOR_LIQUIDO" />
+          <ScalarProperty Name="CONREC_CAMINHO_PDF_BOLETO" ColumnName="CONREC_CAMINHO_PDF_BOLETO" />
+          <ScalarProperty Name="CONREC_DATAVENCTO" ColumnName="CONREC_DATAVENCTO" />
+          <ScalarProperty Name="CONREC_HISTORICO" ColumnName="CONREC_HISTORICO" />
+          <ScalarProperty Name="LOTE_EMISSAO_PMSP" ColumnName="LOTE_EMISSAO_PMSP" />
+          <ScalarProperty Name="CAMINHO_PDF_NF" ColumnName="CAMINHO_PDF_NF" />
+          <ScalarProperty Name="VALOR_SERVICO" ColumnName="VALOR_SERVICO" />
+          <ScalarProperty Name="ID_SITUACAOPAGTO" ColumnName="ID_SITUACAOPAGTO" />
+          <ScalarProperty Name="ID_TIPOPAGTO" ColumnName="ID_TIPOPAGTO" />
+          <ScalarProperty Name="VALOR_MAO_DE_OBRA" ColumnName="VALOR_MAO_DE_OBRA" />
+          <ScalarProperty Name="NUM_SERIE_RPS" ColumnName="NUM_SERIE_RPS" />
+          <ScalarProperty Name="ID_CLIENTE" ColumnName="ID_CLIENTE" />
+          <ScalarProperty Name="ID_SERVICO_PMSP" ColumnName="ID_SERVICO_PMSP" />
+          <ScalarProperty Name="NUMERO_RPS" ColumnName="NUMERO_RPS" />
+          <ScalarProperty Name="FLAG_CANCELADA" ColumnName="FLAG_CANCELADA" />
+          <ScalarProperty Name="DESCRICAO_NF" ColumnName="DESCRICAO_NF" />
+          <ScalarProperty Name="DATA_CADASTRO" ColumnName="DATA_CADASTRO" />
+          <ScalarProperty Name="ID_EMPRESA" ColumnName="ID_EMPRESA" />
+          <ScalarProperty Name="COD_VERIFICACAO_NF" ColumnName="COD_VERIFICACAO_NF" />
+          <ScalarProperty Name="NUMERO_NF" ColumnName="NUMERO_NF" />
+          <ScalarProperty Name="DATA_EMISSAO_NF" ColumnName="DATA_EMISSAO_NF" />
+          <ScalarProperty Name="VALOR_BRUTO" ColumnName="VALOR_BRUTO" />
+          <ScalarProperty Name="ID_OSSB" ColumnName="ID_OSSB" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FAT_SERVICOS_PMSP">
+      <EntityTypeMapping TypeName="ATIMOModel.FAT_SERVICOS_PMSP">
+        <MappingFragment StoreEntitySet="FAT_SERVICOS_PMSP">
+          <ScalarProperty Name="DATA_INICIO" ColumnName="DATA_INICIO" />
+          <ScalarProperty Name="ALIQUOTA" ColumnName="ALIQUOTA" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="EMPRESA_SERVICOPMSP" TypeName="ATIMOModel.EMPRESA_SERVICOPMSP" StoreEntitySet="EMPRESA_SERVICOPMSP">
+      <EndProperty Name="EMPRESA">
+        <ScalarProperty Name="ID" ColumnName="ID_EMPRESA" />
+      </EndProperty>
+      <EndProperty Name="FAT_SERVICOS_PMSP">
+        <ScalarProperty Name="ID" ColumnName="ID_CODIGOSERVICO" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="PAGAMENTO">
+      <EntityTypeMapping TypeName="ATIMOModel.PAGAMENTO">
+        <MappingFragment StoreEntitySet="PAGAMENTO">
+          <ScalarProperty Name="CONTA_BANCARIA" ColumnName="CONTA_BANCARIA" />
+          <ScalarProperty Name="PROVISIONADO" ColumnName="PROVISIONADO" />
+          <ScalarProperty Name="FORMA_PAGAMENTO" ColumnName="FORMA_PAGAMENTO" />
+          <ScalarProperty Name="PROTESTO" ColumnName="PROTESTO" />
+          <ScalarProperty Name="ANEXO" ColumnName="ANEXO" />
+          <ScalarProperty Name="SERVICO" ColumnName="SERVICO" />
+          <ScalarProperty Name="CRITICIDADE" ColumnName="CRITICIDADE" />
+          <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+          <ScalarProperty Name="DATA_PAGAMENTO" ColumnName="DATA_PAGAMENTO" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="DESPESA" ColumnName="DESPESA" />
+          <ScalarProperty Name="DATA_VENCIMENTO" ColumnName="DATA_VENCIMENTO" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAIXINHA">
+      <EntityTypeMapping TypeName="ATIMOModel.CAIXINHA">
+        <MappingFragment StoreEntitySet="CAIXINHA">
+          <ScalarProperty Name="CONTA_BANCARIA" ColumnName="CONTA_BANCARIA" />
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="DATA_ENTREGA" ColumnName="DATA_ENTREGA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CAIXINHA_ITEM">
+      <EntityTypeMapping TypeName="ATIMOModel.CAIXINHA_ITEM">
+        <MappingFragment StoreEntitySet="CAIXINHA_ITEM">
+          <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+          <ScalarProperty Name="VALIDACAO_OPERACIONAL" ColumnName="VALIDACAO_OPERACIONAL" />
+          <ScalarProperty Name="VALIDACAO_FINANCEIRO" ColumnName="VALIDACAO_FINANCEIRO" />
+          <ScalarProperty Name="ANEXO" ColumnName="ANEXO" />
+          <ScalarProperty Name="DATA_QUITADO" ColumnName="DATA_QUITADO" />
+          <ScalarProperty Name="NOTA_FISCAL" ColumnName="NOTA_FISCAL" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="DESPESA" ColumnName="DESPESA" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNCIONARIO_DOCUMENTO">
+      <EntityTypeMapping TypeName="ATIMOModel.FUNCIONARIO_DOCUMENTO">
+        <MappingFragment StoreEntitySet="FUNCIONARIO_DOCUMENTO">
+          <ScalarProperty Name="CATEGORIA" ColumnName="CATEGORIA" />
+          <ScalarProperty Name="DATA_CRIACAO" ColumnName="DATA_CRIACAO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ANEXO" ColumnName="ANEXO" />
+          <ScalarProperty Name="FUNCIONARIO" ColumnName="FUNCIONARIO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTAS_RECEBER">
+      <EntityTypeMapping TypeName="ATIMOModel.CONTAS_RECEBER">
+        <MappingFragment StoreEntitySet="CONTAS_RECEBER">
+          <ScalarProperty Name="CONTA_BANCARIA" ColumnName="CONTA_BANCARIA" />
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="NOTA_FISCAL" ColumnName="NOTA_FISCAL" />
+          <ScalarProperty Name="DATA_RECEBIMENTO" ColumnName="DATA_RECEBIMENTO" />
+          <ScalarProperty Name="VALOR_BRUTO" ColumnName="VALOR_BRUTO" />
+          <ScalarProperty Name="VALOR_LIQUIDO" ColumnName="VALOR_LIQUIDO" />
+          <ScalarProperty Name="DATA_VENCIMENTO" ColumnName="DATA_VENCIMENTO" />
+          <ScalarProperty Name="DATA_EMISSAO" ColumnName="DATA_EMISSAO" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTAS_PAGAR">
+      <EntityTypeMapping TypeName="ATIMOModel.CONTAS_PAGAR">
+        <MappingFragment StoreEntitySet="CONTAS_PAGAR">
+          <ScalarProperty Name="PARA" ColumnName="PARA" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="DESPESA" ColumnName="DESPESA" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="DATA_VENCIMENTO" ColumnName="DATA_VENCIMENTO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOJA_EQUIPAMENTO">
+      <EntityTypeMapping TypeName="ATIMOModel.LOJA_EQUIPAMENTO">
+        <MappingFragment StoreEntitySet="LOJA_EQUIPAMENTO">
+          <ScalarProperty Name="IMAGEM" ColumnName="IMAGEM" />
+          <ScalarProperty Name="DATA_VENCIMENTO" ColumnName="DATA_VENCIMENTO" />
+          <ScalarProperty Name="TAG" ColumnName="TAG" />
+          <ScalarProperty Name="CAPACIDADE" ColumnName="CAPACIDADE" />
+          <ScalarProperty Name="DATA_FABRICACAO" ColumnName="DATA_FABRICACAO" />
+          <ScalarProperty Name="POTENCIA" ColumnName="POTENCIA" />
+          <ScalarProperty Name="FABRICANTE" ColumnName="FABRICANTE" />
+          <ScalarProperty Name="CORRENTE_NOMINAL" ColumnName="CORRENTE_NOMINAL" />
+          <ScalarProperty Name="TENSAO_NOMINAL" ColumnName="TENSAO_NOMINAL" />
+          <ScalarProperty Name="NUM_MODELO" ColumnName="NUM_MODELO" />
+          <ScalarProperty Name="SERIE" ColumnName="SERIE" />
+          <ScalarProperty Name="MODELO" ColumnName="MODELO" />
+          <ScalarProperty Name="TIPO" ColumnName="TIPO" />
+          <ScalarProperty Name="SUBSETOR" ColumnName="SUBSETOR" />
+          <ScalarProperty Name="SETOR" ColumnName="SETOR" />
+          <ScalarProperty Name="LOJA" ColumnName="LOJA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNCIONARIO_TIPO_ACESSO">
+      <EntityTypeMapping TypeName="ATIMOModel.FUNCIONARIO_TIPO_ACESSO">
+        <MappingFragment StoreEntitySet="FUNCIONARIO_TIPO_ACESSO">
+          <ScalarProperty Name="ACESSO" ColumnName="ACESSO" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FUNCIONARIO_CARTAO_PONTO">
+      <EntityTypeMapping TypeName="ATIMOModel.FUNCIONARIO_CARTAO_PONTO">
+        <MappingFragment StoreEntitySet="FUNCIONARIO_CARTAO_PONTO">
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="LATITUDE" ColumnName="LATITUDE" />
+          <ScalarProperty Name="LONGITUDE" ColumnName="LONGITUDE" />
+          <ScalarProperty Name="MOMENTO" ColumnName="MOMENTO" />
+          <ScalarProperty Name="FUNCIONARIO" ColumnName="FUNCIONARIO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VEICULO_MULTA">
+      <EntityTypeMapping TypeName="ATIMOModel.VEICULO_MULTA">
+        <MappingFragment StoreEntitySet="VEICULO_MULTA">
+          <ScalarProperty Name="ANEXO" ColumnName="ANEXO" />
+          <ScalarProperty Name="SITUACAO" ColumnName="SITUACAO" />
+          <ScalarProperty Name="DATA_PAGAMENTO" ColumnName="DATA_PAGAMENTO" />
+          <ScalarProperty Name="DATA_VENCIMENTO" ColumnName="DATA_VENCIMENTO" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="VEICULO" ColumnName="VEICULO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTAS_PAGAS">
+      <EntityTypeMapping TypeName="ATIMOModel.CONTAS_PAGAS">
+        <MappingFragment StoreEntitySet="CONTAS_PAGAS">
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="DESPESA" ColumnName="DESPESA" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="DATA_PAGAMENTO" ColumnName="DATA_PAGAMENTO" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DESPESA_CLASSE">
+      <EntityTypeMapping TypeName="ATIMOModel.DESPESA_CLASSE">
+        <MappingFragment StoreEntitySet="DESPESA_CLASSE">
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CLIENTE_SATISFACAO">
+      <EntityTypeMapping TypeName="ATIMOModel.CLIENTE_SATISFACAO">
+        <MappingFragment StoreEntitySet="CLIENTE_SATISFACAO">
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="MEDIA" ColumnName="MEDIA" />
+          <ScalarProperty Name="COBRANCA" ColumnName="COBRANCA" />
+          <ScalarProperty Name="ASSINATURA" ColumnName="ASSINATURA" />
+          <ScalarProperty Name="SATISFACAO_SERVICO" ColumnName="SATISFACAO_SERVICO" />
+          <ScalarProperty Name="CUMPRIMENTO_HORARIO" ColumnName="CUMPRIMENTO_HORARIO" />
+          <ScalarProperty Name="POSTURA_EQUIPE" ColumnName="POSTURA_EQUIPE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DESPESA_RECORRENTE">
+      <EntityTypeMapping TypeName="ATIMOModel.DESPESA_RECORRENTE">
+        <MappingFragment StoreEntitySet="DESPESA_RECORRENTE">
+          <ScalarProperty Name="CRITICIDADE" ColumnName="CRITICIDADE" />
+          <ScalarProperty Name="PROJETO" ColumnName="PROJETO" />
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="DIA" ColumnName="DIA" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="DESPESA" ColumnName="DESPESA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OSSB_SITUACAO_HISTORICO">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_SITUACAO_HISTORICO">
+        <MappingFragment StoreEntitySet="OSSB_SITUACAO_HISTORICO">
+          <ScalarProperty Name="PARA" ColumnName="PARA" />
+          <ScalarProperty Name="DE" ColumnName="DE" />
+          <ScalarProperty Name="DATA_ALTERACAO" ColumnName="DATA_ALTERACAO" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPO_CONTA">
+      <EntityTypeMapping TypeName="ATIMOModel.TIPO_CONTA">
+        <MappingFragment StoreEntitySet="TIPO_CONTA">
+          <ScalarProperty Name="SIGLA" ColumnName="SIGLA" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTA_BANCARIA">
+      <EntityTypeMapping TypeName="ATIMOModel.CONTA_BANCARIA">
+        <MappingFragment StoreEntitySet="CONTA_BANCARIA">
+          <ScalarProperty Name="CONTA" ColumnName="CONTA" />
+          <ScalarProperty Name="SALDO_INICIAL" ColumnName="SALDO_INICIAL" />
+          <ScalarProperty Name="DIG_AGENCIA" ColumnName="DIG_AGENCIA" />
+          <ScalarProperty Name="NUM_AGENCIA" ColumnName="NUM_AGENCIA" />
+          <ScalarProperty Name="DIG_CONTA" ColumnName="DIG_CONTA" />
+          <ScalarProperty Name="NUM_CONTA" ColumnName="NUM_CONTA" />
+          <ScalarProperty Name="TIPO_CONTA" ColumnName="TIPO_CONTA" />
+          <ScalarProperty Name="BANCO" ColumnName="BANCO" />
+          <ScalarProperty Name="PESSOA" ColumnName="PESSOA" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="COPIAR_SERVICOS_OSSB" FunctionName="ATIMOModel.Store.COPIAR_SERVICOS_OSSB" />
+    <EntitySetMapping Name="OSSB_MATERIAL">
+      <EntityTypeMapping TypeName="ATIMOModel.OSSB_MATERIAL">
+        <MappingFragment StoreEntitySet="OSSB_MATERIAL">
+          <ScalarProperty Name="OBSERVACAO" ColumnName="OBSERVACAO" />
+          <ScalarProperty Name="LOCAL_ENTREGA" ColumnName="LOCAL_ENTREGA" />
+          <ScalarProperty Name="DATA_COMPRADO" ColumnName="DATA_COMPRADO" />
+          <ScalarProperty Name="VALOR_COMPRADO" ColumnName="VALOR_COMPRADO" />
+          <ScalarProperty Name="DATA" ColumnName="DATA" />
+          <ScalarProperty Name="FORNECEDOR" ColumnName="FORNECEDOR" />
+          <ScalarProperty Name="UNIDADE" ColumnName="UNIDADE" />
+          <ScalarProperty Name="VALOR" ColumnName="VALOR" />
+          <ScalarProperty Name="QUANTIDADE" ColumnName="QUANTIDADE" />
+          <ScalarProperty Name="DESCRICAO" ColumnName="DESCRICAO" />
+          <ScalarProperty Name="OSSB" ColumnName="OSSB" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

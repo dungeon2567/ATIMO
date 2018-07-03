@@ -1,0 +1,292 @@
+﻿@model ATIMO.Models.EMPRESA
+
+@{
+    ViewBag.Title = "ÁTIMO - EMPRESAS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    @if (Model.ID == 0)
+                    {
+                        <h3>EMPRESAS - NOVO</h3>
+                    }
+                    else
+                    {
+                        <h3>EMPRESAS - EDITAR</h3>
+                    }
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true)
+                        @Html.HiddenFor(model => model.ID)
+
+                        <fieldset>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CNPJ</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CNPJ, new { @class = "form-control input-lg uppercase", maxlength = "14", placeholder = "CNPJ", id = "cnpj" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>NOME</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NOME, new { @class = "form-control input-lg uppercase", maxlength = "14", placeholder = "NOME", id = "nome" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-9">
+                                <div>
+                                    <label>SERIAL CERTIFICADO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SERIAL_CERTIFICADO, new { @class = "form-control input-lg uppercase", maxlength = "100", placeholder = "SERIAL CERTIFICADO", id = "serial_certificado" })
+                                </div>
+                                <div>
+
+                                    <input type="button" class="btn btn-info" value="Ler do Certificado Inserido" onclick="javascript:getSerialNumberCertificado()"/>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>CARGA TRIBUTÁRIA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.PERC_CARGA_TRIB_STRING, new { @class = "form-control input-lg uppercase", maxlength = "5", alt = "decimal", placeholder = "CARGA TRIBUTÁRIA", id = "perc_carga_trib" })
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>CCM PSMP</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CCM_PMSP, new { @class = "form-control input-lg uppercase", maxlength = "20", placeholder = "CCM PMSP", id = "ccm_pmsp" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>CÓDIGO SERVIÇO PRINCIPAL PMSP</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.COD_SERVICO_PMSP, new { @class = "form-control input-lg uppercase", maxlength = "20", placeholder = "CÓDIGO SERVIÇO PMSP", id = "cod_servico_pmsp" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>NÚMERO ULTIMA RPS</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NUM_ULTIMA_RPS, new { @class = "form-control input-lg uppercase", maxlength = "20", placeholder = "NUM ULTIMA RPS", id = "num_ultima_rps" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <div>
+                                    <label>FONTE DE CARGA TRIBUTÁRIA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NOM_FONTE_CARGA_TRIB, new { @class = "form-control input-lg uppercase", maxlength = "20", placeholder = "FONTE DE CARGA TRIBUTÁRIA", id = "nom_fonte_carga_trib" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SERIE RPS</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SERIE_RPS, new { @class = "form-control input-lg uppercase", maxlength = "20", placeholder = "SERIE RPS", id = "serie_rps" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>OPTANTE SIMPLES NACIONAL?</label>
+                                </div>
+
+                                <select name="flg_optante_simples_nacional" required="">
+                                    @if (Model.FLG_OPTANTE_SIMPLES_NACIONAL == "S")
+                                    {
+                                        <option value="S" selected="selected">SIM</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="S">SIM</option>
+                                    }
+
+                                    @if (Model.FLG_OPTANTE_SIMPLES_NACIONAL == "N")
+                                    {
+                                        <option value="N" selected="selected">NÃO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="N">NÃO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>EMITE NOTA FISCAL?</label>
+                                </div>
+
+                                <select name="flg_emite_nf" required="">
+                                    @if (Model.FLG_EMITE_NF == "S")
+                                    {
+                                        <option value="S" selected="selected">SIM</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="S">SIM</option>
+                                    }
+
+                                    @if (Model.FLG_EMITE_NF == "N")
+                                    {
+                                        <option value="N" selected="selected">NÃO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="N">NÃO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-9">
+                                <div>
+                                    <label>SERVIÇOS PMSP</label>
+                                </div>
+
+                                <select name="FAT_SERVICO_PMSP_ID" id="fat_servico_pmsp" multiple="multiple">
+                                    @foreach (dynamic servico in ViewBag.SERVICOS)
+                                    {
+                                        if (Model.FAT_SERVICO_PMSP_ID.Contains((String)servico.ID))
+                                        {
+                                            <option value="@servico.ID" selected>@servico.DESCRICAO</option>
+
+                                        }
+                                        else
+                                        {
+                                            <option value="@servico.ID">@servico.DESCRICAO</option>
+
+                                        }
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>ALIQ. ISS FORA SP</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(model => model.ALIQUOTA_ISS_FORA_MUNICIPIO, new { @class = "form-control input-lg uppercase", maxlength = "5", alt = "decimal", placeholder = "ALIQUOTA ISS FORA SP", id = "aliq_iss_fora_munic" })
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <hr />
+
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fa fa-check-square-o"></i> Salvar
+                                </button>
+
+                                |
+                                <a class="btn btn-danger" href="~/AreaDoFuncionario/Index">
+                                    <i class="fa fa-rotate-left"></i>
+                                    Voltar
+                                </a>
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="../../Scripts/select2/js/select2.min.js"></script>
+    <link href="../../Scripts/select2/css/select2.min.css" rel="stylesheet" />
+    <link href="../../Scripts/select2/css/select2-bootstrap.min.css" rel="stylesheet" />
+
+    <style>
+    </style>
+
+    <script>
+
+        var m_URL_GetSerialNumber = '@Url.Action("getSerialNumberCertificado", "Empresa")';
+
+        $("#fat_servico_pmsp").select2({
+            theme: "bootstrap",
+            templateSelection: function (data) {
+                return $("<span title='" + data.text + "'>" + data.id + "</span>");
+            },
+            templateResult: function (data) {
+                return data.id + " - " + data.text;
+            }
+        });
+
+        function getSerialNumberCertificado()
+        {
+            var lstrCNPJ = $('#cnpj').val();
+
+            $.ajax({
+                type: 'GET',
+                url: m_URL_GetSerialNumber,
+                data: {
+                    astrCnpjEmpresa: lstrCNPJ
+                },
+                success: function (data) {
+                    if (data.Status == 0)
+                        alert(data.Mensagem);
+                    else
+                        $('#serial_certificado').val(data.SerialCertificado);
+                },
+                error: function (data) {
+                    alert('Erro ao consultar o certificado \n' + 'Erro:' + data.status + ' - ' + data.statusText + '\n' + data.responseText);
+                }
+            })
+
+
+        }
+
+    </script>
+}

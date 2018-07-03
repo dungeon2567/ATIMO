@@ -1,0 +1,544 @@
+﻿@model ATIMO.Models.PESSOA
+@using ATIMO;
+
+@{
+    ViewBag.Title = "Átimo - Pessoa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa  fa-group"></i>
+                    <h3>PESSOA - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+
+                        <fieldset>
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>CPF/CNPJ</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NUM_DOC, new { @class = "form-control input-lg", maxlength = "18", placeholder = "CPF/CNPJ", id = "num_doc", required = "" })
+                                    @Html.ValidationMessageFor(model => model.NUM_DOC, "Informe um número de documento!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>RG/INSC. ESTADUAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.INSC_ESTADUAL, new { @class = "form-control input-lg", maxlength = "50", placeholder = "RG/INSC. ESTADUAL", id = "insc_estadual" })
+                                    @Html.ValidationMessageFor(model => model.INSC_ESTADUAL)
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select name="situacao" required="">
+                                    @if ((Model != null) && (Model.SITUACAO == "A"))
+                                    {
+                                        <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ATIVO</option>
+                                    }
+                                    @if ((Model != null) && (Model.SITUACAO == "I"))
+                                    {
+                                        <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>NOME/RAZÃO SOCIAL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.RAZAO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "NOME/RAZÃO SOCIAL", id = "razao", required = "" })
+                                    @Html.ValidationMessageFor(model => model.RAZAO, "Informe um nome/razão social!")
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>NOME FANTASIA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.NOME, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "NOME FANTASIA", id = "nome" })
+                                    @Html.ValidationMessageFor(model => model.NOME)
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>SENHA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.SENHA, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "SENHA", id = "senha" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label style="text-align:center; width: 100%;">RESPONSÁVEL?</label>
+
+                                <div class="editor-field">
+                                    @Html.CheckBoxFor(model => model.IS_RESPONSAVEL, new { @class = "form-control input-lg", id = "is_responsavel" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label style="text-align:center; width: 100%;">CLIENTE?</label>
+
+                                <div class="editor-field">
+                                    @Html.CheckBoxFor(model => model.IS_CLIENTE, new { @class = "form-control input-lg", id = "is_cliente" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label style="text-align:center; width: 100%;">FUNCIONÁRIO?</label>
+
+                                <div class="editor-field">
+                                    @Html.CheckBoxFor(model => model.IS_FUNCIONARIO, new { @class = "form-control input-lg", id = "is_funcionario" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group col-md-2">
+                                <label style="text-align:center; width: 100%;">TERCEIRO?</label>
+
+                                <div class="editor-field">
+                                    @Html.CheckBoxFor(model => model.IS_TERCEIRO, new { @class = "form-control input-lg", id = "is_terceiro" })
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <label style="text-align:center; width: 100%;">FORNECEDOR?</label>
+
+                                <div class="editor-field">
+                                    @Html.CheckBoxFor(model => model.IS_FORNECEDOR, new { @class = "form-control input-lg", id = "is_fornecedor" })
+                                </div>
+                            </div>
+
+                            @if (Session.IsAdministrador())
+                            {
+                                <div class="form-group col-md-2">
+                                    <label style="text-align:center; width: 100%;">ADMINISTRADOR?</label>
+
+                                    <div class="editor-field">
+                                        @Html.CheckBoxFor(model => model.IS_ADMINISTRADOR, new { @class = "form-control input-lg", id = "is_administrador" })
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group col-md-2">
+                                    <label style="text-align:center; width: 100%;">ADMINISTRADOR?</label>
+
+                                    <div class="editor-field">
+                                        @Html.CheckBoxFor(model => model.IS_ADMINISTRADOR, new { @class = "form-control input-lg", disabled = "disabled", @readonly = "readonly", id = "is_administrador" })
+                                    </div>
+                                </div>
+                            }
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>CEP</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CEP, new { @class = "form-control input-lg uppercase", maxlength = "9", placeholder = "CEP", id = "cep", alt = "cep" })
+                                    @Html.ValidationMessageFor(model => model.CEP, "Informe um CEP!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-10">
+                                <div>
+                                    <label>ENDEREÇO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.ENDERECO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "ENDEREÇO", id = "endereco", required = "" })
+                                    @Html.ValidationMessageFor(model => model.ENDERECO, "Informe um endereço!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>COMPLEMENTO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.COMPLEMENTO, new { @class = "form-control input-lg uppercase", placeholder = "COMPLEMENTO", id = "complemento", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.COMPLEMENTO)
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-5">
+                                <div>
+                                    <label>BAIRRO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.BAIRRO, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "BAIRRO", id = "bairro", required = "" })
+                                    @Html.ValidationMessageFor(model => model.BAIRRO, "Informe um bairro!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>CIDADE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CIDADE, new { @class = "form-control input-lg uppercase", maxlength = "200", placeholder = "CIDADE", id = "cidade", required = "" })
+                                    @Html.ValidationMessageFor(model => model.CIDADE, "Informe uma cidade!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-1">
+                                <div>
+                                    <label>UF</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.UF, new { @class = "form-control input-lg uppercase", maxlength = "2", placeholder = "UF", id = "uf", required = "" })
+                                    @Html.ValidationMessageFor(model => model.UF, "Informe uma UF!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>ZONA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.ZONA, new { @class = "form-control input-lg uppercase", maxlength = "150", placeholder = "ZONA", id = "zona" })
+                                    @Html.ValidationMessageFor(model => model.ZONA)
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>TELEFONE</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.TELEFONE1, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "TELEFONE", id = "telefone1", alt = "phone" })
+                                    @Html.ValidationMessageFor(model => model.TELEFONE1)
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>CELULAR</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.TELEFONE2, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "CELULAR", id = "telefone2", alt = "phone_9digito" })
+                                    @Html.ValidationMessageFor(model => model.TELEFONE2)
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>TEL. CONTATO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.TELEFONE3, new { @class = "form-control input-lg uppercase", maxlength = "25", placeholder = "TEL. CONTATO", id = "telefone3", alt = "phone" })
+                                    @Html.ValidationMessageFor(model => model.TELEFONE3)
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <div>
+                                    <label>CONTATO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.CONTATO, new { @class = "form-control input-lg uppercase", maxlength = "150", placeholder = "CONTATO", id = "contato", required = "" })
+                                    @Html.ValidationMessageFor(model => model.CONTATO, "Informe um contato!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>EMAIL</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.EMAIL, new { @class = "form-control input-lg", type = "email", maxlength = "255", placeholder = "EMAIL", id = "email", required = "" })
+                                    @Html.ValidationMessageFor(model => model.EMAIL, "Informe um e-mail!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <div>
+                                    <label>OBSERVAÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextAreaFor(model => model.OBSERVACAO, new { @class = "form-control input-lg uppercase", placeholder = "OBSERVAÇÃO", id = "observacao", rows = "5" })
+                                    @Html.ValidationMessageFor(model => model.OBSERVACAO)
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                | @Html.ActionLink("Voltar", "Index")
+                            </div>
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="buscar-modal" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Buscar CNPJ</h4>
+            </div>
+            <div class="modal-body" style="height:250px;">
+                <p>Preencha com o texto da imagem</p>
+                <br />
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Texto</label>
+                        <div class="col-md-5">
+                            <input type="text" id="img-input" value="" class="form-control caixa-grande" />
+                        </div>
+                    </div>
+
+                    <div class="form-group img-captcha">
+                        <div class="col-md-offset-2 col-md-6">
+                            <div style="float:left;">
+                                <img id="captcha-img" title="Informe o texto da imagem" class="hidden" />
+                            </div>
+                            <div style="float:right;">
+                                <a href="#" id="buscar-captcha-btn" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-refresh"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="height:80px;">
+                <p class="bg-danger pull-left hidden msg" style="padding:10px 20px;">
+                    <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;<strong><span id="msgErro-span"></span></strong>
+                </p>
+                <button type="button" id="fechar-button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" id="buscarDados-btn" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+
+        $("#zona").autocomplete({
+            source: "@Url.Action("BuscarZona", "Pessoa")",
+            minLength: 2
+        });
+
+        function limpa_formulário_cep() {
+            $("#endereco").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#uf").val("");
+        }
+
+        $("#cep").blur(function () {
+            var cep = $("#cep")
+                .val()
+                .replace("-", "");
+
+            if (cep !== "") {
+                var validacep = /^[0-9]{8}$/;
+
+                if (validacep.test(cep)) {
+                    $("#endereco").val("...");
+                    $("#bairro").val("...");
+                    $("#cidade").val("...");
+                    $("#uf").val("...");
+
+                    $.getJSON("//viacep.com.br/ws/" + cep + "/json/?callback=?", function (dados) {
+
+                        if (!("erro" in dados)) {
+                            $("#endereco").val(dados.logradouro);
+                            $("#bairro").val(dados.bairro);
+                            $("#cidade").val(dados.localidade);
+                            $("#uf").val(dados.uf);
+                            $('#complemento').focus();
+                        }
+                        else {
+                            limpa_formulário_cep();
+                        }
+                    });
+                } else {
+                    limpa_formulário_cep();
+                }
+            } else {
+                limpa_formulário_cep();
+            }
+        });
+
+        $("#num_doc").blur(function () {
+            var cpfCnpj = $(this).val();
+
+            if (formata_cpf_cnpj(cpfCnpj)) {
+                $(this).val(formata_cpf_cnpj(cpfCnpj));
+
+                if ($(this).val().length === 18)
+                    $("#buscar-modal").modal({ show: true });
+            }
+        });
+
+        $("#buscar-modal").on("show.bs.modal", function () {
+            $("#img-input").val("");
+            BuscarCaptcha();
+        });
+
+        $("#buscar-modal").on("shown.bs.modal", function () {
+            $("#img-input").focus();
+        });
+
+        $("#buscar-captcha-btn").on("click", function () {
+            $("#captcha-img").fadeOut(1000, function () {
+                $(this).attr("src", "");
+                BuscarCaptcha();
+            });
+        });
+
+        $("#buscarDados-btn").on("click", function () {
+            ObterDados();
+        });
+
+        var pathLoader = "@Url.Content(@"~/Content/ajax-loader-facebook.gif ")";
+        var $loader = $("<img class=\"loader-facebook\" src=\"" + pathLoader + "\"/> <em>Buscando ...</em>");
+
+        var BuscarCaptcha = function () {
+            var strUrl = "@Url.Action("GetCaptcha", "Pessoa")";
+
+            $.ajax({
+                type: "GET",
+                url: strUrl,
+                dataType: "json",
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $loader.insertAfter($("#captcha-img"));
+                },
+                success: function (data) {
+                    $("#captcha-img").removeClass("hidden").attr("src", data);
+                    $("#captcha-img").fadeIn(1000);
+                },
+                complete: function () {
+                    $loader.remove();
+                    $("#img-input").focus();
+                },
+                error: function () {
+                    alert("Erro na tentativa de obter o captcha!");
+                }
+            });
+        };
+
+        var ObterDados = function () {
+            var strUrl = "@Url.Action("ConsultarDados", "Pessoa")";
+
+            $.ajax({
+                type: "post",
+                url: strUrl,
+                cache: false,
+                async: true,
+                data: { cnpj: $("#num_doc").val(), captcha: $("#img-input").val() },
+                beforeSend: function () {
+                    $loader.insertBefore($("#fechar-button"));
+                },
+                success: function (data) {
+                    $loader.remove();
+                    if (data.erro.length > 0) {
+                        $("#msgErro-span").text(data.erro).closest("p").removeClass("hidden");
+                        $("#captcha-img").fadeOut(1000, function () {
+                            $(this).attr("src", "");
+                            BuscarCaptcha();
+                            $("#img-input").focus();
+                        });
+                        setTimeout(function () {
+                            $("#msgErro-span").closest("p").addClass("hidden");
+                        }, 2000);
+
+                        $("#img-input").val("");
+                    } else {
+                        if (data.dados != null) {
+                            PreencheDados(data.dados, false);
+                            $("#buscar-modal").modal("hide");
+                        } else {
+                            $("#msgErro-span").text("Erro de comunicação com a receita!").closest("p").removeClass("hidden");
+                            $("#captcha-img").fadeOut(1000, function () {
+                                $(this).attr("src", "");
+                                BuscarCaptcha();
+                                $("#img-input").focus();
+                            });
+                            setTimeout(function () {
+                                $("#msgErro-span").closest("p").addClass("hidden");
+                            }, 2000);
+                        }
+
+                    }
+                },
+                error: function () {
+                    $loader.remove();
+                    alert("Erro de comunicação!");
+                }
+            });
+        };
+
+        var PreencheDados = function (dados, clear) {
+            if (clear) {
+                $(".caixa-grande").val("");
+            } else {
+                $("#razao").val(dados.Razaosocial);
+                $("#nome").val(dados.NomeFantasia);
+                $("#endereco").val(dados.Endereco);
+                $("#bairro").val(dados.Bairro);
+                $("#cep").val(dados.Cep.replace(".", ""));
+                $("#cidade").val(dados.Cidade);
+                $("#uf").val(dados.Estado);
+            }
+        };
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿@using ATIMO;
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <div class="nav-collapse">
+                <a class="brand" id="NOME_LOCATION">@Session.Usuario().NOME</a>
+
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="@Url.Action("Logout", "Home")">
+                            <i class="fa fa-cog"></i> LOGOUT
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="subnavbar">
+    <div class="subnavbar-inner">
+        <div class="container">
+            <ul class="mainnav">
+                @if (!Session.Usuario().ACESSOS.Contains("AreaDoFuncionario"))
+                {
+                    <li class="active"><a href="~/AreaDoFuncionario/Index"><i class="fa fa-male"></i><span>ÁREA DO FUNCIONARIO</span> </a> </li>
+                }
+
+                @if (!Session.Usuario().ACESSOS.Contains("VisitaInicial"))
+                {
+                    <li><a href="~/VisitaInicial/Search"><i class="fa fa-bar-chart"></i><span>OPERACIONAL</span> </a></li>
+                }
+
+                @if (!Session.Usuario().ACESSOS.Contains("Financeiro"))
+                {
+                    <li><a href="~/Financeiro/Index"><i class="fa fa-money"></i><span>ADM/FINANCEIRO</span> </a> </li>
+                }
+
+
+                @if (!Session.Usuario().ACESSOS.Contains("AreaGerencial"))
+                {
+                    <li><a href="~/AreaGerencial/Index"><i class="fa fa-bar-chart"></i><span>AREA GERENCIAL</span> </a> </li>
+                }
+
+
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+}

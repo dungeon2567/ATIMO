@@ -1,0 +1,118 @@
+﻿@model ATIMO.ViewModel.CompraParcelaViewModel
+
+@{
+    ViewBag.Title = "ÁTIMO - Contas a Pagar - Parcelas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-book"></i>
+                    <h3>CONTAS A PAGAR - PARCELAS</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="col-md-12">
+                        <a class="btn btn-danger" onclick="window.history.back();">
+                            <i class="fa fa-rotate-left"></i>
+                            Voltar
+                        </a>
+
+                        <hr />
+                        <br />
+                    </div>
+
+                    <div class="col-md-12 table-responsive">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        #
+                                    </th>
+
+                                    <th>
+                                        DATA DE VENCIMENTO
+                                    </th>
+                                    <th>
+                                        VALOR
+                                    </th>
+                                    <th>
+                                        STATUS
+                                    </th>
+                                    <th>
+                                        AÇÕES
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    int index = 0;
+                                }
+                                @foreach (var item in Model.Parcelas)
+                                {
+                                    ++index;
+
+                                    <tr>
+                                        <td>
+                                            @index
+                                        </td>
+
+                                        <td>
+                                            <span>@item.DATA_VENCIMENTO.ToString("dd/MM/yyyy")</span>
+                                        </td>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.VALOR_STRING)
+                                        </td>
+
+                                        @if (item.DATA_PAGAMENTO == null)
+                                        {
+                                            if (item.DATA_VENCIMENTO < System.DateTime.Now.Date)
+                                            {
+                                                <td>
+                                                    <span class="label label-danger">VENCIDO</span>
+                                                </td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="label label-default">ABERTO</span>
+                                                </td>
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <span class="label label-success">FECHADO</span>
+                                            </td>
+                                        }
+                                        <td>
+
+                                            <a class="btn btn-info" href="~/CompraParcela/Edit/@item.ID" title="Editar">
+                                                <i class="fa fa-edit"></i>
+                                                Editar
+                                            </a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,33 @@
+﻿@model ATIMO.Models.Faturamento.EmpresaConfig
+@{
+    ViewBag.Title = "CadEmpresaFromCertificado";
+}
+
+
+@using (Html.BeginForm())
+{
+
+    <h2>Dados da empresa emissora a partir do certificado</h2>
+    <label>Serial</label>
+    <input size="60" type="text" value="@Model.SerialCertificado" name="SerialCertificado" />
+    <br />
+    <label>Nome</label>
+    <input size="60" type="text" value="@Model.Nome" name="Nome" />
+    <br />
+    <label>CNPJ</label>
+    <input size="60" type="text" value="@Model.CNPJ" name="CNPJ" />
+    <br />
+    <label>Inscrição Municipal (CCM)</label>
+    <input size="60" type="text" value="@Model.CcmPmsp" name="CcmPmsp" />
+    <br />
+    <label>Codigo Servico</label>
+    <input size="60" type="text" value="@Model.CodigoServicoPMSP" name="CodigoServicoPMSP" />
+    <br />
+    <label>Optante Simples Nacional</label>
+    <input size="60" type="text" value="@Model.OptanteSimplesNacional" name="OptanteSimplesNacional" />
+    <br />
+    <label>Emite NF</label>
+    <input size="60" type="text" value="@Model.EmiteNF" name="EmiteNF" />
+    <br />
+
+}

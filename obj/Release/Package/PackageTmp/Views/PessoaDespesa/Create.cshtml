@@ -1,0 +1,121 @@
+﻿@model ATIMO.ViewModel.PessoaDespesaViewModel
+
+@{
+    ViewBag.Title = "Átimo - Pessoa/Despesa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("MenuAreaFuncionario")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-minus-circle"></i>
+                    <h3>PESSOAS / DESPESAS - NOVO</h3>
+                </div>
+
+                <div class="widget-content">
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, null, new { @class = "alert alert-danger" })
+                        @Html.HiddenFor(model => model.Pessoa)
+
+                        <fieldset>
+                            <div class="form-group col-md-6">
+                                <div>
+                                    <label>DESPESA</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.DropDownList("DESPESA", null, "SELECIONE UMA DESPESA", new { required = "" })
+                                    @Html.ValidationMessageFor(model => model.Despesa, "Selecione uma despesa!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>TIPO</label>
+                                </div>
+
+                                <select class="editor-field" name="tipodeducao" required="">
+                                    @if ((Model != null) && (Model.TipoDeducao == "P"))
+                                    {
+                                        <option value="P" selected="selected">PERCENTUAL</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="P">PERCENTUAL</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.TipoDeducao == "V"))
+                                    {
+                                        <option value="V" selected="selected">VALOR</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="V">VALOR</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>VALOR DEDUÇÃO</label>
+                                </div>
+
+                                <div class="editor-field">
+                                    @Html.TextBoxFor(model => model.Deducao, new { @class = "form-control input-lg", maxlength = "18", placeholder = "VALOR", id = "valordeducao", required = "", alt = "decimal" })
+                                    @Html.ValidationMessageFor(model => model.Deducao, "Informe um valor de dedução!")
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-2">
+                                <div>
+                                    <label>SITUAÇÃO</label>
+                                </div>
+
+                                <select class="editor-field" name="situacao" required="">
+                                    @if ((Model != null) && (Model.Situacao == "A"))
+                                    {
+                                        <option value="A" selected="selected">ATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="A">ATIVO</option>
+                                    }
+
+                                    @if ((Model != null) && (Model.Situacao == "I"))
+                                    {
+                                        <option value="I" selected="selected">INATIVO</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="I">INATIVO</option>
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="col-md-12">
+                                <input type="submit" value="Salvar" class="btn btn-primary" />
+                                | @if (@Model != null)
+                                  {
+                                      @Html.ActionLink("Voltar", "Index", new { id = @Model.Pessoa })
+                                  }
+                            </div>
+
+                        </fieldset>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("RodapeFixo")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

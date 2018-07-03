@@ -1,0 +1,82 @@
+﻿@using ATIMO.Helpers
+
+<div >
+    <ul class="pagination">
+        @{
+            var l_Action = ViewContext.RouteData.Values["action"] as string;
+
+            /* Modelo
+               int startPage = (Math.Ceiling(page / 10 - 1) * 10) + 1;
+               int endPage = Math.Ceiling(page / 10 - 1) * 10 + 10;
+               for (int i = startPage; i <= endPage; i++)
+             */
+            if (Model == null)
+            {
+                return;
+            }
+            else if (Model.TotalNumberOfRecords == 0)
+            {
+                return;
+            }
+            int l_MaxNumberOfRowsPerPage = 5;
+
+            int startPage = (int)(Math.Ceiling((double)(Model.CurrentPage) / l_MaxNumberOfRowsPerPage - 1) * l_MaxNumberOfRowsPerPage) + 1;
+            int endPage = (int)Math.Ceiling((double)(Model.CurrentPage) / l_MaxNumberOfRowsPerPage - 1) * l_MaxNumberOfRowsPerPage + l_MaxNumberOfRowsPerPage;
+
+
+            if (endPage - startPage > l_MaxNumberOfRowsPerPage)
+            {
+                startPage = Model.CurrentPage;
+                endPage--;
+            }
+
+            if (endPage > Model.NumberOfPages)
+            {
+                endPage = Model.NumberOfPages;
+            }
+
+            if (Model.CurrentPage != 1)
+            {
+                <li class="@((Model.CurrentPage == 1 || Model.CurrentPage == null) ? "disabled" : "")">
+                    @*<a href="@Url.Action(l_Action, (new { search = Request.QueryString["search"], page = Model.CurrentPage - 1 }))">«</a>*@
+                    <a href="@Url.Action(l_Action, ViewContext.GetCombinedRouteValues(new { page = Model.CurrentPage - 1 }))">«</a>
+                </li>
+            }
+            if (startPage > 1)
+            {
+                <li class="@((Model.CurrentPage == 1 || Model.CurrentPage == null) ? "disabled" : "")">
+                    @*<a href="@Url.Action(l_Action, (new { search = Request.QueryString["search"], page = 1 }))"> 1 </a>*@
+                    <a href="@Url.Action(l_Action, ViewContext.GetCombinedRouteValues(new { page = 1 }))"> 1 </a>
+                </li>
+                    <li class="disabled"><a href="#">...</a></li>
+            }
+            for (int i = startPage; i <= endPage; i++)
+            {
+                <li class="@((Model.CurrentPage == i) ? "active" : "")">
+                    @*<a class="page-number" href="@Url.Action(l_Action, (new { search = Request.QueryString["search"], page = i }))">@i</a>*@
+                    <a class="page-number" href="@Url.Action(l_Action, ViewContext.GetCombinedRouteValues(new { page = i }))">@i</a>
+                </li>
+
+            }
+            if (endPage != Model.NumberOfPages)
+            {
+                <li class="disabled"><a href="#">...</a></li>
+                    <li class="@((Model.CurrentPage == Model.NumberOfPages) ? "disabled" : "")">
+                        @*<a href="@Url.Action(l_Action, (new { search = Request.QueryString["search"], page = Model.NumberOfPages }))"> @Model.NumberOfPages </a>*@
+                        <a href="@Url.Action(l_Action, ViewContext.GetCombinedRouteValues(new { page = Model.NumberOfPages }))"> @Model.NumberOfPages </a>
+                    </li>
+            }
+            if (Model.CurrentPage != Model.NumberOfPages)
+            {
+                <li class="@((Model.CurrentPage == Model.NumberOfPages) ? "disabled" : "")">
+                    @*<a href="@Url.Action(l_Action, (new { search = Request.QueryString["search"], page = Model.CurrentPage + 1 }))">»</a>*@
+                    <a href="@Url.Action(l_Action, ViewContext.GetCombinedRouteValues(new { page = Model.CurrentPage + 1  }))">»</a>
+                </li>
+            }
+        }
+
+
+
+    </ul>
+</div>
+

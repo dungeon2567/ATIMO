@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ATIMO.ViewModel.RelatorioGeralViewModel>
+
+@{
+    ViewBag.Title = "Átimo - Relatório Geral";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>RELATÓRIO GERAL</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover tree">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">
+                                        DATA
+                                    </th>
+
+                                    <th style="text-align:center">
+                                        ENTRADA
+                                    </th>
+
+                                    <th style="text-align:center">
+                                        SAÍDA
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @item.DATA
+                                        </td>
+                                        <td>
+                                            @item.ENTRADA.ToString("C")
+                                        </td>
+                                        <td>
+                                            @item.SAIDA.ToString("C")
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+                                        TOTAL
+                                    </td>
+                                    <td>
+                                        @(Model.Select(cp => cp.ENTRADA).DefaultIfEmpty().Sum().ToString("C"))
+                                    </td>
+                                    <td>
+                                        @(Model.Select(cp => cp.SAIDA).DefaultIfEmpty().Sum().ToString("C"))
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

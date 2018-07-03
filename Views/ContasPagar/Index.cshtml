@@ -1,0 +1,107 @@
+﻿@model IEnumerable<ATIMO.Models.CONTAS_PAGAR>
+
+@{
+    ViewBag.Title = "Átimo - Contas a Pagar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-group"></i>
+                    <h3>CONTAS A PAGAR</h3>
+                </div>
+
+                <div class="widget-content">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover tree">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center">
+                                        OSSB
+                                    </th>
+
+                                    <th style="text-align:center">
+                                        FORNECEDOR
+                                    </th>
+
+                                    <th style="text-align:center">
+                                        DATA DE VENCIMENTO
+                                    </th>
+
+                                    <th style="text-align:center">
+                                        DESPESA
+                                    </th>
+
+                                    <th style="text-align:center">
+                                        VALOR
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @item.OSSB
+                                        </td>
+
+
+                                        @if (item.PARA1 != null)
+                                        {
+                                            <td>
+                                                @item.PARA1.RAZAO
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+
+
+                                        <td>
+                                            @(item.DATA_VENCIMENTO == null ? "" : item.DATA_VENCIMENTO.Value.ToString("dd/MM/yyyy"))
+                                        </td>
+
+                                        <td>
+                                            @item.DESPESA1.DESCRICAO
+                                        </td>
+                                        <td>
+                                            @((item.VALOR ?? 0m).ToString("C"))
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="4">
+                                        TOTAL
+                                    </td>
+                                    <td>
+                                        @(Model.Select(cp => cp.VALOR ?? 0m).DefaultIfEmpty().Sum().ToString("C"))
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

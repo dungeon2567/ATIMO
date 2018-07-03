@@ -1,0 +1,128 @@
+﻿@model ATIMO.ViewModel.ExtratoViewModel
+
+@using ATIMO;
+
+@{
+    ViewBag.Title = "Átimo - Operacional";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@helper CreateLabel(decimal valor)
+    {
+        if (valor > 0)
+        {
+            <span class="label label-success">R$ @valor.ToString("N2")</span>
+        }
+        else
+        if (valor < 0)
+        {
+            <span class="label label-danger">R$ @valor.ToString("N2")</span>
+        }
+        else
+        {
+            <span class="label label-default">R$ @valor.ToString("N2")</span>
+        }
+}
+
+
+@Html.Partial("MenuFinanceiro")
+
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="widget">
+                <div class="widget-header">
+                    <i class="fa fa-sort-alpha-asc"></i>
+                    <h3>EXTRATO: @CreateLabel(Model.SALDO.Select(s => s.Value).DefaultIfEmpty().Sum()) </h3>
+                </div>
+
+                <div class="widget-content">
+
+                    @foreach (var t in Model.TRANSACOES)
+                    {
+                        foreach (var j in t.Value.GroupBy(k => k.DATA).OrderBy(k => k.Key))
+                        {
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th colspan="6" style="text-align:center">
+                                            @t.Key.DESCRICAO @j.Key.ToString("dd/MM/yyyy")
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:center">
+                                            PESSOA
+                                        </th>
+
+                                        <th style="text-align:center">
+                                            OSSB
+                                        </th>
+
+                                        <th style="text-align:center">
+                                            NOTA FISCAL
+                                        </th>
+
+                                        <th style="text-align:center">
+                                            DESPESA
+                                        </th>
+
+                                        <th style="text-align:center">
+                                            VALOR
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach (var tr in j)
+                                    {
+                                        <tr>
+                                            <th>
+                                                <span>@tr.PESSOA</span>
+                                            </th>
+
+                                            <th>
+                                                <span>@tr.OSSB</span>
+                                            </th>
+
+                                            <th>
+                                                <span>@tr.NOTA_FISCAL</span>
+                                            </th>
+
+                                            <th>
+                                                <span>@tr.DESPESA</span>
+                                            </th>
+
+                                            <th>
+                                                <span>@CreateLabel(@tr.VALOR)</span>
+                                            </th>
+                                        </tr>
+                                    }
+
+                                    <tr>
+                                        <th colspan="4">
+                                            SALDO
+                                        </th>
+
+                                        <th>
+                                            <span>@CreateLabel(Model.SALDO[t.Key.ID] - t.Value.Where(tv => tv.DATA > j.Key).Select(tv => tv.VALOR).DefaultIfEmpty().Sum())</span>
+                                        </th>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Html.Partial("Rodape")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
